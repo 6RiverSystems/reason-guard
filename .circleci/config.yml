@@ -9,7 +9,7 @@ jobs:
           name: Set Up Environment
           command: |
             git submodule update --init
-            ci_scripts/ci_tool.sh --setup_npm
+            # ci_scripts/ci_tool.sh --setup_npm
       - run:
             name: Install Dependencies
             command: npm ci
