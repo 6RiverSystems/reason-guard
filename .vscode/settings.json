@@ -1,0 +1,10 @@
+{
+	// Fix syntax/style problems on save
+	"eslint.autoFixOnSave": true,
+	"eslint.validate": [
+		{"language": "javascript", "autoFix": true},
+		{"language": "typescript", "autoFix": true}
+	],
+	// Use locally installed copy of TypeScript instead of the version that ships with the editor
+	"typescript.tsdk": "node_modules/typescript/lib"
+}

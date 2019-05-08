@@ -1,0 +1,11 @@
+--require source-map-support/register
+
+--full-trace
+--check-leaks
+
+--recursive
+--timeout=4000
+
+--globals verbose,dryRun,params
+
+dist/test/**/*.spec.js

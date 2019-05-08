@@ -1,0 +1,6 @@
+{
+	"extends": "6river/typescript",
+	"rules": {
+		"no-console": "off"
+	}
+}

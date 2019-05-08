@@ -1,0 +1,33 @@
+{
+	"compileOnSave": true,
+	"include": [
+		"src",
+		"test",
+		"test",
+		"lib",
+	],
+	"compilerOptions": {
+		"outDir": "dist",
+		"target": "es2018",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"allowUnreachableCode": false,
+		"strict": true,
+		"sourceMap": true,
+		"declaration": false,
+		"forceConsistentCasingInFileNames": true,
+		"removeComments": false,
+		"preserveConstEnums": true,
+		"noImplicitReturns": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true
+	},
+	"exclude": [
+		"packages/*/node_modules/**",
+		"**/*.d.ts",
+		"node_modules",
+		"scripts",
+		"coverage",
+		"dist",
+	]
+}

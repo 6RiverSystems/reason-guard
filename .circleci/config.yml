@@ -1,0 +1,97 @@
+version: 2
+jobs:
+  prep:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - checkout
+      - run:
+          name: Set Up Environment
+          command: |
+            git submodule update --init
+            ci_scripts/ci_tool.sh --setup_npm
+      - run:
+            name: Install Dependencies
+            command: npm ci
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - .
+  build:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - attach_workspace:
+            at: ./
+      - run:
+          name: Build
+          command: npm run build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - dist
+  lint:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Lint
+          command: npm run lint -- --format junit --output-file ./reports/eslint/results.xml
+      - store_test_results:
+          path: ./reports
+      - store_artifacts:
+          path: ./reports
+  tests-unit:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Unit Tests
+          command: npm test
+      - store_test_results:
+          path: ./reports
+      - store_artifacts:
+          path: ./reports
+  publish:
+    docker:
+      - image: circleci/node:10.15.3
+    steps:
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Set Up Environment
+          command: ci_scripts/ci_tool.sh --setup_npm
+      - run:
+          name: Calculate Version
+          command: ci_scripts/ci_tool.sh --run_release
+      - run:
+          name: Publish
+          command: ci_scripts/ci_tool.sh --npm_publish
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - prep
+      - build:
+          context: 6rs-circle
+          requires:
+            - prep
+      - lint:
+          context: 6rs-circle
+          requires:
+            - prep
+      - tests-unit:
+          context: 6rs-circle
+          requires:
+            - prep
+      - publish:
+          context: 6rs-circle
+          requires:
+            - prep
+            - build
+            - lint
+            - tests-unit
