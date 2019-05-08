@@ -63,8 +63,8 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-        name: Is Josh Right?
-        command: echo $NPM_TOKEN
+          name: Is Josh Right?
+          command: echo $NPM_TOKEN
       - run:
           name: Set Up Environment
           command: ci_scripts/ci_tool.sh --setup_npm
