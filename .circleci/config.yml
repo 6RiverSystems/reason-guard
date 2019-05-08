@@ -6,6 +6,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Set NPM auth token
+          command: |
+             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - run:
           name: Set Up Environment
           command: |
             git submodule update --init
@@ -36,10 +40,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      - run:
-          name: Set NPM auth token
-          command: |
-             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - run:
           name: Lint
           command: npm run lint -- --format junit --output-file ./reports/eslint/results.xml
