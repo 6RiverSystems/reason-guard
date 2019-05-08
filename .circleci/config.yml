@@ -87,7 +87,7 @@ workflows:
       - tests-unit:
           context: 6rs-public-npm
           requires:
-            - prep
+            - build
       - publish:
           context: 6rs-public-npm
           requires:
