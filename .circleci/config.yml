@@ -3,99 +3,75 @@ jobs:
   prep:
     docker:
       - image: circleci/node:10.15.3
+        environment:
+          NODE_ENV: test
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package-lock.json"}}
+            - dependency-cache-
+      - run:
+          name: Install node dependencies
+          command: |
+            npm ci
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - .
+  publish:
+    docker:
+      - image: circleci/node:8
+        environment:
+          NODE_ENV: test
+    steps:
+      - attach_workspace:
+          at: ./
       - run:
           name: Set NPM auth token
           command: |
              echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - run:
-          name: Set Up Environment
+          name: npm publish via script
           command: |
-            git submodule update --init
-            ci_scripts/ci_tool.sh --setup_npm
-      - run:
-            name: Install Dependencies
-            command: npm ci
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - .
-  build:
+            ./scripts/release.sh
+  test:
     docker:
-      - image: circleci/node:10.15.3
-    steps:
-      - attach_workspace:
-            at: ./
-      - run:
-          name: Build
-          command: npm run build
-      - persist_to_workspace:
-          root: ./
-          paths:
-            - dist
-  lint:
-    docker:
-      - image: circleci/node:10.15.3
+      - image: node:8.9.4
+        environment:
+          NODE_ENV: test
+          MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
     steps:
       - attach_workspace:
           at: ./
       - run:
-          name: Lint
-          command: npm run lint -- --format junit --output-file ./reports/eslint/results.xml
-      - store_test_results:
-          path: ./reports
+          name: npm test
+          command: |
+            npm test
+      - run:
+          name: npm run coverage
+          command: |
+            npm run coverage
       - store_artifacts:
-          path: ./reports
-  tests-unit:
-    docker:
-      - image: circleci/node:10.15.3
-    steps:
-      - attach_workspace:
-          at: ./
-      - run:
-          name: Unit Tests
-          command: npm test
-      - store_test_results:
-          path: ./reports
+          path: coverage
       - store_artifacts:
-          path: ./reports
-  publish:
-    docker:
-      - image: circleci/node:10.15.3
-    steps:
-      - attach_workspace:
-          at: ./
-      - run:
-          name: Set Up Environment
-          command: ci_scripts/ci_tool.sh --setup_npm
-      - run:
-          name: Calculate Version
-          command: ci_scripts/ci_tool.sh --run_release
-      - run:
-          name: Publish
-          command: ci_scripts/ci_tool.sh --npm_publish
+          path: reports/junit/
+      - store_test_results:
+          path: reports/junit/
+
 workflows:
   version: 2
-  build-test-deploy:
+
+  test_and_publish:
     jobs:
-      - prep
-      - build:
-          context: 6rs-circle
+      - setup
+      - test:
           requires:
-            - prep
-      - lint:
-          context: 6rs-circle
-          requires:
-            - prep
-      - tests-unit:
-          context: 6rs-circle
-          requires:
-            - prep
+            - setup
       - publish:
-          context: 6rs-circle
           requires:
-            - prep
-            - build
-            - lint
-            - tests-unit
+            - test
