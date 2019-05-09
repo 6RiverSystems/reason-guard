@@ -1,0 +1,10 @@
+.circleci/
+.github/
+.vscode/
+test/
+scripts/
+.editorconfig
+.eslintignore
+.eslintrc.json
+.node-version
+tsconfig.json

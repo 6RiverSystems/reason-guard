@@ -1,18 +1,13 @@
 version: 2
 jobs:
-  prep:
+  setup:
     docker:
       - image: circleci/node:10.15.3
     steps:
       - checkout
       - run:
-          name: Set Up Environment
-          command: |
-            git submodule update --init
-            ci_scripts/ci_tool.sh --setup_npm
-      - run:
-            name: Install Dependencies
-            command: npm ci
+          name: Install Dependencies
+          command: npm ci
       - persist_to_workspace:
           root: ./
           paths:
@@ -37,25 +32,26 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          name: Set NPM auth token
-          command: |
-             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      - run:
           name: Lint
           command: npm run lint -- --format junit --output-file ./reports/eslint/results.xml
       - store_test_results:
           path: ./reports
       - store_artifacts:
           path: ./reports
-  tests-unit:
+  test:
     docker:
       - image: circleci/node:10.15.3
+    environment:
+      MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
     steps:
       - attach_workspace:
           at: ./
       - run:
           name: Unit Tests
           command: npm test
+      - run:
+          name: Coverage
+          command: npm run coverage
       - store_test_results:
           path: ./reports
       - store_artifacts:
@@ -67,35 +63,35 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          name: Set Up Environment
-          command: ci_scripts/ci_tool.sh --setup_npm
-      - run:
           name: Calculate Version
-          command: ci_scripts/ci_tool.sh --run_release
+          command: npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
       - run:
           name: Publish
-          command: ci_scripts/ci_tool.sh --npm_publish
+          command: ./scripts/release.sh
 workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - prep
+      - setup
       - build:
-          context: 6rs-circle
+          context: 6rs-public-npm
           requires:
-            - prep
+            - setup
       - lint:
-          context: 6rs-circle
+          context: 6rs-public-npm
           requires:
-            - prep
-      - tests-unit:
-          context: 6rs-circle
+            - setup
+      - test:
+          context: 6rs-public-npm
           requires:
-            - prep
+            - build
       - publish:
-          context: 6rs-circle
+          context: 6rs-public-npm
           requires:
-            - prep
+            - setup
             - build
             - lint
-            - tests-unit
+            - test
+          filters:
+            branches:
+              only: master
