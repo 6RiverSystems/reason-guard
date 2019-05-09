@@ -1,0 +1,12 @@
+{
+	"cache": false,
+	"reporter": [
+		"lcov",
+		"html",
+		"text"
+	],
+	"extension": [
+		".ts"
+	],
+	"all": true
+}
