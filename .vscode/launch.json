@@ -5,22 +5,32 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch Program",
+			// Name of configuration; appears in the launch configuration drop down menu.
+			"name": "Run mocha",
 			"request": "launch",
+			// Type of configuration. Possible values: "node", "mono".
 			"type": "node",
-			"cwd": "${workspaceFolder}",
-			"env": {
-				"NODE_ENV": "development",
-				"LOG_PRETTY": "true"
-			},
-			"outputCapture": "std",
-			"program": "${workspaceFolder}/dist/server.js",
-			"outFiles": [
-				"${workspaceFolder}/dist/**/*"
-			],
-			"sourceMaps": true,
+			// Workspace relative or absolute path to the program.
+			"program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+			"preLaunchTask": "npm build",
+			// Automatically stop program after launch.
 			"stopOnEntry": false,
-			"preLaunchTask": "npm build"
+			// Command line arguments passed to the program.
+			"args": [
+				"--no-timeouts"
+			],
+			// Workspace relative or absolute path to the working directory of the program being debugged. Default is the current workspace.
+			"cwd": "${workspaceFolder}",
+			// Workspace relative or absolute path to the runtime executable to be used. Default is the runtime executable on the PATH.
+			"runtimeExecutable": null,
+			// Environment variables passed to the program.
+			"env": {
+				"NODE_ENV": "test"
+			},
+			// Don't debug node internals
+			"skipFiles": [
+				"<node_internals>/**"
+			],
 		}
-	]
+		]
 }

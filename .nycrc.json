@@ -1,0 +1,19 @@
+{
+	"cache": false,
+	"reporter": [
+		"lcov",
+		"html",
+		"text"
+	],
+	"include": [
+		"dist/**"
+	],
+	"exclude": [
+		"dist/test/**"
+	],
+	"extension": [
+		".ts",
+		".tsx"
+	],
+	"all": true
+}

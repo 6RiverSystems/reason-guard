@@ -6,6 +6,6 @@
 --recursive
 --timeout=4000
 
---globals verbose,dryRun,params
+--exit
 
-dist/test/**/*.spec.js
+dist*/test/**/*.spec.js
