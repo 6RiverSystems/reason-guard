@@ -7,7 +7,6 @@
     "url": "https://github.com/6RiverSystems/reason guard.git"
   },
   "main": "dist/src/index.js",
-  "private": true,
   "contributors": [
     "David Durschlag <ddurschlag@6river.com>"
   ],
