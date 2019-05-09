@@ -5,15 +5,8 @@
 		"html",
 		"text"
 	],
-	"include": [
-		"dist/**"
-	],
-	"exclude": [
-		"dist/test/**"
-	],
 	"extension": [
-		".ts",
-		".tsx"
+		".ts"
 	],
 	"all": true
 }
