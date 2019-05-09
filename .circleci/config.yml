@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  prep:
+  setup:
     docker:
       - image: circleci/node:10.15.3
     steps:
@@ -38,7 +38,7 @@ jobs:
           path: ./reports
       - store_artifacts:
           path: ./reports
-  tests-unit:
+  test:
     docker:
       - image: circleci/node:10.15.3
     environment:
@@ -69,26 +69,26 @@ workflows:
   version: 2
   build-test-deploy:
     jobs:
-      - prep
+      - setup
       - build:
           context: 6rs-public-npm
           requires:
-            - prep
+            - setup
       - lint:
           context: 6rs-public-npm
           requires:
-            - prep
-      - tests-unit:
+            - setup
+      - test:
           context: 6rs-public-npm
           requires:
             - build
       - publish:
           context: 6rs-public-npm
           requires:
-            - prep
+            - setup
             - build
             - lint
-            - tests-unit
+            - test
           filters:
             branches:
               only: master
