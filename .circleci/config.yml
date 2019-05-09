@@ -46,6 +46,8 @@ jobs:
   tests-unit:
     docker:
       - image: circleci/node:10.15.3
+    environment:
+      MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
     steps:
       - attach_workspace:
           at: ./
