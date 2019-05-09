@@ -14,7 +14,7 @@ export const hasProperty =
 		return `property ${p} is present`;
 	});
 
-export const propertyHasType =
+const propertyHasType =
 	<FROM, TO extends FROM>(itemGuard: ReasonGuard<FROM, TO>) =>
 		<T extends string | number | symbol>(p: T) =>
 			checkerToGuard<{ [P in T]: FROM }, { [P in T]: TO }>((input: { [P in T]: FROM }) => {
@@ -26,14 +26,14 @@ export const propertyHasType =
 				return `property ${p}: ${innerConfs[0]}`;
 			});
 
-export const propertyIsUndefined =
+const propertyIsUndefined =
 	<T extends string | number | symbol>(p: T) => checkerToGuard<unknown, { [P in T]?: undefined }>((input: unknown) => {
 		const x: any = input;
 		if (x[p] !== undefined) throw new Error(`property ${p} is not undefined`);
 		return `property ${p} is undefined`;
 	});
 
-export const propertyIsNull =
+const propertyIsNull =
 	<T extends string | number | symbol>(p: T) => checkerToGuard<unknown, { [P in T]: null }>((input: unknown) => {
 		const x: any = input;
 		if (x[p] !== null) throw new Error(`property ${p} is not null`);
@@ -50,6 +50,10 @@ export const hasFunctionProperty = <T extends string | number | symbol>(p: T) =>
 	thenGuard(hasProperty(p), propertyHasType(isFunction)(p));
 export const hasDateProperty = <T extends string | number | symbol>(p: T) =>
 	thenGuard(hasProperty(p), propertyHasType(isDate)(p));
+export const hasUndefinedProperty = <T extends string | number | symbol>(p: T) =>
+	thenGuard(hasProperty(p), propertyIsUndefined(p));
+export const hasNullProperty = <T extends string | number | symbol>(p: T) =>
+	thenGuard(hasProperty(p), propertyIsNull(p));
 
 export const hasArrayProperty =
 	<TO>(itemGuard: ReasonGuard<unknown, TO>) =>

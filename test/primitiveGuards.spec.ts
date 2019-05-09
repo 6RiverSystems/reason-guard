@@ -1,7 +1,6 @@
 import 'mocha';
-import {assert} from 'chai';
-import * as primitive from '../src/primitiveGuards';
 import {assertGuardConfirmed, assertGuardFailed} from './util';
+import * as primitive from '../src/primitiveGuards';
 
 describe('primitive guards', function() {
 	context('isNumber', function() {

@@ -19,18 +19,18 @@ ReasonGuard<FROM, LEFT&RIGHT>)>((left, right) => {
 export const notGuard =
 	<(<FROM, TO extends FROM>(inner: ReasonGuard<FROM, TO>) =>
 		ReasonGuard<FROM, Exclude<FROM, TO>>)>((inner) => {
-			return (input, output, confirmations) => {
+			return (input, errors, confirmations) => {
 				try {
 					const innerErrors: Error[] = [];
 					const innerConfs: string[] = [];
 					if (inner(input, innerErrors, innerConfs)) {
-						throw new Error(innerConfs[0]);
+						throw new Error(innerConfs[innerConfs.length-1]);
 					} else {
 						confirmations.push(innerErrors[0].message);
 						return true;
 					}
 				} catch (err) {
-					output.push(err);
+					errors.push(err);
 					return false;
 				}
 			};
@@ -44,12 +44,13 @@ export const orGuard =
 				const innerErrors: Error[] = [];
 				const innerConfs: string[] = [];
 				if (left(input, innerErrors, innerConfs)) {
-					confirmations.push(innerConfs[0]);
+					confirmations.push(...innerConfs);
 					return true;
 				}
+				innerErrors.splice(1);
 				innerConfs.splice(0);
 				if (right(input, innerErrors, innerConfs)) {
-					confirmations.push(innerConfs[0]);
+					confirmations.push(...innerConfs);
 					return true;
 				}
 				throw new Error(`${innerErrors[0].message}, and ${innerErrors[1].message}`);
