@@ -18,7 +18,7 @@
     "integration:single": "",
     "lint": "eslint --ext .ts .",
     "clean": "",
-    "coverage": ""
+    "coverage": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "dependencies": {},
   "devDependencies": {

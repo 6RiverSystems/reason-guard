@@ -49,6 +49,9 @@ jobs:
       - run:
           name: Unit Tests
           command: npm test
+      - run:
+          name: Coverage
+          command: npm run coverage
       - store_test_results:
           path: ./reports
       - store_artifacts:
