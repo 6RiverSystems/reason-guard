@@ -6,13 +6,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Set Up Environment
-          command: |
-            git submodule update --init
-            # ci_scripts/ci_tool.sh --setup_npm
-      - run:
-            name: Install Dependencies
-            command: npm ci
+          name: Install Dependencies
+          command: npm ci
       - persist_to_workspace:
           root: ./
           paths:
@@ -46,6 +41,8 @@ jobs:
   tests-unit:
     docker:
       - image: circleci/node:10.15.3
+    environment:
+      MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
     steps:
       - attach_workspace:
           at: ./
@@ -62,15 +59,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ./
-      # - run:
-      #     name: Set Up Environment
-      #     command: ci_scripts/ci_tool.sh --setup_npm
       - run:
           name: Calculate Version
-          command: ci_scripts/ci_tool.sh --run_release
+          command: npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
       - run:
           name: Publish
-          command: ci_scripts/ci_tool.sh --npm_publish
+          command: ./scripts/release.sh
 workflows:
   version: 2
   build-test-deploy:
