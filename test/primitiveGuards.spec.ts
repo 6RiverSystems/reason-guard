@@ -1,4 +1,3 @@
-import 'mocha';
 import {assertGuards} from './assertGuards';
 import * as primitive from '../src/primitiveGuards';
 
@@ -28,4 +27,18 @@ describe('primitive guards', function() {
 			assertGuards(false)(primitive.isString, {});
 		});
 	});
+	context('isLiteral', function() {
+		const testSymbol = Symbol('test');
+		const literalList = ['a', 3, testSymbol];
+		const guard = primitive.isLiteral(literalList);
+		it('guards for things in the literal', function() {
+			assertGuards(true)(guard, 'a');
+			assertGuards(true)(guard, 3);
+			assertGuards(true)(guard, testSymbol);
+		});
+		it('guards against things not in the literal', function() {
+			assertGuards(false)(guard, '3');
+			assertGuards(false)(guard, Symbol('test'));
+		});
+	})
 });

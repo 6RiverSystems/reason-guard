@@ -20,7 +20,8 @@
 		"preserveConstEnums": true,
 		"noImplicitReturns": true,
 		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true
+		"emitDecoratorMetadata": true,
+		"incremental": true
 	},
 	"exclude": [
 		"packages/*/node_modules/**",
