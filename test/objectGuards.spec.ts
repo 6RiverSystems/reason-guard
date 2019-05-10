@@ -1,5 +1,5 @@
-import { ReasonGuard, objectHasDefinition, isString, ChangedFields, checkerToGuard, andGuard, Checker, thenGuard } from '../src';
-import { assertGuardFailed, assertGuardConfirmed } from './util';
+import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isStringLiteral} from '../src';
+import {assertGuardFailed, assertGuardConfirmed} from './util';
 
 // NOTE: half of the testing here is just making sure this file compiles without errors
 
@@ -37,18 +37,6 @@ type ComplexDerived2 = {
 };
 
 const commonValues = [0, 'string', false, () => null, new Date(), null, undefined, []];
-// TODO: move this into primitiveGuards as a generally useful thing?
-function isStringLiteral<T extends string>(keys: {[P in T]: any}): ReasonGuard<unknown, T> {
-	// want this to be computed once when building the guard
-	const values = new Set(Object.getOwnPropertyNames(keys));
-	return thenGuard(isString, checkerToGuard((x: string): string => {
-		if (values.has(x)) {
-			return `is ${x}`;
-		} else {
-			throw new Error(`not in ${[...values.values()]}`);
-		}
-	}));
-};
 
 function testPropertyBadValues<FROM, MID extends FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
