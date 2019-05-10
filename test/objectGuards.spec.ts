@@ -27,14 +27,13 @@ type ComplexDerived = {
 	};
 	e: string;
 };
-type ComplexDerived2 = {
-	a: string;
-	b: {
-		c: 'foo' | 'bar';
-		d: string;
-	};
-	e: string;
+
+type OptionalBase = {
+	a?: string;
 };
+type OptionalNarrowed = {
+	a: string;
+}
 
 const commonValues = [0, 'string', false, () => null, new Date(), null, undefined, []];
 
@@ -87,6 +86,14 @@ describe(objectHasDefinition.name, function() {
 
 		testPropertyGoodValues(guard, {a: 'xyzzy'}, 'a', ['foo', 'bar']);
 		testPropertyBadValues(guard, {a: 'xyzzy'}, 'a', Number.NaN);
+	});
+
+	context('optionality narrowing', function() {
+		const guard = objectHasDefinition<OptionalBase, OptionalNarrowed>({
+			a: isString,
+		});
+		testPropertyGoodValues(guard, {}, 'a', ['foo', 'bar']);
+		testPropertyBadValues(guard, {}, 'a', 1);
 	});
 
 	context('complex derivation part 1', function() {
