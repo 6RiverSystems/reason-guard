@@ -11,13 +11,11 @@
     "David Durschlag <ddurschlag@6river.com>"
   ],
   "scripts": {
-    "start": "",
     "build": "tsc",
     "test": "NODE_ENV=test nyc mocha ${MOCHA_OPTS}",
-    "integration": "",
     "integration:single": "",
     "lint": "eslint --ext .ts .",
-    "clean": "",
+    "precommit": "npm run lint && npm run build && npm run test",
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "dependencies": {},
