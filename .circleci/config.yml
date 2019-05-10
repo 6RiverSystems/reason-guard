@@ -20,7 +20,7 @@ jobs:
             at: ./
       - run:
           name: Build
-          command: npm run build
+          command: npm run only:build
       - persist_to_workspace:
           root: ./
           paths:
@@ -48,10 +48,13 @@ jobs:
           at: ./
       - run:
           name: Unit Tests
-          command: npm run test-ci
+          command: npm run only:test
       - run:
           name: Coverage
-          command: npm run coverage
+          command: npm run only:lCov
+      - run:
+          name: Upload to codecov
+          command: npm run ci:codecov
       - store_test_results:
           path: ./reports
       - store_artifacts:
