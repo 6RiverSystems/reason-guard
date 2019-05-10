@@ -38,7 +38,6 @@ export const isLiterable = orGuard<unknown, Literable>(
 
 /**
  * Check that a value is a string literal type given the list of values.
- * CAUTION: this will NOT protect you from forgetting to list all the values of `T` in the parameter!
  *
  * @param keys Values to check
  */
