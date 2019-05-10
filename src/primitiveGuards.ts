@@ -50,9 +50,3 @@ export function isStringLiteral<T extends string, U extends T>(
 	// and so the fact that the typing here went weird should be moot
 	return thenGuard<unknown, unknown, ArrayLiteralCheck<T, typeof keys>>(isString, litGuard as any);
 };
-
-type _L = 'a' | 'b';
-const k = ['a'] as const;
-type _k = ArrayToLiteral<typeof k>;
-type _kc = LiteralCheck<_L, _k>;
-type _K = ArrayLiteralCheck<_L, typeof k>;
