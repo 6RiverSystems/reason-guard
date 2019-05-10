@@ -7,4 +7,4 @@ TypeScript library to build typeguards that explain their decisions
 
 # compatibility
 
-- `isStringLiteral` may not work unless your project uses at least version 3.4 of `typescript`
+- `isLiteral` may not work unless your project uses at least version 3.4 of `typescript`
