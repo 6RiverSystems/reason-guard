@@ -19,14 +19,20 @@ export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<Symbol>('symbol');
 export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');
 
-export function isStringLiteral<T extends string>(keys: {[P in T]: any}): ReasonGuard<unknown, T> {
+/**
+ * Check that a value is a string literal type given the list of values.
+ * CAUTION: this will NOT protect you from forgetting to list all the values of `T` in the parameter!
+ *
+ * @param keys Values to check
+ */
+export function isStringLiteral<T extends string>(...keys: T[]): ReasonGuard<unknown, T> {
 	// want this to be computed once when building the guard
-	const values = new Set(Object.getOwnPropertyNames(keys));
+	const values = new Set<string>(keys);
 	return thenGuard(isString, checkerToGuard((x: string): string => {
 		if (values.has(x)) {
 			return `is ${x}`;
 		} else {
-			throw new Error(`not in ${[...values.values()]}`);
+			throw new Error(`not in ${keys}`);
 		}
 	}));
 };

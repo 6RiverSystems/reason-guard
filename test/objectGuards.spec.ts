@@ -81,7 +81,7 @@ describe(objectHasDefinition.name, function() {
 
 	context('simple narrowing', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({
-			a: isStringLiteral({foo: true, bar: true}),
+			a: isStringLiteral('foo', 'bar'),
 		});
 
 		testPropertyGoodValues(guard, {a: 'xyzzy'}, 'a', ['foo', 'bar']);
