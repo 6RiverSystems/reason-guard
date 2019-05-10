@@ -14,7 +14,7 @@ export const hasProperty =
 		return `property ${p} is present`;
 	});
 
-const propertyHasType =
+export const propertyHasType =
 	<FROM, TO extends FROM>(itemGuard: ReasonGuard<FROM, TO>) =>
 		<T extends string | number | symbol>(p: T) =>
 			checkerToGuard<{ [P in T]: FROM }, { [P in T]: TO }>((input: { [P in T]: FROM }) => {

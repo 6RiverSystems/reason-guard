@@ -1,5 +1,5 @@
 import {ReasonGuard} from './ReasonGuard';
-import {hasProperty} from './propertyGuards';
+import {hasProperty, propertyHasType} from './propertyGuards';
 import {thenGuard} from './combinators';
 
 // NOTE: for this one you HAVE to have K as a parameter
@@ -17,7 +17,7 @@ type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 /**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
-type ChangedFields<FROM, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
+export type ChangedFields<FROM, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
 
 export type PropertyGuards<FROM extends Object, TO extends FROM> = {
 	[P in ChangedFields<FROM, TO>]: P extends keyof FROM ? ReasonGuard<FROM[P], TO[P]> : ReasonGuard<unknown, TO[P]>;
@@ -25,12 +25,12 @@ export type PropertyGuards<FROM extends Object, TO extends FROM> = {
 
 // this shouldn't be needed, but if the property voodoo goes wrong it might be
 // needs to be a factory functionfor the generic parameterization to work?
-export function identityGuard<T>(): ReasonGuard<T, T> {
-	return (_input, _output, confirmations): _input is T => {
-		confirmations.push('true');
-		return true;
-	};
-}
+// export function identityGuard<T>(): ReasonGuard<T, T> {
+// 	return (_input, _output, confirmations): _input is T => {
+// 		confirmations.push('true');
+// 		return true;
+// 	};
+// }
 
 // don't seem to need this
 // type PropertyGuarded<G> = G extends PropertyGuards<infer FROM, infer TO> ? ReasonGuard<FROM, TO> : never;
@@ -42,14 +42,19 @@ function checkDefinition<FROM extends Object, TO extends FROM>(
 	let anyFailed = false;
 
 	function checkProperty(k: ChangedFields<FROM, TO>) {
-		if (thenGuard(hasProperty(k), definition[k] as any)(input, output, confirmations)) {
+		if (thenGuard(
+			hasProperty(k),
+			// sadly this requires some `any`ing because the type system doesn't know which value `k` has
+			propertyHasType<unknown, any>(definition[k] as any)(k)
+		)(input, output, confirmations)) {
 			anyPassed = true;
 		} else {
-			anyFailed = false;
+			anyFailed = true;
 		}
 	}
 
 	// if k in keyof FROM, then hasProperty is redundant, but that's not something we can express here
+	// TODO: we could cache these property lists for performance
 	(Object.getOwnPropertyNames(definition) as (keyof typeof definition)[]).forEach(checkProperty);
 	// repeat!
 	(Object.getOwnPropertySymbols(definition) as (keyof typeof definition)[]).forEach(checkProperty);

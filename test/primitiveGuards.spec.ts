@@ -1,4 +1,3 @@
-import 'mocha';
 import {assertGuardConfirmed, assertGuardFailed} from './util';
 import * as primitive from '../src/primitiveGuards';
 

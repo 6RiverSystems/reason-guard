@@ -1,9 +1,9 @@
 import {assert} from 'chai';
-import { ReasonGuard, checkerToGuard } from '../src';
+import {ReasonGuard} from '../src';
 
-export function assertGuardConfirmed<FROM, TO extends FROM>(
+export function assertGuardConfirmed<FROM, MID extends FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
-	value: FROM,
+	value: FROM | MID,
 ) {
 	const es: Error[] = [];
 	const cs: string[] = [];
@@ -12,9 +12,9 @@ export function assertGuardConfirmed<FROM, TO extends FROM>(
 	assert.isAtLeast(cs.length, 1, 'no confirmation reason for successful guard');
 }
 
-export function assertGuardFailed<FROM, TO extends FROM>(
+export function assertGuardFailed<FROM, MID extends FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
-	value: FROM,
+	value: FROM | MID,
 ) {
 	const es: Error[] = [];
 	const cs: string[] = [];

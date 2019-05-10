@@ -1,9 +1,8 @@
 {
 	"cache": false,
 	"reporter": [
-		"lcov",
-		"html",
-		"text"
+		"text",
+		"html"
 	],
 	"extension": [
 		".ts"

@@ -48,7 +48,7 @@ jobs:
           at: ./
       - run:
           name: Unit Tests
-          command: npm test
+          command: npm run test-ci
       - run:
           name: Coverage
           command: npm run coverage

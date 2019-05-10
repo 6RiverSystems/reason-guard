@@ -1,4 +1,3 @@
-import 'mocha';
 import {assertGuardConfirmed, assertGuardFailed, falseGuard, trueGuard} from './util';
 import {orGuard, notGuard, andGuard, thenGuard} from '../src/combinators';
 
