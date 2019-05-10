@@ -1,4 +1,4 @@
-import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isStringLiteral} from '../src';
+import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isStringLiteral, ArrayLiteralCheck} from '../src';
 import {assertGuards} from './assertGuards';
 
 // NOTE: half of the testing here is just making sure this file compiles without errors
@@ -81,7 +81,7 @@ describe(objectHasDefinition.name, function() {
 
 	context('simple narrowing', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({
-			a: isStringLiteral('foo', 'bar'),
+			a: isStringLiteral(['foo', 'bar']),
 		});
 
 		testPropertyGoodValues(guard, {a: 'xyzzy'}, 'a', ['foo', 'bar']);
