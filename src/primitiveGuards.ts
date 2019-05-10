@@ -44,9 +44,10 @@ export function isStringLiteral<T extends string, U extends T>(
 			throw new Error(`not in ${keys}`);
 		}
 	});
-	// have to `as any` the literal guard here because `ArrayLiteralCheck<T, typeof keys>` might evaluate to `never`
-	// if it does, the caller is going to end up with a compiler error and so the fact that the typing here went weird
-	// should be a non-issue
+	// have to `unknown` the middle type and `as any` the literal guard here
+	// because `ArrayLiteralCheck<T, typeof keys>` might evaluate to `never`
+	// if it does, the caller is going to end up with a compiler error
+	// and so the fact that the typing here went weird should be moot
 	return thenGuard<unknown, unknown, ArrayLiteralCheck<T, typeof keys>>(isString, litGuard as any);
 };
 
