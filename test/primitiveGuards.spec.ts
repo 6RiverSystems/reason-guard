@@ -1,30 +1,30 @@
-import {assertGuardConfirmed, assertGuardFailed} from './util';
+import {assertGuards} from './assertGuards';
 import * as primitive from '../src/primitiveGuards';
 
 describe('primitive guards', function() {
 	context('isNumber', function() {
 		it('guards for numbers', function() {
-			assertGuardConfirmed(primitive.isNumber, 0);
-			assertGuardConfirmed(primitive.isNumber, 2.7);
-			assertGuardConfirmed(primitive.isNumber, -3);
+			assertGuards(true)(primitive.isNumber, 0);
+			assertGuards(true)(primitive.isNumber, 2.7);
+			assertGuards(true)(primitive.isNumber, -3);
 		});
 		it('guards against non-numbers', function() {
-			assertGuardFailed(primitive.isNumber, 'string');
-			assertGuardFailed(primitive.isNumber, undefined);
-			assertGuardFailed(primitive.isNumber, null);
-			assertGuardFailed(primitive.isNumber, {});
+			assertGuards(false)(primitive.isNumber, 'string');
+			assertGuards(false)(primitive.isNumber, undefined);
+			assertGuards(false)(primitive.isNumber, null);
+			assertGuards(false)(primitive.isNumber, {});
 		});
 	});
 	context('isString', function() {
 		it('guards for strings', function() {
-			assertGuardConfirmed(primitive.isString, '');
-			assertGuardConfirmed(primitive.isString, 'string');
+			assertGuards(true)(primitive.isString, '');
+			assertGuards(true)(primitive.isString, 'string');
 		});
 		it('guards against non-strings', function() {
-			assertGuardFailed(primitive.isString, 7);
-			assertGuardFailed(primitive.isString, undefined);
-			assertGuardFailed(primitive.isString, null);
-			assertGuardFailed(primitive.isString, {});
+			assertGuards(false)(primitive.isString, 7);
+			assertGuards(false)(primitive.isString, undefined);
+			assertGuards(false)(primitive.isString, null);
+			assertGuards(false)(primitive.isString, {});
 		});
 	});
 });

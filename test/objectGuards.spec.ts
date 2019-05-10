@@ -1,5 +1,5 @@
 import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isStringLiteral} from '../src';
-import {assertGuardFailed, assertGuardConfirmed} from './util';
+import {assertGuards} from './assertGuards';
 
 // NOTE: half of the testing here is just making sure this file compiles without errors
 
@@ -47,7 +47,7 @@ function testPropertyBadValues<FROM, MID extends FROM, TO extends FROM>(
 	for (let i = 0; i < values.length; ++i) {
 		if (i !== correctIndex) {
 			it(`fails if ${prop} has bad value ${values[i]}`, function() {
-				assertGuardFailed(guard, {...base, [prop]: values[i]});
+				assertGuards(false)(guard, {...base, [prop]: values[i]});
 			});
 		}
 	}
@@ -61,7 +61,7 @@ function testPropertyGoodValues<FROM, TO extends FROM>(
 ) {
 	for (let i = 0; i < values.length; ++i) {
 		it(`passes if ${prop} has good value ${values[i]}`, function() {
-			assertGuardConfirmed(guard, {...base, [prop]: values[i]});
+			assertGuards(true)(guard, {...base, [prop]: values[i]});
 		});
 	}
 }
@@ -73,7 +73,7 @@ describe(objectHasDefinition.name, function() {
 		});
 
 		it('detects missing extension property', function() {
-			assertGuardFailed(guard, {a: 'foo'});
+			assertGuards(false)(guard, {a: 'foo'});
 		});
 		testPropertyBadValues(guard, {a: 'foo'}, 'b', 1);
 		testPropertyGoodValues(guard, {a: 'foo'}, 'b', ['foo', 'xyzzy']);
@@ -107,26 +107,26 @@ describe(objectHasDefinition.name, function() {
 		// TODO: we want to assert on _why_ most of these tests pass/fail
 
 		it('detects missing new property', function() {
-			assertGuardFailed(guard, {a: 'foo', b: {c: 'foo', d: 'foo'}});
+			assertGuards(false)(guard, {a: 'foo', b: {c: 'foo', d: 'foo'}});
 		});
 		// bad values for new property
 		testPropertyBadValues(guard, {a: 'foo', b: {c: 'foo', d: 'foo'}}, 'e', 1);
 		it('detects missing nested property', function() {
-			assertGuardFailed(guard, {a: 'foo', b: {c: 'foo'}, e: 'foo'});
+			assertGuards(false)(guard, {a: 'foo', b: {c: 'foo'}, e: 'foo'});
 		});
 		// bad values for nested property
 		testPropertyBadValues(guard, {a: 'foo', b: {c: 'foo'}, e: 'foo'}, 'b', 1,
 			commonValues.map((v) => ({c: 'foo', d: v})));
 
 		it('accepts good values', function() {
-			assertGuardConfirmed(guard, {a: 'foo', b: {c: 'foo', d: 'foo'}, e: 'foo'});
+			assertGuards(true)(guard, {a: 'foo', b: {c: 'foo', d: 'foo'}, e: 'foo'});
 		});
 	});
 
 	context('weird corner cases', function() {
 		it('detects no-op guards that made it past the type checker', function() {
 			const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({} as any);
-			assertGuardFailed(guard, {a: 'foo'});
+			assertGuards(false)(guard, {a: 'foo'});
 		});
 	});
 });

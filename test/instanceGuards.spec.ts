@@ -1,29 +1,29 @@
 import 'mocha';
-import {assertGuardConfirmed, assertGuardFailed} from './util';
+import {assertGuards} from './assertGuards';
 import {isArray, isDate} from '../src/instanceGuards'
 
 describe('instance guards', function() {
 	context('isArray', function() {
 		it('guards for arrays', function() {
-			assertGuardConfirmed(isArray, []);
+			assertGuards(true)(isArray, []);
 		});
 		it('guards against non-arrays', function() {
-			assertGuardFailed(isArray, undefined);
-			assertGuardFailed(isArray, null);
-			assertGuardFailed(isArray, 3);
-			assertGuardFailed(isArray, {});
+			assertGuards(false)(isArray, undefined);
+			assertGuards(false)(isArray, null);
+			assertGuards(false)(isArray, 3);
+			assertGuards(false)(isArray, {});
 		});
 	});
 	context('isDate', function() {
 		it('guards for dates', function() {
-			assertGuardConfirmed(isDate, new Date());
+			assertGuards(true)(isDate, new Date());
 		});
 		it('guards against non-dates', function() {
-			assertGuardFailed(isDate, undefined);
-			assertGuardFailed(isDate, null);
-			assertGuardFailed(isDate, 3);
-			assertGuardFailed(isDate, {});
-			assertGuardFailed(isDate, new Date().toString());
+			assertGuards(false)(isDate, undefined);
+			assertGuards(false)(isDate, null);
+			assertGuards(false)(isDate, 3);
+			assertGuards(false)(isDate, {});
+			assertGuards(false)(isDate, new Date().toString());
 		});
 	});
 });
