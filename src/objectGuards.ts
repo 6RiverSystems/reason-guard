@@ -2,26 +2,35 @@ import {ReasonGuard} from './ReasonGuard';
 import {hasProperty} from './propertyGuards';
 import {thenGuard} from './combinators';
 
-type DifferentFields<FROM extends Object, TO extends FROM, K extends keyof TO = keyof TO> = {
-	[P in K]: P extends keyof FROM ? (
-		// this reverse extends check doesn't work if you just look at T[P],
-		// only if you put it in an object
-		{[PP in P]: FROM[PP]} extends {[PP in P]: TO[PP]} ? never : P
-	) : P;
-}[K]
+// NOTE: for this one you HAVE to have K as a parameter
+// if you move `keyof FROM` into the mapping, the result of this type is `any`
+/**
+ * Fields in `FROM` that are narrowed in `TO`
+ */
+type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {
+	[P in K]: FROM[P] extends TO[P] ? never : P;
+}[K];
+/**
+ * Fields in `TO` that don't exist in `FROM`
+ */
+type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
+/**
+ * Fields in `TO` that are different (type or presence) in `FROM`
+ */
+type ChangedFields<FROM, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
 
 export type PropertyGuards<FROM extends Object, TO extends FROM> = {
-	[P in DifferentFields<FROM, TO>]: P extends keyof FROM ? ReasonGuard<FROM[P], TO[P]> : ReasonGuard<unknown, TO[P]>;
+	[P in ChangedFields<FROM, TO>]: P extends keyof FROM ? ReasonGuard<FROM[P], TO[P]> : ReasonGuard<unknown, TO[P]>;
 };
 
-// TODO: there's got to be a better way to write this than as an iife
-// thankfully it's not needed if the exclusion voodoo above works
-// export const identityGuard = (<(<T>() => ReasonGuard<T, T>)>(
-// 	() => (_input, _output, confirmations) => {
-// 		confirmations.push('true');
-// 		return true;
-// 	}
-// ))();
+// this shouldn't be needed, but if the property voodoo goes wrong it might be
+// needs to be a factory functionfor the generic parameterization to work?
+export function identityGuard<T>(): ReasonGuard<T, T> {
+	return (_input, _output, confirmations): _input is T => {
+		confirmations.push('true');
+		return true;
+	};
+}
 
 // don't seem to need this
 // type PropertyGuarded<G> = G extends PropertyGuards<infer FROM, infer TO> ? ReasonGuard<FROM, TO> : never;
@@ -32,7 +41,7 @@ function checkDefinition<FROM extends Object, TO extends FROM>(
 	let anyPassed = false;
 	let anyFailed = false;
 
-	function checkProperty(k: DifferentFields<FROM, TO>) {
+	function checkProperty(k: ChangedFields<FROM, TO>) {
 		if (thenGuard(hasProperty(k), definition[k] as any)(input, output, confirmations)) {
 			anyPassed = true;
 		} else {
