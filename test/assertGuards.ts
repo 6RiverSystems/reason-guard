@@ -1,7 +1,9 @@
 import {assert} from 'chai';
 import { ReasonGuard, checkerToGuard } from '../src';
 
-export function assertGuardConfirmed<FROM, TO extends FROM>(
+type assertGuard = <FROM, TO extends FROM>(guard: ReasonGuard<FROM, TO>, value: FROM) => void;
+
+function assertGuardConfirmed<FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
 	value: FROM,
 ) {
@@ -12,7 +14,7 @@ export function assertGuardConfirmed<FROM, TO extends FROM>(
 	assert.isAtLeast(cs.length, 1, 'no confirmation reason for successful guard');
 }
 
-export function assertGuardFailed<FROM, TO extends FROM>(
+function assertGuardFailed<FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
 	value: FROM,
 ) {
@@ -22,15 +24,5 @@ export function assertGuardFailed<FROM, TO extends FROM>(
 	assert.isAtLeast(es.length, 1, 'no error reason for failed guard');
 }
 
-export const trueGuard: ReasonGuard<unknown, unknown> = (input, _errs, confs): input is unknown => {
-	confs.push('true');
-	return true;
-};
-export const falseGuard: ReasonGuard<unknown, never> = (input, errs, _confs): input is never => {
-	try {
-		throw new Error('false');
-	} catch (err){
-		errs.push(err);
-		return false;
-	}
-}
+export const assertGuards: (result: boolean) => assertGuard =
+	(result: boolean) => result ? assertGuardConfirmed : assertGuardFailed;

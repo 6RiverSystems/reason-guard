@@ -1,5 +1,5 @@
 import 'mocha';
-import {assertGuardConfirmed, assertGuardFailed} from './util';
+import {assertGuards} from './assertGuards';
 import * as property from '../src/propertyGuards';
 import { ReasonGuard } from '../src';
 
@@ -34,17 +34,17 @@ describe('property guards', function() {
 
 function testGuardMaker(guardMaker: <T extends string | number | symbol>(p: T) => ReasonGuard<unknown, unknown>, correctIndex: number) {
 	it('guards for correct properties', function () {
-		assertGuardConfirmed(guardMaker('prop'), { prop: values[correctIndex] });
+		assertGuards(true)(guardMaker('prop'), { prop: values[correctIndex] });
 	});
 	it('guards against missing properties', function () {
-		assertGuardFailed(guardMaker('prop'), {});
-		assertGuardFailed(guardMaker('prop'), 3);
-		assertGuardFailed(guardMaker('prop'), undefined);
+		assertGuards(false)(guardMaker('prop'), {});
+		assertGuards(false)(guardMaker('prop'), 3);
+		assertGuards(false)(guardMaker('prop'), undefined);
 	});
 	it('guards against wrong properties', function () {
 		for (let i = 0; i < values.length; i++) {
 			if (i !== correctIndex) {
-				assertGuardFailed(guardMaker('prop'), { prop: values[i] });
+				assertGuards(false)(guardMaker('prop'), { prop: values[i] });
 			}
 		}
 	});
