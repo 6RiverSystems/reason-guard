@@ -6,5 +6,7 @@ TypeScript library to build typeguards that explain their decisions
 - A false reasonguard will provide at least one error about what failed.
 
 # compatibility
-
 - `isLiteral` may not work unless your project uses at least version 3.4 of `typescript`
+
+# examples
+- See the [example guard tests](test/examples)
