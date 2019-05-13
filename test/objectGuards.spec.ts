@@ -1,4 +1,4 @@
-import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isLiteral, ArrayLiteralCheck} from '../src';
+import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isLiteral} from '../src';
 import {assertGuards} from './assertGuards';
 
 // NOTE: half of the testing here is just making sure this file compiles without errors

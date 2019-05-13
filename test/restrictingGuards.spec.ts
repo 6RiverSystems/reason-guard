@@ -15,7 +15,7 @@ describe('primitive guards', function() {
 			assertGuards(false)(guard, '3');
 			assertGuards(false)(guard, Symbol('test'));
 		});
-	})
+	});
 	context('numberIsInteger', function() {
 		const guard = restricting.numberIsInteger;
 		it('guards for integers', function() {
@@ -28,7 +28,7 @@ describe('primitive guards', function() {
 			assertGuards(false)(guard, -0.1);
 			assertGuards(false)(guard, Number.EPSILON);
 		});
-	})
+	});
 	context('>', function() {
 		const guard = restricting.numberIsGreaterThan(1);
 		it('guards for greater quantities', function() {
@@ -86,8 +86,8 @@ describe('primitive guards', function() {
 			assertGuards(false)(guard, 1 + Number.EPSILON);
 		});
 	});
-	context('open integer range', function() {
-		const guard = restricting.openIntegerRange(-1, 1);
+	context('integralInterval', function() {
+		const guard = restricting.integralInterval('[', -1)(1, ']');
 		it('guards for integers in the range', function() {
 			assertGuards(true)(guard, -1);
 			assertGuards(true)(guard, 0);
@@ -97,6 +97,18 @@ describe('primitive guards', function() {
 			assertGuards(false)(guard, Number.EPSILON);
 			assertGuards(false)(guard, -2);
 			assertGuards(false)(guard, 2);
-		})
-	})
+		});
+	});
+	context('interval', function() {
+		const guard = restricting.interval('(', -1)(1, ')');
+		it('guards for numbers in the range', function() {
+			assertGuards(true)(guard, -1 + Number.EPSILON);
+			assertGuards(true)(guard, 0);
+			assertGuards(true)(guard, 1 - Number.EPSILON);
+		});
+		it('guards against numbers outside the range', function() {
+			assertGuards(false)(guard, -1);
+			assertGuards(false)(guard, 1);
+		});
+	});
 });

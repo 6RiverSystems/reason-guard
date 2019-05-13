@@ -1,29 +1,28 @@
 import {assertGuards} from '../assertGuards';
-import { objectHasDefinition, isLiteral } from "../../src";
-import { openIntegerRange } from "../../src/restrictingGuards";
+import {objectHasDefinition, isLiteral, integralInterval} from '../../src';
 
-const minSec = openIntegerRange(0, 60);
+const minSec = integralInterval('[', 0)(60, ']');
 
-const degLng = openIntegerRange(0, 180);
-const degLat = openIntegerRange(0, 90);
+const degLng = integralInterval('[', 0)(180, ']');
+const degLat = integralInterval('[', 0)(90, ']');
 
 const lat = objectHasDefinition({
 	degrees: degLat,
 	minutes: minSec,
 	seconds: minSec,
-	heading: isLiteral(['N', 'S'])
+	heading: isLiteral(['N', 'S']),
 });
 
 const lng = objectHasDefinition({
 	degrees: degLng,
 	minutes: minSec,
 	seconds: minSec,
-	heading: isLiteral(['E', 'W'])
+	heading: isLiteral(['E', 'W']),
 });
 
 const geoCoords = objectHasDefinition({
 	lat,
-	lng
+	lng,
 });
 
 describe('geographic coordinates', function() {
@@ -32,13 +31,13 @@ describe('geographic coordinates', function() {
 			degrees: 30,
 			minutes: 12,
 			seconds: 15,
-			heading: 'N'
+			heading: 'N',
 		},
 		lng: {
 			degrees: 150,
 			minutes: 12,
 			seconds: 15,
-			heading: 'E'
+			heading: 'E',
 		},
 	};
 	it('accepts good coords', function() {
@@ -61,4 +60,4 @@ describe('geographic coordinates', function() {
 		test.lng.heading = 'e';
 		assertGuards(false)(geoCoords, test);
 	});
-})
+});

@@ -1,5 +1,5 @@
 import {checkerToGuard} from './Checker';
-import {thenGuard, andGuard, orGuard} from './combinators';
+import {andGuard, orGuard} from './combinators';
 import {ReasonGuard} from './ReasonGuard';
 import {isNumber, isSymbol, isString} from './primitiveGuards';
 
@@ -26,30 +26,77 @@ export const numberIsGreaterThan = (minimum: number) =>
 		return `${input} > ${minimum}`;
 	});
 
-export const numberIsAtMost = (maximum: number) =>
+export const numberIs = (value: number) =>
 	checkerToGuard<number, number>((input: number) => {
-		if (input > maximum) {
-			throw new Error(`${input} > ${maximum}`);
+		if (input !== value) {
+			throw new Error(`${input}  ${value}`);
 		}
-		return `${input} <= ${maximum}`;
+		return `${input} = ${value}`;
 	});
+export const numberIsAtMost = (maximum: number) =>
+	orGuard(
+		numberIsLessThan(maximum),
+		numberIs(maximum)
+	);
 
 export const numberIsAtLeast = (minimum: number) =>
-	checkerToGuard<number, number>((input: number) => {
-		if (input < minimum) {
-			throw new Error(`${input} < ${minimum}`);
-		}
-		return `${input} >= ${minimum}`;
-	});
+	orGuard(
+		numberIsGreaterThan(minimum),
+		numberIs(minimum)
+	);
 
-export const openIntegerRange =
-	(minimum: number, maximum: number) =>
-		thenGuard(
-			numberIsInteger,
-			andGuard(numberIsAtLeast(minimum), numberIsAtMost(maximum))
-		);
+export const numberIsLessThanOrEqual = numberIsAtMost;
+export const numberIsGreaterThanOrEqual = numberIsAtLeast;
 
-		type Literable = string | symbol | number;
+const OPEN = Symbol('open');
+const CLOSED = Symbol('closed');
+
+const bottomSymbols = {
+	'>': OPEN,
+	'open': OPEN,
+	'(': OPEN,
+	'gt': OPEN,
+	'GT': OPEN,
+	'>=': CLOSED,
+	'closed': CLOSED,
+	'[': CLOSED,
+	'gte': CLOSED,
+	'GTE': CLOSED,
+};
+
+const topSymbols = {
+	'<': OPEN,
+	'open': OPEN,
+	')': OPEN,
+	'lt': OPEN,
+	'LT': OPEN,
+	'<=': CLOSED,
+	'closed': CLOSED,
+	']': CLOSED,
+	'lte': CLOSED,
+	'LTE': CLOSED,
+};
+
+export type Bottom = keyof typeof bottomSymbols;
+export type Top = keyof typeof topSymbols;
+
+export const interval =
+		(bottomType: Bottom, bottomValue: number) =>
+			(topValue: number, topType: Top) =>
+				andGuard(
+					bottomSymbols[bottomType] === OPEN ? numberIsGreaterThan(bottomValue) : numberIsAtLeast(bottomValue),
+					topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue)
+				);
+
+export const integralInterval =
+	(bottomType: Bottom, bottomValue: number) =>
+		(topValue: number, topType: Top) =>
+			andGuard(
+				interval(bottomType, bottomValue)(topValue, topType),
+				numberIsInteger
+			);
+
+type Literable = string | symbol | number;
 
 type ArrayToLiteral<T> = T extends ReadonlyArray<infer U> ? U : never;
 type BoolMap<T extends Literable> = {[P in T]: boolean};
