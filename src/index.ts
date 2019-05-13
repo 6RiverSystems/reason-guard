@@ -6,3 +6,4 @@ export * from './primitiveGuards';
 export * from './propertyGuards';
 export * from './objectGuards';
 export * from './ReasonGuard';
+export * from './restrictingGuards';
