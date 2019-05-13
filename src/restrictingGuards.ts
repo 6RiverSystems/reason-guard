@@ -1,5 +1,5 @@
 import {checkerToGuard} from './Checker';
-import {andGuard, orGuard} from './combinators';
+import {andGuard, orGuard, thenGuard} from './combinators';
 import {ReasonGuard} from './ReasonGuard';
 import {isNumber, isSymbol, isString} from './primitiveGuards';
 
@@ -83,15 +83,18 @@ export type Top = keyof typeof topSymbols;
 export const interval =
 		(bottomType: Bottom, bottomValue: number) =>
 			(topValue: number, topType: Top) =>
-				andGuard(
-					bottomSymbols[bottomType] === OPEN ? numberIsGreaterThan(bottomValue) : numberIsAtLeast(bottomValue),
-					topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue)
+				thenGuard(
+					isNumber,
+					andGuard(
+						bottomSymbols[bottomType] === OPEN ? numberIsGreaterThan(bottomValue) : numberIsAtLeast(bottomValue),
+						topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue)
+					)
 				);
 
 export const integralInterval =
 	(bottomType: Bottom, bottomValue: number) =>
 		(topValue: number, topType: Top) =>
-			andGuard(
+			thenGuard(
 				interval(bottomType, bottomValue)(topValue, topType),
 				numberIsInteger
 			);

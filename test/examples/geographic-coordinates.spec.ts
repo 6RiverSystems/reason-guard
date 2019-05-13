@@ -1,26 +1,36 @@
 import {assertGuards} from '../assertGuards';
-import {objectHasDefinition, isLiteral, integralInterval} from '../../src';
+import {objectHasDefinition, isLiteral, integralInterval, thenGuard, isObject} from '../../src';
 
 const minSec = integralInterval('[', 0)(60, ']');
 
 const degLng = integralInterval('[', 0)(180, ']');
 const degLat = integralInterval('[', 0)(90, ']');
 
-const lat = objectHasDefinition({
-	degrees: degLat,
-	minutes: minSec,
-	seconds: minSec,
-	heading: isLiteral(['N', 'S']),
-});
+type Lat = {degrees: number, minutes: number, seconds: number, heading: 'N'|'S'};
+type Lng = {degrees: number, minutes: number, seconds: number, heading: 'E'|'W'};
+type GeoCoords = {lat: Lat, lng: Lng};
 
-const lng = objectHasDefinition({
-	degrees: degLng,
-	minutes: minSec,
-	seconds: minSec,
-	heading: isLiteral(['E', 'W']),
-});
+const lat = thenGuard(
+	isObject,
+	objectHasDefinition<{}, Lat>({
+		degrees: degLat,
+		minutes: minSec,
+		seconds: minSec,
+		heading: isLiteral(['N', 'S']),
+	})
+);
 
-const geoCoords = objectHasDefinition({
+const lng = thenGuard(
+	isObject,
+	objectHasDefinition<{}, Lng>({
+		degrees: degLng,
+		minutes: minSec,
+		seconds: minSec,
+		heading: isLiteral(['E', 'W']),
+	})
+);
+
+const geoCoords = objectHasDefinition<{}, GeoCoords>({
 	lat,
 	lng,
 });

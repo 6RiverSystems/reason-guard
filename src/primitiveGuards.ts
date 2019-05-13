@@ -16,3 +16,4 @@ export const isBoolean = getPrimitiveTypeCheck<boolean>('boolean');
 export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<symbol>('symbol');
 export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');
+export const isObject = getPrimitiveTypeCheck<Object>('object');
