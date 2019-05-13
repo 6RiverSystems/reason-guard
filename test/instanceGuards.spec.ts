@@ -1,6 +1,6 @@
 import 'mocha';
 import {assertGuards} from './assertGuards';
-import {isArray, isDate} from '../src/instanceGuards'
+import {isArray, isDate} from '../src/instanceGuards';
 
 describe('instance guards', function() {
 	context('isArray', function() {
