@@ -128,7 +128,7 @@ export function isLiteral<T extends Literable, U extends T>(
 	// want this to be computed once when building the guard
 	const values = new Set<Literable>(keys);
 
-	return (input, es, cs): input is ArrayLiteralCheck<T, typeof keys> => {
+	return (input, es = [], cs = []): input is ArrayLiteralCheck<T, typeof keys> => {
 		try {
 			if (!literableGuard(input, es, cs)) {
 				return false;
