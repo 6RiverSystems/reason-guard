@@ -19,7 +19,7 @@ ReasonGuard<FROM, LEFT&RIGHT>)>((left, right) => {
 export const notGuard =
 	<(<FROM, TO extends FROM>(inner: ReasonGuard<FROM, TO>) =>
 		ReasonGuard<FROM, Exclude<FROM, TO>>)>((inner) => {
-			return (input, errors, confirmations) => {
+			return (input, errors = [], confirmations = []) => {
 				try {
 					const innerErrors: Error[] = [];
 					const innerConfs: string[] = [];
@@ -39,7 +39,7 @@ export const notGuard =
 export const orGuard =
 	<(<FROM, TO extends FROM>(left: ReasonGuard<FROM, TO>, right: ReasonGuard<FROM, TO>) =>
 	ReasonGuard<FROM, TO>)>((left, right) => {
-		return (input, output, confirmations) => {
+		return (input, output = [], confirmations = []) => {
 			try {
 				const innerErrors: Error[] = [];
 				const innerConfs: string[] = [];

@@ -1,4 +1,3 @@
-import 'mocha';
 import {assertGuards} from './assertGuards';
 import {isArray, isDate} from '../src/instanceGuards';
 

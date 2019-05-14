@@ -75,5 +75,6 @@ function checkDefinition<FROM extends Object, TO extends FROM>(
 
 export const objectHasDefinition =
 	<(<FROM extends Object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
-		(definition) => (input, output, confirmations) => checkDefinition(definition, input, output, confirmations)
+		(definition) =>
+			(input, output = [], confirmations = []) => checkDefinition(definition, input, output, confirmations)
 	);

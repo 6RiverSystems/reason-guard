@@ -1,10 +1,10 @@
 import {ReasonGuard} from './ReasonGuard';
 
-const trueGuard: ReasonGuard<unknown, unknown> = (input, _errs, confs): input is unknown => {
+const trueGuard: ReasonGuard<unknown, unknown> = (input, _errs, confs = []): input is unknown => {
 	confs.push('true');
 	return true;
 };
-const falseGuard: ReasonGuard<unknown, never> = (input, errs): input is never => {
+const falseGuard: ReasonGuard<unknown, never> = (input, errs = []): input is never => {
 	try {
 		throw new Error('false');
 	} catch (err) {
