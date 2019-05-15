@@ -1,5 +1,5 @@
 import {checkerToGuard} from './Checker';
-import {andGuard, orGuard, thenGuard} from './combinators';
+import {andGuard, orGuard, thenGuard} from './Combinators';
 import {ReasonGuard} from './ReasonGuard';
 import {isNumber, isSymbol, isString} from './primitiveGuards';
 
@@ -108,8 +108,8 @@ type LiteralCheck<T1 extends Literable, T2 extends Literable, BAD = unknown> =
 export type ArrayLiteralCheck<T extends Literable, TT extends ReadonlyArray<Literable>> =
 	LiteralCheck<T, ArrayToLiteral<TT>>;
 
-export const isLiterable = orGuard<unknown, Literable>(
-	orGuard<unknown, string|symbol>(
+export const isLiterable = orGuard(
+	orGuard(
 		isString,
 		isSymbol
 	),

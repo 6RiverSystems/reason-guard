@@ -1,6 +1,6 @@
 export * from './arrayHasType';
 export * from './Checker';
-export * from './combinators';
+export * from './Combinators';
 export * from './instanceGuards';
 export * from './primitiveGuards';
 export * from './propertyGuards';

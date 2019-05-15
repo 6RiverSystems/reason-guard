@@ -1,5 +1,5 @@
 import {assertGuards} from './assertGuards';
-import {orGuard, notGuard, andGuard, thenGuard} from '../src/combinators';
+import {orGuard, notGuard, andGuard, thenGuard} from '../src/Combinators';
 import {constantGuards} from '../src/constantGuards';
 import {ReasonGuard} from '../src';
 
