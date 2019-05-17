@@ -28,7 +28,7 @@ describe('property guards', function() {
 		testGuardMaker(property.hasUndefinedProperty, 6);
 	});
 	context('array property', function() {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 		testGuardMaker(property.hasArrayProperty((x): x is unknown => true), 7);
 	});
 });

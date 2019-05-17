@@ -1,8 +1,15 @@
 import {ReasonGuard} from '../ReasonGuard';
 import {andGuard} from './thenGuard';
 import {notGuard} from './notGuard';
+import {buildNegatable} from '../NegatableGuard';
 
-export const orGuard = getOrGuard;
+export const orGuard = <FROM, LEFT extends FROM, RIGHT extends FROM>(
+	left: ReasonGuard<FROM, LEFT>,
+	right: ReasonGuard<FROM, RIGHT>
+) => buildNegatable(
+		() => getRawOr(left, right),
+		() => getRawNegatedOr(left, right)
+	);
 
 function getRawOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,
@@ -35,18 +42,4 @@ function getRawNegatedOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 	right: ReasonGuard<FROM, RIGHT>
 ): ReasonGuard<FROM, FROM> {
 	return andGuard(notGuard(left), notGuard(right));
-}
-
-function getOrGuard<FROM, LEFT extends FROM, RIGHT extends FROM>(
-	left: ReasonGuard<FROM, LEFT>,
-	right: ReasonGuard<FROM, RIGHT>
-) {
-	return Object.assign(getRawOr(left, right), {negate: () => getNegatedOrGuard(left, right)});
-}
-
-function getNegatedOrGuard<FROM, LEFT extends FROM, RIGHT extends FROM>(
-	left: ReasonGuard<FROM, LEFT>,
-	right: ReasonGuard<FROM, RIGHT>
-) {
-	return Object.assign(getRawNegatedOr(left, right), {negate: () => getOrGuard(left, right)});
 }

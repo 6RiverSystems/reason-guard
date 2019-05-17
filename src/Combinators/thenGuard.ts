@@ -1,8 +1,15 @@
 import {ReasonGuard} from '../ReasonGuard';
 import {orGuard} from './orGuard';
 import {notGuard} from './notGuard';
+import {buildNegatable} from '../NegatableGuard';
 
-export const thenGuard = getThenGuard;
+export const thenGuard = <FROM, MID extends FROM, TO extends MID>(
+	left: ReasonGuard<FROM, MID>,
+	right: ReasonGuard<MID, TO>
+) => buildNegatable(
+		() => getRawThen(left, right),
+		() => getRawNegatedThen(left, right)
+	);
 export const andGuard = thenGuard;
 
 function getRawThen<FROM, MID extends FROM, TO extends MID>(
@@ -22,18 +29,4 @@ function getRawNegatedThen<FROM, MID extends FROM, TO extends MID>(
 		getRawThen(left, notGuard<MID, MID>(right)),
 		notGuard(left)
 	);
-}
-
-function getThenGuard<FROM, MID extends FROM, TO extends MID>(
-	left: ReasonGuard<FROM, MID>,
-	right: ReasonGuard<MID, TO>
-) {
-	return Object.assign(getRawThen(left, right), {negate: () => getNegatedThenGuard(left, right)});
-}
-
-function getNegatedThenGuard<FROM, MID extends FROM, TO extends MID>(
-	left: ReasonGuard<FROM, MID>,
-	right: ReasonGuard<MID, TO>
-) {
-	return Object.assign(getRawNegatedThen(left, right), {negate: () => getThenGuard(left, right)});
 }

@@ -7,3 +7,5 @@ export * from './propertyGuards';
 export * from './objectGuards';
 export * from './ReasonGuard';
 export * from './restrictingGuards';
+export * from './constantGuards';
+export * from './NegatableGuard';
