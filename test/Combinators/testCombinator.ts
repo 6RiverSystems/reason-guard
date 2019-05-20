@@ -4,7 +4,7 @@ import {assertGuards} from '../assertGuards';
 export type Tautology = ReasonGuard<unknown, unknown>;
 export const abbrev = (b: boolean) => b ? 'T' : 'F';
 
-export function testCombinator1(
+export function testOneArgCombinator(
 	char: string, result: [boolean, boolean, boolean, boolean],
 	combinator: (inner: Tautology) => Tautology
 ) {
@@ -32,7 +32,7 @@ export function testCombinator1(
 	}
 }
 
-export function testCombinator2(
+export function testTwoArgCombinator(
 	char: string,
 	result: [boolean, boolean, boolean, boolean],
 	combinator: (left: Tautology, right: Tautology) => Tautology

@@ -1,6 +1,6 @@
-import {testCombinator2} from './testCombinator';
+import {testTwoArgCombinator} from './testCombinator';
 import {orGuard} from '../../src';
 
 describe('or', function() {
-	testCombinator2('|', [false, true, true, true], orGuard);
+	testTwoArgCombinator('|', [false, true, true, true], orGuard);
 });
