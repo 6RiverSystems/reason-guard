@@ -16,12 +16,14 @@ export const buildNegatable =
 	(input: () => ReasonGuard<FROM, TO>, negated: () => ReasonGuard<FROM, N>) => {
 		const negatableGuard: NegatableGuard<FROM, TO, N> = Object.assign(
 			cloneGuard(input()),
-			{negate: () => Object.assign(
-				cloneGuard(negated()),
-				{negate: () => {
-					return negatableGuard;
-				}}
-			)}
+			{
+				negate: () => Object.assign(
+					cloneGuard(negated()),
+					{
+						negate: () => negatableGuard,
+					}
+				),
+			}
 		);
 		return negatableGuard;
 	};
