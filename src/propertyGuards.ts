@@ -1,6 +1,6 @@
 import {ReasonGuard} from './ReasonGuard';
 import {checkerToGuard} from './Checker';
-import {thenGuard} from './combinators';
+import {thenGuard} from './Combinators';
 import {isNumber, isString, isBoolean, isFunction} from './primitiveGuards';
 import {isDate, isArray} from './instanceGuards';
 import {arrayHasType} from './arrayHasType';
@@ -27,18 +27,20 @@ export const propertyHasType =
 			});
 
 const propertyIsUndefined =
-	<T extends string | number | symbol>(p: T) => checkerToGuard<unknown, { [P in T]?: undefined }>((input: unknown) => {
-		const x: any = input;
-		if (x[p] !== undefined) throw new Error(`property ${p} is not undefined`);
-		return `property ${p} is undefined`;
-	});
+	<T extends string | number | symbol>(p: T) =>
+		checkerToGuard<{[P in T]: unknown}, {[P in T]: undefined}>((input: unknown) => {
+			const x: any = input;
+			if (x[p] !== undefined) throw new Error(`property ${p} is not undefined`);
+			return `property ${p} is undefined`;
+		});
 
 const propertyIsNull =
-	<T extends string | number | symbol>(p: T) => checkerToGuard<unknown, { [P in T]: null }>((input: unknown) => {
-		const x: any = input;
-		if (x[p] !== null) throw new Error(`property ${p} is not null`);
-		return `property ${p} is null`;
-	});
+	<T extends string | number | symbol>(p: T) =>
+		checkerToGuard<{[P in T]: unknown}, { [P in T]: null }>((input: unknown) => {
+			const x: any = input;
+			if (x[p] !== null) throw new Error(`property ${p} is not null`);
+			return `property ${p} is null`;
+		});
 
 export const hasNumberProperty = <T extends string | number | symbol>(p: T) =>
 	thenGuard(hasProperty(p), propertyHasType(isNumber)(p));

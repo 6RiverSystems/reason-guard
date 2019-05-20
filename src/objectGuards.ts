@@ -1,6 +1,6 @@
 import {ReasonGuard} from './ReasonGuard';
 import {hasProperty, propertyHasType} from './propertyGuards';
-import {thenGuard} from './combinators';
+import {thenGuard} from './Combinators';
 
 // NOTE: for this one you HAVE to have K as a parameter
 // if you move `keyof FROM` into the mapping, the result of this type is `any`
