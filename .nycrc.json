@@ -7,5 +7,10 @@
 	"extension": [
 		".ts"
 	],
+	"exclude": [
+		"**/*.d.ts",
+		"coverage/**",
+		"test/**"
+	],
 	"all": true
 }
