@@ -28,7 +28,7 @@ export const propertyHasType =
 
 const propertyIsUndefined =
 	<T extends string | number | symbol>(p: T) =>
-		checkerToGuard<{[P in T]: unknown}, {[P in T]: undefined}>((input: unknown) => {
+		checkerToGuard<Record<T, unknown>, Record<T, undefined>>((input: unknown) => {
 			const x: any = input;
 			if (x[p] !== undefined) throw new Error(`property ${p} is not undefined`);
 			return `property ${p} is undefined`;
@@ -36,7 +36,7 @@ const propertyIsUndefined =
 
 const propertyIsNull =
 	<T extends string | number | symbol>(p: T) =>
-		checkerToGuard<{[P in T]: unknown}, { [P in T]: null }>((input: unknown) => {
+		checkerToGuard<Record<T, unknown>, Record<T, null>>((input: unknown) => {
 			const x: any = input;
 			if (x[p] !== null) throw new Error(`property ${p} is not null`);
 			return `property ${p} is null`;
