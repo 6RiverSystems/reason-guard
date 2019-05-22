@@ -17,3 +17,15 @@ export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<symbol>('symbol');
 export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');
 export const isObject = getPrimitiveTypeCheck<Object>('object');
+export const isUndefined = checkerToGuard<unknown, undefined>((input) => {
+	if (input === undefined) {
+		return `undefined`;
+	}
+	throw new Error('not undefined');
+});
+export const isNull = checkerToGuard<unknown, null>((input) => {
+	if (input === null) {
+		return `null`;
+	}
+	throw new Error('not null');
+});

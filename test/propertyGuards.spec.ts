@@ -4,6 +4,14 @@ import * as property from '../src/propertyGuards';
 import {ReasonGuard} from '../src';
 
 const values = [0, 'string', false, () => null, new Date(), null, undefined, []];
+class TestBase {
+	public get prop1() {
+		return undefined;
+	}
+}
+class Test extends TestBase {
+	public prop2: undefined = undefined;
+}
 
 describe('property guards', function() {
 	context('number property', function() {
@@ -30,6 +38,14 @@ describe('property guards', function() {
 	context('array property', function() {
 		// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 		testGuardMaker(property.hasArrayProperty((x): x is unknown => true), 7);
+	});
+	context('has property', function() {
+		it('guards for present properties', function() {
+			assertGuards(true)(property.hasProperty('test'), {test: 3});
+			assertGuards(true)(property.hasProperty('test'), {test: undefined});
+			assertGuards(true)(property.hasProperty('prop1'), new Test());
+			assertGuards(true)(property.hasProperty('prop2'), new Test());
+		});
 	});
 });
 

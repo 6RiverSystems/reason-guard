@@ -1,6 +1,4 @@
 import {ReasonGuard} from './ReasonGuard';
-import {hasProperty, propertyHasType} from './propertyGuards';
-import {thenGuard} from './Combinators';
 
 // NOTE: for this one you HAVE to have K as a parameter
 // if you move `keyof FROM` into the mapping, the result of this type is `any`
@@ -20,7 +18,9 @@ type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 export type ChangedFields<FROM, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
 
 export type PropertyGuards<FROM extends Object, TO extends FROM> = {
-	[P in ChangedFields<FROM, TO>]: P extends keyof FROM ? ReasonGuard<FROM[P], TO[P]> : ReasonGuard<unknown, TO[P]>;
+	[P in ChangedFields<FROM, TO>]: P extends keyof FROM
+	? ReasonGuard<Pick<FROM, P>, Pick<TO, P>>
+	: ReasonGuard<Record<P, unknown>, Pick<TO, P>>;
 };
 
 // this shouldn't be needed, but if the property voodoo goes wrong it might be
@@ -42,11 +42,7 @@ function checkDefinition<FROM extends Object, TO extends FROM>(
 	let anyFailed = false;
 
 	function checkProperty(k: ChangedFields<FROM, TO>) {
-		if (thenGuard(
-			hasProperty(k),
-			// sadly this requires some `any`ing because the type system doesn't know which value `k` has
-			propertyHasType<unknown, any>(definition[k] as any)(k)
-		)(input, output, confirmations)) {
+		if (definition[k](input, output, confirmations)) {
 			anyPassed = true;
 		} else {
 			anyFailed = true;
