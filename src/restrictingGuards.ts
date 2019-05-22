@@ -102,9 +102,9 @@ export const integralInterval =
 type Literable = string | symbol | number;
 
 type ArrayToLiteral<T> = T extends ReadonlyArray<infer U> ? U : never;
-type BoolMap<T extends Literable> = {[P in T]: boolean};
+type BoolMap<T extends Literable> = Record<T, boolean>;
 type LiteralCheck<T1 extends Literable, T2 extends Literable, BAD = unknown> =
-	BoolMap<T1> extends BoolMap<T2> ? (BoolMap<T2> extends BoolMap<T1> ? T1 : BAD) : BAD;
+	BoolMap<T1> extends BoolMap<T2> ? (BoolMap<T2> extends BoolMap<T1> ? T2 : BAD) : BAD;
 export type ArrayLiteralCheck<T extends Literable, TT extends ReadonlyArray<Literable>> =
 	LiteralCheck<T, ArrayToLiteral<TT>>;
 

@@ -1,7 +1,7 @@
 import {assertGuards} from './assertGuards';
 import * as restricting from '../src/restrictingGuards';
 
-describe('primitive guards', function() {
+describe('restricting guards', function() {
 	context('isLiteral', function() {
 		const testSymbol = Symbol('test');
 		const literalList = ['a', 3, testSymbol];

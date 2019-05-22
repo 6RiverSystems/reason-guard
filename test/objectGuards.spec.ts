@@ -1,4 +1,17 @@
-import {ReasonGuard, objectHasDefinition, isString, ChangedFields, isLiteral} from '../src';
+import {
+	isUndefined,
+	ReasonGuard,
+	objectHasDefinition,
+	isString,
+	ChangedFields,
+	isLiteral,
+	thenGuard,
+	isObject,
+	orGuard,
+	requiredProperty,
+	optionalProperty,
+	narrowedProperty,
+} from '../src';
 import {assertGuards} from './assertGuards';
 
 // NOTE: half of the testing here is just making sure this file compiles without errors
@@ -69,7 +82,7 @@ function testPropertyGoodValues<FROM, TO extends FROM>(
 describe(objectHasDefinition.name, function() {
 	context('simple extension', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
-			b: isString,
+			b: requiredProperty('b', isString),
 		});
 
 		it('detects missing extension property', function() {
@@ -81,16 +94,24 @@ describe(objectHasDefinition.name, function() {
 
 	context('simple narrowing', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({
-			a: isLiteral(['foo', 'bar']),
+			a: requiredProperty('a', isLiteral(['foo', 'bar'])),
 		});
 
 		testPropertyGoodValues(guard, {a: 'xyzzy'}, 'a', ['foo', 'bar']);
 		testPropertyBadValues(guard, {a: 'xyzzy'}, 'a', Number.NaN);
 	});
 
+	context('optionality accepting', function() {
+		const guard = thenGuard(isObject, objectHasDefinition<object, OptionalBase>({
+			a: optionalProperty('a', orGuard(isString, isUndefined)),
+		}));
+		testPropertyGoodValues(guard, {}, 'a', ['foo', undefined]);
+		assertGuards(true)(guard, {});
+	});
+
 	context('optionality narrowing', function() {
 		const guard = objectHasDefinition<OptionalBase, OptionalNarrowed>({
-			a: isString,
+			a: requiredProperty('a', isString),
 		});
 		testPropertyGoodValues(guard, {}, 'a', ['foo', 'bar']);
 		testPropertyBadValues(guard, {}, 'a', 1);
@@ -98,10 +119,10 @@ describe(objectHasDefinition.name, function() {
 
 	context('complex derivation part 1', function() {
 		const guard = objectHasDefinition<ComplexBase, ComplexDerived>({
-			b: objectHasDefinition({
-				d: isString,
-			}),
-			e: isString,
+			b: narrowedProperty<ComplexBase, 'b', ComplexDerived>('b', objectHasDefinition({
+				d: requiredProperty('d', isString),
+			})),
+			e: requiredProperty('e', isString),
 		});
 
 		// TODO: we want to assert on _why_ most of these tests pass/fail

@@ -27,4 +27,28 @@ describe('primitive guards', function() {
 			assertGuards(false)(primitive.isString, {});
 		});
 	});
+	context('isUndefined', function() {
+		it('guards for undefined', function() {
+			assertGuards(true)(primitive.isUndefined, undefined);
+			assertGuards(true)(primitive.isUndefined, ({} as any).testProperty);
+		});
+		it('guards against anything else', function() {
+			assertGuards(false)(primitive.isUndefined, 7);
+			assertGuards(false)(primitive.isUndefined, '');
+			assertGuards(false)(primitive.isUndefined, null);
+			assertGuards(false)(primitive.isUndefined, {});
+		});
+	});
+	context('isNull', function() {
+		it('guards for null', function() {
+			assertGuards(true)(primitive.isNull, null);
+		});
+		it('guards against anything else', function() {
+			assertGuards(false)(primitive.isNull, ({} as any).testProperty);
+			assertGuards(false)(primitive.isNull, 7);
+			assertGuards(false)(primitive.isNull, '');
+			assertGuards(false)(primitive.isNull, undefined);
+			assertGuards(false)(primitive.isNull, {});
+		});
+	});
 });

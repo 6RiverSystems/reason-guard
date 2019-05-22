@@ -6,15 +6,15 @@ export const notGuard =
 	(inner: ReasonGuard<FROM, TO>|NegatableGuard<FROM, TO, N>) =>
 		isNegatableGuard(inner)
 			? inner.negate()
-			: buildNegatable(
+			: buildNegatable<FROM, N, TO>(
 				() => getRawNot(inner),
 				() => inner
 			);
 
-function getRawNot<FROM, TO extends FROM>(
+function getRawNot<FROM, TO extends FROM, N extends FROM>(
 	inner: ReasonGuard<FROM, TO>
-): ReasonGuard<FROM, FROM> {
-	return (input: FROM, errors: Error[] = [], confirmations: string[] = []): input is FROM => {
+): ReasonGuard<FROM, N> {
+	return (input: FROM, errors: Error[] = [], confirmations: string[] = []): input is N => {
 		try {
 			const innerErrors: Error[] = [];
 			const innerConfs: string[] = [];
