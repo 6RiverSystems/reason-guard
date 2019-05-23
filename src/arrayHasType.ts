@@ -2,6 +2,7 @@ import {ReasonGuard} from './ReasonGuard';
 import {checkerToGuard} from './Checker';
 import {thenGuard} from './Combinators';
 import {isArray} from './instanceGuards';
+import {NegatableGuard} from './NegatableGuard';
 
 export const arrayHasType =
 	<TO>(itemGuard: ReasonGuard<unknown, TO>) =>
@@ -17,7 +18,7 @@ export const arrayHasType =
 		});
 
 export const isArrayOfType =
-<TO>(itemGuard: ReasonGuard<unknown, TO>) =>
+<TO>(itemGuard: ReasonGuard<unknown, TO>): NegatableGuard<unknown, TO[], unknown> =>
 		thenGuard(
 			isArray,
 			arrayHasType(itemGuard)

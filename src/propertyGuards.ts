@@ -4,6 +4,7 @@ import {thenGuard, orGuard, notGuard} from './Combinators';
 import {isNumber, isString, isBoolean, isFunction} from './primitiveGuards';
 import {isDate} from './instanceGuards';
 import {isArrayOfType} from './arrayHasType';
+import {NegatableGuard} from './NegatableGuard';
 
 export const hasProperty =
 	<T extends string | number | symbol>
@@ -16,7 +17,8 @@ export const hasProperty =
 	});
 
 export const propertyHasType =
-	<FROMT, T extends string|number|symbol, TO extends Record<T, FROMT>>(itemGuard: ReasonGuard<FROMT, TO[T]>, p: T) =>
+	<FROMT, T extends string|number|symbol, TOT extends FROMT, TO extends Record<T, TOT>>
+	(itemGuard: ReasonGuard<FROMT, TOT>, p: T) =>
 		checkerToGuard<Record<T, FROMT>, Pick<TO, T>>((input) => {
 			const innerErrors: Error[] = [];
 			const innerConfs: string[] = [];
@@ -49,8 +51,8 @@ export const narrowedProperty =
 
 export const requiredProperty =
 <TO, T extends keyof TO>
-	(p: T, g: ReasonGuard<unknown, TO[T]>) =>
-		thenGuard(hasProperty(p), propertyHasType(g, p));
+	(p: T, g: ReasonGuard<unknown, TO[T]>): NegatableGuard<unknown, Pick<TO, T>, unknown> =>
+		thenGuard(hasProperty(p), propertyHasType<unknown, T, TO[T], TO>(g, p));
 
 export const optionalProperty =
 <TO, T extends keyof TO>
@@ -60,21 +62,29 @@ export const optionalProperty =
 			requiredProperty(p, g)
 		);
 
-export const hasNumberProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyHasType(isNumber, p));
-export const hasStringProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyHasType(isString, p));
-export const hasBooleanProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyHasType(isBoolean, p));
-export const hasFunctionProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyHasType(isFunction, p));
-export const hasDateProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyHasType(isDate, p));
-export const hasUndefinedProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyIsUndefined(p));
-export const hasNullProperty = <T extends string | number | symbol>(p: T) =>
-	thenGuard(hasProperty(p), propertyIsNull(p));
-export const hasArrayProperty = <T extends string | number | symbol, TO>
+export const hasNumberProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, number>, unknown> =>
+		thenGuard(hasProperty(p), propertyHasType(isNumber, p));
+export const hasStringProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, string>, unknown> =>
+		thenGuard(hasProperty(p), propertyHasType(isString, p));
+export const hasBooleanProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, boolean>, unknown> =>
+		thenGuard(hasProperty(p), propertyHasType(isBoolean, p));
+export const hasFunctionProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, Function>, unknown> =>
+		thenGuard(hasProperty(p), propertyHasType(isFunction, p));
+export const hasDateProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, Date>, unknown> =>
+		thenGuard(hasProperty(p), propertyHasType(isDate, p));
+export const hasUndefinedProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, undefined>, unknown> =>
+		thenGuard(hasProperty(p), propertyIsUndefined(p));
+export const hasNullProperty =
+<T extends string | number | symbol>(p: T): NegatableGuard<unknown, Record<T, null>, unknown> =>
+		thenGuard(hasProperty(p), propertyIsNull(p));
+export const hasArrayProperty =
+<T extends string | number | symbol, TO>
 	(itemGuard: ReasonGuard<unknown, TO>) =>
-		(p: T) =>
+		(p: T): NegatableGuard<unknown, Record<T, TO[]>, unknown> =>
 			thenGuard(hasProperty(p), propertyHasType(isArrayOfType(itemGuard), p));
