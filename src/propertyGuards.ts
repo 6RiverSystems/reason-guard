@@ -50,7 +50,7 @@ export const narrowedProperty =
 export const requiredProperty =
 <TO, T extends keyof TO>
 	(p: T, g: ReasonGuard<unknown, TO[T]>) =>
-		thenGuard<unknown, Record<T, unknown>, Pick<TO, T>>(hasProperty(p), propertyHasType(g, p));
+		thenGuard(hasProperty(p), propertyHasType(g, p));
 
 export const optionalProperty =
 <TO, T extends keyof TO>
