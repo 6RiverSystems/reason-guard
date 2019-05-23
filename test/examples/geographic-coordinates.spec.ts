@@ -9,7 +9,7 @@ type Lat = {degrees: number, minutes: number, seconds: number, heading: 'N'|'S'}
 type Lng = {degrees: number, minutes: number, seconds: number, heading: 'E'|'W'};
 type GeoCoords = {lat: Lat, lng: Lng};
 
-const lat = thenGuard<unknown, {}, Lat>(
+const lat = thenGuard(
 	isObject,
 	objectHasDefinition<{}, Lat>({
 		degrees: requiredProperty('degrees', degLat),
@@ -19,7 +19,7 @@ const lat = thenGuard<unknown, {}, Lat>(
 	})
 );
 
-const lng = thenGuard<unknown, {}, Lng>(
+const lng = thenGuard(
 	isObject,
 	objectHasDefinition<{}, Lng>({
 		degrees: requiredProperty('degrees', degLng),
