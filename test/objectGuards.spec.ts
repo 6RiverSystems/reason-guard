@@ -104,7 +104,7 @@ describe(objectHasDefinition.name, function() {
 		const guard = isObjectWithDefinition<OptionalBase>({
 			a: optionalProperty('a', orGuard(isString, isUndefined)),
 		});
-		testPropertyGoodValues<unknown, OptionalBase>(guard, {}, 'a', ['foo', undefined]);
+		testPropertyGoodValues(guard, {}, 'a', ['foo', undefined]);
 		assertGuards(true)(guard, {});
 	});
 
