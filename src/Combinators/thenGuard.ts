@@ -10,7 +10,6 @@ export const thenGuard = <FROM, MID extends FROM, TO extends MID>(
 		() => getRawThen(left, right),
 		() => getRawNegatedThen(left, right)
 	);
-export const andGuard = thenGuard;
 
 function getRawThen<FROM, MID extends FROM, TO extends MID>(
 	left: ReasonGuard<FROM, MID>,

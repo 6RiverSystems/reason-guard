@@ -1,5 +1,7 @@
 import {ReasonGuard} from './ReasonGuard';
 import {checkerToGuard} from './Checker';
+import {thenGuard} from './Combinators';
+import {isArray} from './instanceGuards';
 
 export const arrayHasType =
 	<TO>(itemGuard: ReasonGuard<unknown, TO>) =>
@@ -13,3 +15,10 @@ export const arrayHasType =
 			}
 			return `is array of expected type`;
 		});
+
+export const isArrayOfType =
+<TO>(itemGuard: ReasonGuard<unknown, TO>) =>
+		thenGuard(
+			isArray,
+			arrayHasType(itemGuard)
+		);

@@ -2,8 +2,8 @@ import {ReasonGuard} from './ReasonGuard';
 import {checkerToGuard} from './Checker';
 import {thenGuard, orGuard, notGuard} from './Combinators';
 import {isNumber, isString, isBoolean, isFunction} from './primitiveGuards';
-import {isDate, isArray} from './instanceGuards';
-import {arrayHasType} from './arrayHasType';
+import {isDate} from './instanceGuards';
+import {isArrayOfType} from './arrayHasType';
 
 export const hasProperty =
 	<T extends string | number | symbol>
@@ -74,11 +74,7 @@ export const hasUndefinedProperty = <T extends string | number | symbol>(p: T) =
 	thenGuard(hasProperty(p), propertyIsUndefined(p));
 export const hasNullProperty = <T extends string | number | symbol>(p: T) =>
 	thenGuard(hasProperty(p), propertyIsNull(p));
-
-export const hasArrayProperty =
-	<TO>(itemGuard: ReasonGuard<unknown, TO>) =>
-		<T extends string | number | symbol>(p: T) =>
-			thenGuard(
-				thenGuard(hasProperty(p), propertyHasType<unknown, T, Record<T, unknown[]>>(isArray, p)),
-				propertyHasType(arrayHasType(itemGuard), p)
-			);
+export const hasArrayProperty = <T extends string | number | symbol, TO>
+	(itemGuard: ReasonGuard<unknown, TO>) =>
+		(p: T) =>
+			thenGuard(hasProperty(p), propertyHasType(isArrayOfType(itemGuard), p));

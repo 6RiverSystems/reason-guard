@@ -1,4 +1,6 @@
 import {ReasonGuard} from './ReasonGuard';
+import {thenGuard} from './Combinators';
+import {isObject} from './primitiveGuards';
 
 // NOTE: for this one you HAVE to have K as a parameter
 // if you move `keyof FROM` into the mapping, the result of this type is `any`
@@ -73,4 +75,10 @@ export const objectHasDefinition =
 	<(<FROM extends Object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
 		(definition) =>
 			(input, output = [], confirmations = []) => checkDefinition(definition, input, output, confirmations)
+	);
+
+export const isObjectWithDefinition =
+	<TO extends object>(definition: PropertyGuards<object, TO>) => thenGuard<unknown, object, TO>(
+		isObject,
+		objectHasDefinition(definition)
 	);

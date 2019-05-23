@@ -5,12 +5,11 @@ import {
 	isString,
 	ChangedFields,
 	isLiteral,
-	thenGuard,
-	isObject,
 	orGuard,
 	requiredProperty,
 	optionalProperty,
 	narrowedProperty,
+	isObjectWithDefinition,
 } from '../src';
 import {assertGuards} from './assertGuards';
 
@@ -102,9 +101,9 @@ describe(objectHasDefinition.name, function() {
 	});
 
 	context('optionality accepting', function() {
-		const guard = thenGuard(isObject, objectHasDefinition<object, OptionalBase>({
+		const guard = isObjectWithDefinition<OptionalBase>({
 			a: optionalProperty('a', orGuard(isString, isUndefined)),
-		}));
+		});
 		testPropertyGoodValues(guard, {}, 'a', ['foo', undefined]);
 		assertGuards(true)(guard, {});
 	});

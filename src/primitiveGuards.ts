@@ -16,7 +16,7 @@ export const isBoolean = getPrimitiveTypeCheck<boolean>('boolean');
 export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<symbol>('symbol');
 export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');
-export const isObject = getPrimitiveTypeCheck<Object>('object');
+export const isObject = getPrimitiveTypeCheck<object>('object');
 export const isUndefined = checkerToGuard<unknown, undefined>((input) => {
 	if (input === undefined) {
 		return `undefined`;
