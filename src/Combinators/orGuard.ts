@@ -1,7 +1,7 @@
 import {ReasonGuard} from '../ReasonGuard';
-import {andGuard} from './thenGuard';
 import {notGuard} from './notGuard';
 import {buildNegatable} from '../NegatableGuard';
+import {andGuard} from './andGuard';
 
 export const orGuard = <FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,

@@ -1,5 +1,5 @@
 import {testOneArgCombinator, Tautology, testTwoArgCombinator} from './testCombinator';
-import {notGuard, orGuard, andGuard} from '../../src';
+import {notGuard, orGuard, andGuard, thenGuard} from '../../src';
 
 describe('not', function() {
 	context('pure not', function() {
@@ -10,7 +10,11 @@ describe('not', function() {
 		testTwoArgCombinator('!|', [true, false, false, false], notOr);
 	});
 	context('not-and', function() {
-		const notAnd = (left: Tautology, right: Tautology) => notGuard(andGuard<unknown, unknown, unknown>(left, right));
+		const notAnd = (left: Tautology, right: Tautology) => notGuard(andGuard(left, right));
+		testTwoArgCombinator('!&', [true, true, true, false], notAnd);
+	});
+	context('not-then', function() {
+		const notAnd = (left: Tautology, right: Tautology) => notGuard(thenGuard(left, right));
 		testTwoArgCombinator('!&', [true, true, true, false], notAnd);
 	});
 });
