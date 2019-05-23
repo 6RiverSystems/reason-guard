@@ -10,7 +10,7 @@ describe('not', function() {
 		testTwoArgCombinator('!|', [true, false, false, false], notOr);
 	});
 	context('not-and', function() {
-		const notAnd = (left: Tautology, right: Tautology) => notGuard(andGuard(left, right));
+		const notAnd = (left: Tautology, right: Tautology) => notGuard(andGuard<unknown, unknown, unknown>(left, right));
 		testTwoArgCombinator('!&', [true, true, true, false], notAnd);
 	});
 });

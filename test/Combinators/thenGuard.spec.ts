@@ -1,9 +1,8 @@
-import {testTwoArgCombinator} from './testCombinator';
-import {thenGuard, ReasonGuard} from '../../src';
+import {testTwoArgCombinator, Tautology} from './testCombinator';
+import {thenGuard} from '../../src';
 
 describe('then/and', function() {
-	testTwoArgCombinator(',', [false, false, false, true], thenGuard);
+	const tuautologicalThen: (left: Tautology, right: Tautology) => Tautology =
+		(left, right) => thenGuard<unknown, unknown, unknown>(left, right);
+	testTwoArgCombinator(',', [false, false, false, true], tuautologicalThen);
 });
-
-const x: ReasonGuard<unknown, unknown> = undefined as any;
-const y = thenGuard(x, x);
