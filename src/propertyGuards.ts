@@ -1,7 +1,7 @@
 import {ReasonGuard} from './ReasonGuard';
 import {checkerToGuard} from './Checker';
 import {thenGuard, orGuard, notGuard} from './Combinators';
-import {isNumber, isString, isBoolean, isFunction} from './primitiveGuards';
+import {isNumber, isString, isBoolean, isFunction, isUndefined} from './primitiveGuards';
 import {isDate} from './instanceGuards';
 import {isArrayOfType} from './arrayHasType';
 import {NegatableGuard} from './NegatableGuard';
@@ -54,8 +54,31 @@ export const requiredProperty =
 	(p: T, g: ReasonGuard<unknown, TO[T]>): NegatableGuard<unknown, Pick<TO, T>, unknown> =>
 		thenGuard(hasProperty(p), propertyHasType<unknown, T, TO[T], TO>(g, p));
 
+export type OptionalProps<T> = {
+	[Key in keyof T]:
+	Pick<T, Key> extends Partial<Pick<T, Key>>
+	? Partial<Pick<T, Key>> extends Pick<T, Key>
+		? Key
+		: never
+	: never
+};
+
+export type OptionalKeys<T> =
+		OptionalProps<T>[keyof T] & (string|number|symbol);
+
 export const optionalProperty =
-<TO, T extends keyof TO>
+<TO, T extends OptionalKeys<TO>>
+	(p: T, g: ReasonGuard<unknown, TO[T]>) =>
+		orGuard(
+			notGuard(hasProperty(p)),
+			orGuard(
+				requiredProperty<Record<T, undefined>, T>(p, isUndefined),
+				requiredProperty(p, g)
+			)
+		);
+
+export const strictOptionalProperty =
+<TO, T extends OptionalKeys<TO>>
 	(p: T, g: ReasonGuard<unknown, TO[T]>) =>
 		orGuard(
 			notGuard(hasProperty(p)),

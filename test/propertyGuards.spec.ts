@@ -1,7 +1,7 @@
 import 'mocha';
 import {assertGuards} from './assertGuards';
 import * as property from '../src/propertyGuards';
-import {ReasonGuard} from '../src';
+import {ReasonGuard, isString, notGuard, isObjectWithDefinition} from '../src';
 
 const values = [0, 'string', false, () => null, new Date(), null, undefined, []];
 class TestBase {
@@ -14,6 +14,55 @@ class Test extends TestBase {
 }
 
 describe('property guards', function() {
+	context('required property', function() {
+		it('works normally', function() {
+			const guard = property.requiredProperty<{foo: string}, 'foo'>('foo', isString);
+			assertGuards(true)(guard, {foo: 'foo'});
+			assertGuards(false)(guard, {});
+			assertGuards(false)(guard, {foo: 3});
+		});
+		it('works negated', function() {
+			const guard = notGuard(property.requiredProperty<{foo: string}, 'foo'>('foo', isString));
+			assertGuards(!true)(guard, {foo: 'foo'});
+			assertGuards(!false)(guard, {});
+			assertGuards(!false)(guard, {foo: 3});
+		});
+	});
+	context('optional property', function() {
+		it('works normally', function() {
+			const guard = property.optionalProperty<{foo?: string}, 'foo'>('foo', isString);
+			assertGuards(true)(guard, {foo: 'foo'});
+			assertGuards(true)(guard, {});
+			assertGuards(false)(guard, {foo: 3});
+		});
+		it('works negated', function() {
+			const guard = notGuard(property.optionalProperty<{foo?: string}, 'foo'>('foo', isString));
+			assertGuards(!true)(guard, {foo: 'foo'});
+			assertGuards(!true)(guard, {});
+			assertGuards(!false)(guard, {foo: 3});
+		});
+		it('works nested', function() {
+			const guard = isObjectWithDefinition<{foo?: {bar?: string}}>({
+				foo: property.optionalProperty('foo', isObjectWithDefinition<{bar?: string}>({
+					bar: property.optionalProperty('bar', isString),
+				})),
+			});
+			const negaGuard = notGuard(guard);
+			assertGuards(true)(guard, {foo: {bar: 'test'}});
+			assertGuards(true)(guard, {foo: {}});
+			assertGuards(true)(guard, {});
+			assertGuards(false)(guard, {foo: {bar: null}});
+			assertGuards(false)(guard, {foo: null});
+			assertGuards(false)(guard, null);
+
+			assertGuards(!true)(negaGuard, {foo: {bar: 'test'}});
+			assertGuards(!true)(negaGuard, {foo: {}});
+			assertGuards(!true)(negaGuard, {});
+			assertGuards(!false)(negaGuard, {foo: {bar: null}});
+			assertGuards(!false)(negaGuard, {foo: null});
+			assertGuards(!false)(negaGuard, null);
+		});
+	});
 	context('number property', function() {
 		testGuardMaker(property.hasNumberProperty, 0);
 	});

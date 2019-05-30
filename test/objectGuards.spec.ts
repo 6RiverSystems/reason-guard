@@ -10,6 +10,7 @@ import {
 	optionalProperty,
 	narrowedProperty,
 	isObjectWithDefinition,
+	strictOptionalProperty,
 } from '../src';
 import {assertGuards} from './assertGuards';
 
@@ -77,6 +78,49 @@ function testPropertyGoodValues<FROM, TO extends FROM>(
 		});
 	}
 }
+
+describe(isObjectWithDefinition.name, function() {
+	context('double-optional nesting', function() {
+		const guard = isObjectWithDefinition<{a?: {b?: string}}>({
+			a: optionalProperty('a', isObjectWithDefinition<{b?: string}>({
+				b: optionalProperty('b', isString),
+			})),
+		});
+		const strictGuard = isObjectWithDefinition<{a?: {b?: string}}>({
+			a: strictOptionalProperty('a', isObjectWithDefinition<{b?: string}>({
+				b: strictOptionalProperty('b', isString),
+			})),
+		});
+
+		it('guards for proper values', function() {
+			assertGuards(true)(guard, {a: {b: ''}});
+			assertGuards(true)(guard, {a: {}});
+			assertGuards(true)(guard, {});
+
+			assertGuards(true)(strictGuard, {a: {b: ''}});
+			assertGuards(true)(strictGuard, {a: {}});
+			assertGuards(true)(strictGuard, {});
+		});
+
+		it('differentiates strictness for explicit undefined', function() {
+			assertGuards(true)(guard, {a: {b: undefined}});
+			assertGuards(true)(guard, {a: undefined});
+
+			assertGuards(false)(strictGuard, {a: {b: undefined}});
+			assertGuards(false)(strictGuard, {a: undefined});
+		});
+
+		it('guards against improper values', function() {
+			assertGuards(false)(guard, {a: {b: null}});
+			assertGuards(false)(guard, {a: null});
+			assertGuards(false)(guard, null);
+
+			assertGuards(false)(strictGuard, {a: {b: null}});
+			assertGuards(false)(strictGuard, {a: null});
+			assertGuards(false)(strictGuard, null);
+		});
+	});
+});
 
 describe(objectHasDefinition.name, function() {
 	context('simple extension', function() {
