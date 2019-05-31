@@ -16,13 +16,13 @@ class Test extends TestBase {
 describe('property guards', function() {
 	context('required property', function() {
 		it('works normally', function() {
-			const guard = property.requiredProperty<{foo: string}, 'foo'>('foo', isString);
+			const guard = property.requiredProperty('foo', isString);
 			assertGuards(true)(guard, {foo: 'foo'});
 			assertGuards(false)(guard, {});
 			assertGuards(false)(guard, {foo: 3});
 		});
 		it('works negated', function() {
-			const guard = notGuard(property.requiredProperty<{foo: string}, 'foo'>('foo', isString));
+			const guard = notGuard(property.requiredProperty('foo', isString));
 			assertGuards(!true)(guard, {foo: 'foo'});
 			assertGuards(!false)(guard, {});
 			assertGuards(!false)(guard, {foo: 3});
@@ -30,13 +30,13 @@ describe('property guards', function() {
 	});
 	context('optional property', function() {
 		it('works normally', function() {
-			const guard = property.optionalProperty<{foo?: string}, 'foo'>('foo', isString);
+			const guard = property.optionalProperty('foo', isString);
 			assertGuards(true)(guard, {foo: 'foo'});
 			assertGuards(true)(guard, {});
 			assertGuards(false)(guard, {foo: 3});
 		});
 		it('works negated', function() {
-			const guard = notGuard(property.optionalProperty<{foo?: string}, 'foo'>('foo', isString));
+			const guard = notGuard(property.optionalProperty('foo', isString));
 			assertGuards(!true)(guard, {foo: 'foo'});
 			assertGuards(!true)(guard, {});
 			assertGuards(!false)(guard, {foo: 3});

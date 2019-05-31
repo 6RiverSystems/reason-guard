@@ -162,7 +162,7 @@ describe(objectHasDefinition.name, function() {
 
 	context('complex derivation part 1', function() {
 		const guard = objectHasDefinition<ComplexBase, ComplexDerived>({
-			b: narrowedProperty<ComplexBase, 'b', ComplexDerived>('b', objectHasDefinition({
+			b: narrowedProperty('b', objectHasDefinition({
 				d: requiredProperty('d', isString),
 			})),
 			e: requiredProperty('e', isString),
