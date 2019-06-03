@@ -1,21 +1,29 @@
-import {NegatableGuard} from '../NegatableGuard';
 import {orGuard} from './orGuard';
 import {andGuard} from './andGuard';
 import {thenGuard} from './thenGuard';
 import {notGuard} from './notGuard';
+import {ReasonGuard} from '../ReasonGuard';
 
-export class FluentGuardBuilder<FROM, TO extends FROM, N extends FROM> {
-	constructor(public readonly guard: NegatableGuard<FROM, TO, N>) {}
-	public or(guard: NegatableGuard<FROM, TO, N>) {
-		return orGuard(this.guard, guard);
+export class FluentGuardBuilder<FROM, TO extends FROM> {
+	constructor(private readonly _guard: ReasonGuard<FROM, TO>) {
+		// eslint-disable-next-line no-console
+		console.log('new guard');
 	}
-	public and(guard: NegatableGuard<FROM, TO, N>) {
-		return andGuard(this.guard, guard);
+	public get guard() {
+		// eslint-disable-next-line no-console
+		console.log('getting guard');
+		return this._guard;
 	}
-	public then(guard: NegatableGuard<FROM, TO, N>) {
-		return thenGuard(this.guard, guard);
+	public or(guard: ReasonGuard<FROM, TO>) {
+		return new FluentGuardBuilder(orGuard(this.guard, guard));
+	}
+	public and(guard: ReasonGuard<FROM, TO>) {
+		return new FluentGuardBuilder(andGuard(this.guard, guard));
+	}
+	public then(guard: ReasonGuard<FROM, TO>) {
+		return new FluentGuardBuilder(thenGuard(this.guard, guard));
 	}
 	public not() {
-		return notGuard(this.guard);
+		return new FluentGuardBuilder(notGuard(this.guard));
 	}
 }
