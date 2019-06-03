@@ -9,11 +9,11 @@ import {isObject} from './primitiveGuards';
  */
 type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {
 	[P in K]: FROM[P] extends TO[P] ? never : P;
-}[K] & keyof TO;
+}[K];
 /**
  * Fields in `TO` that don't exist in `FROM`
  */
-type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM> & keyof TO;
+type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 
 export type NarrowedGuards<FROM extends object, TO extends FROM> = {
 	[P in NarrowedFields<FROM, TO>]: (p: P) => ReasonGuard<Pick<FROM, P>, Pick<TO, P>>
@@ -28,7 +28,7 @@ export type PropertyGuards<FROM extends object, TO extends FROM> = NarrowedGuard
 /**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
-export type ChangedFields<FROM extends object, TO extends FROM> = keyof PropertyGuards<FROM, TO> & keyof TO;
+export type ChangedFields<FROM extends object, TO extends FROM> = keyof PropertyGuards<FROM, TO>;
 
 function checkDefinition<FROM extends object, TO extends FROM>(
 	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[],
