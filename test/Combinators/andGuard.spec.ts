@@ -4,7 +4,7 @@ import {assert} from 'chai';
 
 describe('and', function() {
 	it('behaves as && at runtime', function() {
-		testTwoArgCombinator(',', [false, false, false, true], andGuard);
+		testTwoArgCombinator('&', [false, false, false, true], andGuard);
 	});
 	it('can add up objects', function() {
 		type A = {a: string};
