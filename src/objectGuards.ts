@@ -20,10 +20,17 @@ type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
  */
 export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO>|ExtendedFields<FROM, TO>;
 
-type Beta<FROM extends object, TO extends FROM, P extends ChangedFields<FROM, TO>> =
+/**
+ * A function from property name to guard on that property
+ */
+type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends ChangedFields<FROM, TO>> =
 	(p: P) => ReasonGuard<Pick<FROM, P&keyof FROM>, Pick<TO, P>>;
+
+/**
+ *	A mapping from property names to factories for guards on those properties
+ */
 export type PropertyGuards<FROM extends object, TO extends FROM> = {
-	[P in ChangedFields<FROM, TO>]: Beta<FROM, TO, P>;
+	[P in ChangedFields<FROM, TO>]: PropertyGuardFactory<FROM, TO, P>;
 }
 
 function checkDefinition<FROM extends object, TO extends FROM>(
