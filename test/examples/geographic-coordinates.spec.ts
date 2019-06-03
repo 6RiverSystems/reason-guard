@@ -12,26 +12,26 @@ type GeoCoords = {lat: Lat, lng: Lng};
 const lat = thenGuard(
 	isObject,
 	objectHasDefinition<{}, Lat>({
-		degrees: requiredProperty('degrees', degLat),
-		minutes: requiredProperty('minutes', minSec),
-		seconds: requiredProperty('seconds', minSec),
-		heading: requiredProperty('heading', isLiteral(['N', 'S'])),
+		degrees: requiredProperty(degLat),
+		minutes: requiredProperty(minSec),
+		seconds: requiredProperty(minSec),
+		heading: requiredProperty(isLiteral(['N', 'S'])),
 	})
 );
 
 const lng = thenGuard(
 	isObject,
 	objectHasDefinition<{}, Lng>({
-		degrees: requiredProperty('degrees', degLng),
-		minutes: requiredProperty('minutes', minSec),
-		seconds: requiredProperty('seconds', minSec),
-		heading: requiredProperty('heading', isLiteral(['E', 'W'])),
+		degrees: requiredProperty(degLng),
+		minutes: requiredProperty(minSec),
+		seconds: requiredProperty(minSec),
+		heading: requiredProperty(isLiteral(['E', 'W'])),
 	})
 );
 
 const geoCoords = objectHasDefinition<{}, GeoCoords>({
-	lat: requiredProperty('lat', lat),
-	lng: requiredProperty('lng', lng),
+	lat: requiredProperty(lat),
+	lng: requiredProperty(lng),
 });
 
 describe('geographic coordinates', function() {

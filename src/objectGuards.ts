@@ -9,45 +9,57 @@ import {isObject} from './primitiveGuards';
  */
 type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {
 	[P in K]: FROM[P] extends TO[P] ? never : P;
-}[K];
+}[K] & keyof TO;
 /**
  * Fields in `TO` that don't exist in `FROM`
  */
-type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
+type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM> & keyof TO;
+
+export type NarrowedGuards<FROM extends object, TO extends FROM> = {
+	[P in NarrowedFields<FROM, TO>]: (p: P) => ReasonGuard<Pick<FROM, P>, Pick<TO, P>>
+}
+
+export type ExtendedGuards<FROM, TO extends FROM> = {
+	[P in ExtendedFields<FROM, TO>]: (p: P) => ReasonGuard<unknown, Pick<TO, P>>;
+}
+
+export type PropertyGuards<FROM extends object, TO extends FROM> = NarrowedGuards<FROM, TO> & ExtendedGuards<FROM, TO>;
+
 /**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
-export type ChangedFields<FROM, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
+export type ChangedFields<FROM extends object, TO extends FROM> = keyof PropertyGuards<FROM, TO> & keyof TO;
 
-export type PropertyGuards<FROM extends Object, TO extends FROM> = {
-	[P in ChangedFields<FROM, TO>]: P extends keyof FROM
-	? ReasonGuard<Pick<FROM, P>, Pick<TO, P>>
-	: ReasonGuard<Record<P, unknown>, Pick<TO, P>>;
-};
-
-// this shouldn't be needed, but if the property voodoo goes wrong it might be
-// needs to be a factory functionfor the generic parameterization to work?
-// export function identityGuard<T>(): ReasonGuard<T, T> {
-// 	return (_input, _output, confirmations): _input is T => {
-// 		confirmations.push('true');
-// 		return true;
-// 	};
-// }
-
-// don't seem to need this
-// type PropertyGuarded<G> = G extends PropertyGuards<infer FROM, infer TO> ? ReasonGuard<FROM, TO> : never;
-
-function checkDefinition<FROM extends Object, TO extends FROM>(
+function checkDefinition<FROM extends object, TO extends FROM>(
 	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[],
 ): input is TO {
 	let anyPassed = false;
 	let anyFailed = false;
+	const narrowHalf: NarrowedGuards<FROM, TO> = definition;
+	const extendHalf: ExtendedGuards<FROM, TO> = definition;
 
-	function checkProperty(k: ChangedFields<FROM, TO>) {
-		if (definition[k](input, output, confirmations)) {
+	function checkNarrow<K extends NarrowedFields<FROM, TO>>(k: K) {
+		if (narrowHalf[k](k)(input, output, confirmations)) {
 			anyPassed = true;
 		} else {
 			anyFailed = true;
+		}
+	}
+	function checkExtend<K extends ExtendedFields<FROM, TO>>(k: K) {
+		if (extendHalf[k](k)(input, output, confirmations)) {
+			anyPassed = true;
+		} else {
+			anyFailed = true;
+		}
+	}
+
+	function checkProperty<K extends ChangedFields<FROM, TO>>(k: K) {
+		if (k in input) {
+			const fromKey: NarrowedFields<FROM, TO> = k as any; // Can't prove this to TS :(
+			checkNarrow(fromKey);
+		} else {
+			const fromKey: ExtendedFields<FROM, TO> = k as any; // Can't prove this to TS :(
+			checkExtend(fromKey);
 		}
 	}
 
@@ -72,7 +84,7 @@ function checkDefinition<FROM extends Object, TO extends FROM>(
 // type PropertyGuardBuilder<FROM, TO extends FROM> = (definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>;
 
 export const objectHasDefinition =
-	<(<FROM extends Object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
+	<(<FROM extends object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
 		(definition) =>
 			(input, output = [], confirmations = []) => checkDefinition(definition, input, output, confirmations)
 	);
