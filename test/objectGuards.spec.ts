@@ -1,11 +1,9 @@
 import {
-	isUndefined,
 	ReasonGuard,
 	objectHasDefinition,
 	isString,
 	ChangedFields,
 	isLiteral,
-	orGuard,
 	requiredProperty,
 	optionalProperty,
 	narrowedProperty,
@@ -50,7 +48,7 @@ type OptionalNarrowed = {
 
 const commonValues = [0, 'string', false, () => null, new Date(), null, undefined, []];
 
-function testPropertyBadValues<FROM, MID extends FROM, TO extends FROM>(
+function testPropertyBadValues<FROM extends object, MID extends FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
 	base: FROM | MID,
 	prop: ChangedFields<FROM, TO>,
@@ -66,7 +64,7 @@ function testPropertyBadValues<FROM, MID extends FROM, TO extends FROM>(
 	}
 }
 
-function testPropertyGoodValues<FROM, TO extends FROM>(
+function testPropertyGoodValues<FROM extends object, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
 	base: FROM,
 	prop: ChangedFields<FROM, TO>,
@@ -82,13 +80,13 @@ function testPropertyGoodValues<FROM, TO extends FROM>(
 describe(isObjectWithDefinition.name, function() {
 	context('double-optional nesting', function() {
 		const guard = isObjectWithDefinition<{a?: {b?: string}}>({
-			a: optionalProperty('a', isObjectWithDefinition<{b?: string}>({
-				b: optionalProperty('b', isString),
+			a: optionalProperty(isObjectWithDefinition<{b?: string}>({
+				b: optionalProperty(isString),
 			})),
 		});
 		const strictGuard = isObjectWithDefinition<{a?: {b?: string}}>({
-			a: strictOptionalProperty('a', isObjectWithDefinition<{b?: string}>({
-				b: strictOptionalProperty('b', isString),
+			a: strictOptionalProperty(isObjectWithDefinition<{b?: string}>({
+				b: strictOptionalProperty(isString),
 			})),
 		});
 
@@ -125,7 +123,7 @@ describe(isObjectWithDefinition.name, function() {
 describe(objectHasDefinition.name, function() {
 	context('simple extension', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
-			b: requiredProperty('b', isString),
+			b: requiredProperty(isString),
 		});
 
 		it('detects missing extension property', function() {
@@ -137,7 +135,7 @@ describe(objectHasDefinition.name, function() {
 
 	context('simple narrowing', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({
-			a: requiredProperty('a', isLiteral(['foo', 'bar'])),
+			a: requiredProperty(isLiteral(['foo', 'bar'])),
 		});
 
 		testPropertyGoodValues(guard, {a: 'xyzzy'}, 'a', ['foo', 'bar']);
@@ -146,7 +144,7 @@ describe(objectHasDefinition.name, function() {
 
 	context('optionality accepting', function() {
 		const guard = isObjectWithDefinition<OptionalBase>({
-			a: optionalProperty('a', orGuard(isString, isUndefined)),
+			a: optionalProperty(isString),
 		});
 		testPropertyGoodValues(guard, {}, 'a', ['foo', undefined]);
 		assertGuards(true)(guard, {});
@@ -154,7 +152,7 @@ describe(objectHasDefinition.name, function() {
 
 	context('optionality narrowing', function() {
 		const guard = objectHasDefinition<OptionalBase, OptionalNarrowed>({
-			a: requiredProperty('a', isString),
+			a: requiredProperty(isString),
 		});
 		testPropertyGoodValues(guard, {}, 'a', ['foo', 'bar']);
 		testPropertyBadValues(guard, {}, 'a', 1);
@@ -162,10 +160,10 @@ describe(objectHasDefinition.name, function() {
 
 	context('complex derivation part 1', function() {
 		const guard = objectHasDefinition<ComplexBase, ComplexDerived>({
-			b: narrowedProperty<ComplexBase, 'b', ComplexDerived>('b', objectHasDefinition({
-				d: requiredProperty('d', isString),
+			b: narrowedProperty(objectHasDefinition<{c: string}, {c: string, d: string}>({
+				d: requiredProperty(isString),
 			})),
-			e: requiredProperty('e', isString),
+			e: requiredProperty(isString),
 		});
 
 		// TODO: we want to assert on _why_ most of these tests pass/fail

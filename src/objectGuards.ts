@@ -14,37 +14,33 @@ type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = 
  * Fields in `TO` that don't exist in `FROM`
  */
 type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
+
 /**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
-export type ChangedFields<FROM, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
+export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO>|ExtendedFields<FROM, TO>;
 
-export type PropertyGuards<FROM extends Object, TO extends FROM> = {
-	[P in ChangedFields<FROM, TO>]: P extends keyof FROM
-	? ReasonGuard<Pick<FROM, P>, Pick<TO, P>>
-	: ReasonGuard<Record<P, unknown>, Pick<TO, P>>;
-};
+/**
+ * A function from property name to guard on that property
+ */
+type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends ChangedFields<FROM, TO>> =
+	(p: P) => ReasonGuard<Pick<FROM, P&keyof FROM>, Pick<TO, P>>;
 
-// this shouldn't be needed, but if the property voodoo goes wrong it might be
-// needs to be a factory functionfor the generic parameterization to work?
-// export function identityGuard<T>(): ReasonGuard<T, T> {
-// 	return (_input, _output, confirmations): _input is T => {
-// 		confirmations.push('true');
-// 		return true;
-// 	};
-// }
+/**
+ *	A mapping from property names to factories for guards on those properties
+ */
+export type PropertyGuards<FROM extends object, TO extends FROM> = {
+	[P in ChangedFields<FROM, TO>]: PropertyGuardFactory<FROM, TO, P>;
+}
 
-// don't seem to need this
-// type PropertyGuarded<G> = G extends PropertyGuards<infer FROM, infer TO> ? ReasonGuard<FROM, TO> : never;
-
-function checkDefinition<FROM extends Object, TO extends FROM>(
+function checkDefinition<FROM extends object, TO extends FROM>(
 	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[],
 ): input is TO {
 	let anyPassed = false;
 	let anyFailed = false;
 
-	function checkProperty(k: ChangedFields<FROM, TO>) {
-		if (definition[k](input, output, confirmations)) {
+	function checkProperty<K extends ChangedFields<FROM, TO>>(k: K) {
+		if (definition[k](k)(input, output, confirmations)) {
 			anyPassed = true;
 		} else {
 			anyFailed = true;
@@ -72,7 +68,7 @@ function checkDefinition<FROM extends Object, TO extends FROM>(
 // type PropertyGuardBuilder<FROM, TO extends FROM> = (definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>;
 
 export const objectHasDefinition =
-	<(<FROM extends Object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
+	<(<FROM extends object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
 		(definition) =>
 			(input, output = [], confirmations = []) => checkDefinition(definition, input, output, confirmations)
 	);

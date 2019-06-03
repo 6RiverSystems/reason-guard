@@ -16,13 +16,13 @@ class Test extends TestBase {
 describe('property guards', function() {
 	context('required property', function() {
 		it('works normally', function() {
-			const guard = property.requiredProperty<{foo: string}, 'foo'>('foo', isString);
+			const guard = property.requiredProperty(isString)('foo');
 			assertGuards(true)(guard, {foo: 'foo'});
 			assertGuards(false)(guard, {});
 			assertGuards(false)(guard, {foo: 3});
 		});
 		it('works negated', function() {
-			const guard = notGuard(property.requiredProperty<{foo: string}, 'foo'>('foo', isString));
+			const guard = notGuard(property.requiredProperty(isString)('foo'));
 			assertGuards(!true)(guard, {foo: 'foo'});
 			assertGuards(!false)(guard, {});
 			assertGuards(!false)(guard, {foo: 3});
@@ -30,21 +30,21 @@ describe('property guards', function() {
 	});
 	context('optional property', function() {
 		it('works normally', function() {
-			const guard = property.optionalProperty<{foo?: string}, 'foo'>('foo', isString);
+			const guard = property.optionalProperty(isString)('foo');
 			assertGuards(true)(guard, {foo: 'foo'});
 			assertGuards(true)(guard, {});
 			assertGuards(false)(guard, {foo: 3});
 		});
 		it('works negated', function() {
-			const guard = notGuard(property.optionalProperty<{foo?: string}, 'foo'>('foo', isString));
+			const guard = notGuard(property.optionalProperty(isString)('foo'));
 			assertGuards(!true)(guard, {foo: 'foo'});
 			assertGuards(!true)(guard, {});
 			assertGuards(!false)(guard, {foo: 3});
 		});
 		it('works nested', function() {
 			const guard = isObjectWithDefinition<{foo?: {bar?: string}}>({
-				foo: property.optionalProperty('foo', isObjectWithDefinition<{bar?: string}>({
-					bar: property.optionalProperty('bar', isString),
+				foo: property.optionalProperty(isObjectWithDefinition<{bar?: string}>({
+					bar: property.optionalProperty(isString),
 				})),
 			});
 			const negaGuard = notGuard(guard);
@@ -62,27 +62,6 @@ describe('property guards', function() {
 			assertGuards(!false)(negaGuard, {foo: null});
 			assertGuards(!false)(negaGuard, null);
 		});
-	});
-	context('number property', function() {
-		testGuardMaker(property.hasNumberProperty, 0);
-	});
-	context('string property', function() {
-		testGuardMaker(property.hasStringProperty, 1);
-	});
-	context('boolean property', function() {
-		testGuardMaker(property.hasBooleanProperty, 2);
-	});
-	context('function property', function() {
-		testGuardMaker(property.hasFunctionProperty, 3);
-	});
-	context('date property', function() {
-		testGuardMaker(property.hasDateProperty, 4);
-	});
-	context('null property', function() {
-		testGuardMaker(property.hasNullProperty, 5);
-	});
-	context('undefined property', function() {
-		testGuardMaker(property.hasUndefinedProperty, 6);
 	});
 	context('array property', function() {
 		// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
