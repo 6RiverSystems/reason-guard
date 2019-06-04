@@ -9,3 +9,4 @@ export * from './ReasonGuard';
 export * from './restrictingGuards';
 export * from './constantGuards';
 export * from './NegatableGuard';
+export * from './parseGuards';

@@ -1,4 +1,4 @@
-import {isNumberString, isDateString, isBigIntString} from '../src/Combinators/parseGuards';
+import {isNumberString, isDateString, isBigIntString} from '../src';
 import {assertGuards} from './assertGuards';
 
 describe('parse guards', function() {
@@ -19,8 +19,7 @@ describe('parse guards', function() {
 			assertGuards(true)(isDateString, '2011-10-10T14:48:00.000+09:00');
 		});
 		it('guards against non-Dates', function() {
-			// Terrifyingly, this seems to be different in chrome and node, so I'm just leaving it out for now
-			// assertGuards(false)(isDateString, '');
+			assertGuards(false)(isDateString, '');
 			assertGuards(false)(isDateString, '17');
 			assertGuards(false)(isDateString, 'test');
 		});
