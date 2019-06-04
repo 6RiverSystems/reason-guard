@@ -1,4 +1,4 @@
-import {checkerToGuard} from '../Checker';
+import {checkerToGuard} from './Checker';
 
 /**
  * Would Number.parseFloat parse this input?
