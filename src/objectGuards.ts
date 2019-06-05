@@ -47,11 +47,12 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	let anyPassed = false;
 	let anyFailed = false;
 
+	// Here be dragons
+	// While typescript accepts this done in pieces,
+	// it won't accept it as a one-liner.
 	const unifiedDefs: OptionalGuards<FROM, TO> = definition;
 
-	type DefinitionKeys = keyof typeof definition;
-
-	function checkProperty<K extends DefinitionKeys>(k: K) {
+	function checkProperty<K extends keyof TO>(k: K) {
 		const propertyDefinition = unifiedDefs[k];
 		if (propertyDefinition) {
 			if (propertyDefinition(k)(input, output, confirmations)) {
@@ -64,9 +65,9 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 
 	// if k in keyof FROM, then hasProperty is redundant, but that's not something we can express here
 	// TODO: we could cache these property lists for performance
-	(Object.getOwnPropertyNames(definition) as (DefinitionKeys)[]).forEach(checkProperty);
+	(Object.getOwnPropertyNames(definition) as (keyof TO)[]).forEach(checkProperty);
 	// repeat!
-	(Object.getOwnPropertySymbols(definition) as (DefinitionKeys)[]).forEach(checkProperty);
+	(Object.getOwnPropertySymbols(definition) as (keyof TO)[]).forEach(checkProperty);
 
 	if (!anyPassed && !anyFailed) {
 		try {
