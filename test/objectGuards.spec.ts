@@ -9,6 +9,7 @@ import {
 	narrowedProperty,
 	isObjectWithDefinition,
 	strictOptionalProperty,
+	isNumberString,
 } from '../src';
 import {assertGuards} from './assertGuards';
 
@@ -123,6 +124,33 @@ describe(isObjectWithDefinition.name, function() {
 describe(objectHasDefinition.name, function() {
 	context('simple extension', function() {
 		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
+			b: requiredProperty(isString),
+		});
+
+		it('detects missing extension property', function() {
+			assertGuards(false)(guard, {a: 'foo'});
+		});
+		testPropertyBadValues(guard, {a: 'foo'}, 'b', 1);
+		testPropertyGoodValues(guard, {a: 'foo'}, 'b', ['foo', 'xyzzy']);
+	});
+
+	context('optional semantic narrowing', function() {
+		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
+			a: narrowedProperty(isNumberString),
+			b: requiredProperty(isString),
+		});
+
+		it('fails on things with wrong semantics', function() {
+			assertGuards(false)(guard, {a: 'foo', b: 'bar'});
+		});
+		it('succeeds on things with proper semantics', function() {
+			assertGuards(true)(guard, {a: '7', b: 'foo'});
+		});
+	});
+
+	context('explicit choice not to add semantics', function() {
+		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
+			a: undefined,
 			b: requiredProperty(isString),
 		});
 
