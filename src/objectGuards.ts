@@ -16,6 +16,13 @@ type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = 
 type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 
 /**
+ * Fields in `FROM` and `TO` that are the same type (but may not have the same semantics!)
+ */
+type UnchangedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {
+	[P in K]: FROM[P] extends TO[P] ? P : never;
+}[K];
+
+/**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
 export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO>|ExtendedFields<FROM, TO>;
@@ -23,15 +30,23 @@ export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields
 /**
  * A function from property name to guard on that property
  */
-type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends ChangedFields<FROM, TO>> =
+type PropertyGuardFactory<
+	FROM extends object,
+	TO extends FROM,
+	P extends keyof TO
+> =
 	(p: P) => ReasonGuard<Pick<FROM, P&keyof FROM>, Pick<TO, P>>;
+
+export type RequiredGuards<FROM extends object, TO extends FROM, K extends keyof TO = ChangedFields<FROM, TO>> = {
+	[P in K]: PropertyGuardFactory<FROM, TO, P>
+}
+
+export type OptionalGuards<FROM extends object, TO extends FROM> = Partial<RequiredGuards<FROM, TO, keyof TO>>;
 
 /**
  *	A mapping from property names to factories for guards on those properties
  */
-export type PropertyGuards<FROM extends object, TO extends FROM> = {
-	[P in ChangedFields<FROM, TO>]: PropertyGuardFactory<FROM, TO, P>;
-}
+export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuards<FROM, TO> & OptionalGuards<FROM, TO>;
 
 function checkDefinition<FROM extends object, TO extends FROM>(
 	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[],
@@ -39,19 +54,26 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	let anyPassed = false;
 	let anyFailed = false;
 
-	function checkProperty<K extends ChangedFields<FROM, TO>>(k: K) {
-		if (definition[k](k)(input, output, confirmations)) {
-			anyPassed = true;
-		} else {
-			anyFailed = true;
+	const unifiedDefs: OptionalGuards<FROM, TO> = definition;
+
+	type DefinitionKeys = keyof typeof definition;
+
+	function checkProperty<K extends DefinitionKeys>(k: K) {
+		const propertyDefinition = unifiedDefs[k];
+		if (propertyDefinition) {
+			if (propertyDefinition(k)(input, output, confirmations)) {
+				anyPassed = true;
+			} else {
+				anyFailed = true;
+			}
 		}
 	}
 
 	// if k in keyof FROM, then hasProperty is redundant, but that's not something we can express here
 	// TODO: we could cache these property lists for performance
-	(Object.getOwnPropertyNames(definition) as (keyof typeof definition)[]).forEach(checkProperty);
+	(Object.getOwnPropertyNames(definition) as (DefinitionKeys)[]).forEach(checkProperty);
 	// repeat!
-	(Object.getOwnPropertySymbols(definition) as (keyof typeof definition)[]).forEach(checkProperty);
+	(Object.getOwnPropertySymbols(definition) as (DefinitionKeys)[]).forEach(checkProperty);
 
 	if (!anyPassed && !anyFailed) {
 		try {
