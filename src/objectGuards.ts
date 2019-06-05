@@ -23,11 +23,7 @@ export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields
 /**
  * A function from property name to guard on that property
  */
-type PropertyGuardFactory<
-	FROM extends object,
-	TO extends FROM,
-	P extends keyof TO
-> =
+type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends keyof TO> =
 	(p: P) => ReasonGuard<Pick<FROM, P&keyof FROM>, Pick<TO, P>>;
 
 export type RequiredGuards<FROM extends object, TO extends FROM, K extends keyof TO = ChangedFields<FROM, TO>> = {
