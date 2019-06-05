@@ -16,13 +16,6 @@ type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = 
 type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 
 /**
- * Fields in `FROM` and `TO` that are the same type (but may not have the same semantics!)
- */
-type UnchangedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {
-	[P in K]: FROM[P] extends TO[P] ? P : never;
-}[K];
-
-/**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
 export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO>|ExtendedFields<FROM, TO>;
