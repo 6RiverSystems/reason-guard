@@ -10,3 +10,4 @@ export * from './restrictingGuards';
 export * from './constantGuards';
 export * from './NegatableGuard';
 export * from './parseGuards';
+export * from './arrayFilterGuard';
