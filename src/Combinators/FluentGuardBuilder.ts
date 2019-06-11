@@ -6,12 +6,8 @@ import {ReasonGuard} from '../ReasonGuard';
 
 export class FluentGuardBuilder<FROM, TO extends FROM> {
 	constructor(private readonly _guard: ReasonGuard<FROM, TO>) {
-		// eslint-disable-next-line no-console
-		console.log('new guard');
 	}
 	public get guard() {
-		// eslint-disable-next-line no-console
-		console.log('getting guard');
 		return this._guard;
 	}
 	public or(guard: ReasonGuard<FROM, TO>) {
