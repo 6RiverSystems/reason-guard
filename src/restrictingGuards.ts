@@ -10,6 +10,13 @@ export const numberIsInteger = checkerToGuard<number, number>((input: number) =>
 	return `${input} is an integer`;
 });
 
+export const numberIsFinite = checkerToGuard<number, number>((input: number) => {
+	if (!Number.isFinite) {
+		throw new Error(`${input} is not finite`);
+	}
+	return `${input} is finite`;
+});
+
 export const numberIsLessThan = (maximum: number) =>
 	checkerToGuard<number, number>((input: number) => {
 		if (input >= maximum) {
@@ -98,6 +105,11 @@ export const integralInterval =
 				interval(bottomType, bottomValue)(topValue, topType),
 				numberIsInteger
 			);
+
+export const numberIsSafeInteger = andGuard(
+	numberIsInteger,
+	interval('>=', Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, '<=')
+);
 
 type Literable = string | symbol | number;
 

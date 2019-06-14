@@ -132,4 +132,24 @@ describe('restricting guards', function() {
 			assertGuards(false)(guard, Number.NaN);
 		});
 	});
+	context('safe', function() {
+		const guard = restricting.numberIsSafeInteger;
+		it('guards for integers in the range', function() {
+			assertGuards(true)(guard, Number.MIN_SAFE_INTEGER);
+			assertGuards(true)(guard, Number.MAX_SAFE_INTEGER);
+			assertGuards(true)(guard, 0);
+		});
+		it('guards for integers outside the range', function() {
+			assertGuards(false)(guard, Number.MIN_SAFE_INTEGER - 1);
+			assertGuards(false)(guard, Number.MAX_SAFE_INTEGER + 1);
+		});
+		it('guards for non-integers', function() {
+			assertGuards(false)(guard, 0.999999999);
+			assertGuards(false)(guard, Number.MIN_SAFE_INTEGER * (1 + Number.EPSILON));
+			assertGuards(false)(guard, Number.MAX_SAFE_INTEGER * (1 + Number.EPSILON));
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
+		});
+	});
 });
