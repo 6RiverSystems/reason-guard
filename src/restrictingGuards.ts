@@ -19,27 +19,34 @@ export const numberIsFinite = checkerToGuard<number, number>((input: number) => 
 
 export const numberIsLessThan = (maximum: number) =>
 	checkerToGuard<number, number>((input: number) => {
-		if (input >= maximum) {
-			throw new Error(`${input} >= ${maximum}`);
+		if (input < maximum) {
+			return `${input} < ${maximum}`;
 		}
-		return `${input} < ${maximum}`;
+		throw new Error(`${input} >= ${maximum}`);
 	});
 
 export const numberIsGreaterThan = (minimum: number) =>
 	checkerToGuard<number, number>((input: number) => {
-		if (input <= minimum) {
-			throw new Error(`${input} <= ${minimum}`);
+		if (input > minimum) {
+			return `${input} > ${minimum}`;
 		}
-		return `${input} > ${minimum}`;
+		throw new Error(`${input} <= ${minimum}`);
 	});
 
 export const numberIs = (value: number) =>
-	checkerToGuard<number, number>((input: number) => {
-		if (input !== value) {
-			throw new Error(`${input}  ${value}`);
-		}
-		return `${input} = ${value}`;
-	});
+	Number.isNaN(value)
+		? checkerToGuard<number, number>((input: number) => {
+			if (Number.isNaN(input)) {
+				return `${input} = ${value}`;
+			}
+			throw new Error(`${input} != ${value}`);
+		})
+		: checkerToGuard<number, number>((input: number) => {
+			if (input === value) {
+				return `${input} = ${value}`;
+			}
+			throw new Error(`${input} != ${value}`);
+		});
 export const numberIsAtMost = (maximum: number) =>
 	orGuard(
 		numberIsLessThan(maximum),
