@@ -192,7 +192,7 @@ describe('restricting guards', function() {
 			assertGuards(true)(guard, Number.MAX_SAFE_INTEGER);
 			assertGuards(true)(guard, 0);
 		});
-		it('guards for integers outside the range', function() {
+		it('guards against integers outside the range', function() {
 			assertGuards(false)(guard, Number.MIN_SAFE_INTEGER - 1);
 			assertGuards(false)(guard, Number.MAX_SAFE_INTEGER + 1);
 		});
