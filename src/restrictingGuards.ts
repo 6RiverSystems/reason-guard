@@ -11,7 +11,7 @@ export const numberIsInteger = checkerToGuard<number, number>((input: number) =>
 });
 
 export const numberIsFinite = checkerToGuard<number, number>((input: number) => {
-	if (!Number.isFinite) {
+	if (!Number.isFinite(input)) {
 		throw new Error(`${input} is not finite`);
 	}
 	return `${input} is finite`;

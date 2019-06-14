@@ -68,6 +68,23 @@ describe('restricting guards', function() {
 			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
 		});
 	});
+	context('numberIsFinite', function() {
+		const guard = restricting.numberIsFinite;
+		it('guards for finite values', function() {
+			assertGuards(true)(guard, Number.MIN_VALUE);
+			assertGuards(true)(guard, Number.MIN_SAFE_INTEGER);
+			assertGuards(true)(guard, -1);
+			assertGuards(true)(guard, 0);
+			assertGuards(true)(guard, 1);
+			assertGuards(true)(guard, Number.MIN_SAFE_INTEGER);
+			assertGuards(true)(guard, Number.MAX_VALUE);
+		});
+		it('guards against non-finite values', function() {
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
+		});
+	});
 	context('>', function() {
 		const guard = restricting.numberIsGreaterThan(1);
 		it('guards for greater quantities', function() {
