@@ -10,29 +10,43 @@ export const numberIsInteger = checkerToGuard<number, number>((input: number) =>
 	return `${input} is an integer`;
 });
 
+export const numberIsFinite = checkerToGuard<number, number>((input: number) => {
+	if (!Number.isFinite(input)) {
+		throw new Error(`${input} is not finite`);
+	}
+	return `${input} is finite`;
+});
+
 export const numberIsLessThan = (maximum: number) =>
 	checkerToGuard<number, number>((input: number) => {
-		if (input >= maximum) {
-			throw new Error(`${input} >= ${maximum}`);
+		if (input < maximum) {
+			return `${input} < ${maximum}`;
 		}
-		return `${input} < ${maximum}`;
+		throw new Error(`${input} >= ${maximum}`);
 	});
 
 export const numberIsGreaterThan = (minimum: number) =>
 	checkerToGuard<number, number>((input: number) => {
-		if (input <= minimum) {
-			throw new Error(`${input} <= ${minimum}`);
+		if (input > minimum) {
+			return `${input} > ${minimum}`;
 		}
-		return `${input} > ${minimum}`;
+		throw new Error(`${input} <= ${minimum}`);
 	});
 
 export const numberIs = (value: number) =>
-	checkerToGuard<number, number>((input: number) => {
-		if (input !== value) {
-			throw new Error(`${input}  ${value}`);
-		}
-		return `${input} = ${value}`;
-	});
+	Number.isNaN(value)
+		? checkerToGuard<number, number>((input: number) => {
+			if (Number.isNaN(input)) {
+				return `${input} = ${value}`;
+			}
+			throw new Error(`${input} != ${value}`);
+		})
+		: checkerToGuard<number, number>((input: number) => {
+			if (input === value) {
+				return `${input} = ${value}`;
+			}
+			throw new Error(`${input} != ${value}`);
+		});
 export const numberIsAtMost = (maximum: number) =>
 	orGuard(
 		numberIsLessThan(maximum),
@@ -98,6 +112,11 @@ export const integralInterval =
 				interval(bottomType, bottomValue)(topValue, topType),
 				numberIsInteger
 			);
+
+export const numberIsSafeInteger = andGuard(
+	numberIsInteger,
+	interval('>=', Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, '<=')
+);
 
 type Literable = string | symbol | number;
 

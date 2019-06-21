@@ -27,6 +27,80 @@ describe('restricting guards', function() {
 			assertGuards(false)(guard, 3.3);
 			assertGuards(false)(guard, -0.1);
 			assertGuards(false)(guard, Number.EPSILON);
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
+		});
+	});
+	context('numberIs', function() {
+		context('given the target value is finite', function() {
+			const guard = restricting.numberIs(1);
+			it('guards for the correct value', function() {
+				assertGuards(true)(guard, 1);
+			});
+			it('guards against finite incorrect values', function() {
+				assertGuards(false)(guard, 1 + Number.EPSILON);
+				assertGuards(false)(guard, 1 - Number.EPSILON);
+			});
+			it('guards against non-finite values', function() {
+				assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+				assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+				assertGuards(false)(guard, Number.NaN);
+			});
+		});
+		context('given the target value is positive infinity', function() {
+			const guard = restricting.numberIs(Number.POSITIVE_INFINITY);
+			it('guards for positive infinity', function() {
+				assertGuards(true)(guard, Number.POSITIVE_INFINITY);
+			});
+			it('guards against incorrect values', function() {
+				assertGuards(false)(guard, 0);
+				assertGuards(false)(guard, Number.MAX_VALUE);
+				assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+				assertGuards(false)(guard, Number.NaN);
+			});
+		});
+		context('given the target value is negative infinity', function() {
+			const guard = restricting.numberIs(Number.NEGATIVE_INFINITY);
+			it('guards for negative infinity', function() {
+				assertGuards(true)(guard, Number.NEGATIVE_INFINITY);
+			});
+			it('guards against incorrect values', function() {
+				assertGuards(false)(guard, 0);
+				assertGuards(false)(guard, Number.MIN_VALUE);
+				assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+				assertGuards(false)(guard, Number.NaN);
+			});
+		});
+		context('given the target value is NaN', function() {
+			const guard = restricting.numberIs(Number.NaN);
+			it('guards for NaN', function() {
+				assertGuards(true)(guard, Number.NaN);
+			});
+			it('guards against incorrect values', function() {
+				assertGuards(false)(guard, 0);
+				assertGuards(false)(guard, Number.MIN_VALUE);
+				assertGuards(false)(guard, Number.MAX_VALUE);
+				assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+				assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			});
+		});
+	});
+	context('numberIsFinite', function() {
+		const guard = restricting.numberIsFinite;
+		it('guards for finite values', function() {
+			assertGuards(true)(guard, Number.MIN_VALUE);
+			assertGuards(true)(guard, Number.MIN_SAFE_INTEGER);
+			assertGuards(true)(guard, -1);
+			assertGuards(true)(guard, 0);
+			assertGuards(true)(guard, 1);
+			assertGuards(true)(guard, Number.MIN_SAFE_INTEGER);
+			assertGuards(true)(guard, Number.MAX_VALUE);
+		});
+		it('guards against non-finite values', function() {
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 	context('>', function() {
@@ -35,12 +109,15 @@ describe('restricting guards', function() {
 			assertGuards(true)(guard, 2);
 			assertGuards(true)(guard, 1.1);
 			assertGuards(true)(guard, 1 + Number.EPSILON);
+			assertGuards(true)(guard, Number.POSITIVE_INFINITY);
 		});
 		it('guards against non-greater quantities', function() {
 			assertGuards(false)(guard, 1);
 			assertGuards(false)(guard, 0);
 			assertGuards(false)(guard, 1 - Number.EPSILON);
 			assertGuards(false)(guard, 0);
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 	context('<', function() {
@@ -50,11 +127,14 @@ describe('restricting guards', function() {
 			assertGuards(true)(guard, -1.1);
 			assertGuards(true)(guard, 1 - Number.EPSILON);
 			assertGuards(true)(guard, 0);
+			assertGuards(true)(guard, Number.NEGATIVE_INFINITY);
 		});
 		it('guards against non-smaller quantities', function() {
 			assertGuards(false)(guard, 1);
 			assertGuards(false)(guard, 1.1);
 			assertGuards(false)(guard, 1 + Number.EPSILON);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 
@@ -65,11 +145,14 @@ describe('restricting guards', function() {
 			assertGuards(true)(guard, 1.1);
 			assertGuards(true)(guard, 1 + Number.EPSILON);
 			assertGuards(true)(guard, 1);
+			assertGuards(true)(guard, Number.POSITIVE_INFINITY);
 		});
 		it('guards against non-greater-or-equal quantities', function() {
 			assertGuards(false)(guard, 0);
 			assertGuards(false)(guard, 1 - Number.EPSILON);
 			assertGuards(false)(guard, 0);
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 	context('<=', function() {
@@ -80,10 +163,13 @@ describe('restricting guards', function() {
 			assertGuards(true)(guard, 1 - Number.EPSILON);
 			assertGuards(true)(guard, 0);
 			assertGuards(true)(guard, 1);
+			assertGuards(true)(guard, Number.NEGATIVE_INFINITY);
 		});
 		it('guards against non-smaller-or-equal quantities', function() {
 			assertGuards(false)(guard, 1.1);
 			assertGuards(false)(guard, 1 + Number.EPSILON);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 	context('integralInterval', function() {
@@ -97,6 +183,9 @@ describe('restricting guards', function() {
 			assertGuards(false)(guard, Number.EPSILON);
 			assertGuards(false)(guard, -2);
 			assertGuards(false)(guard, 2);
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 	context('interval', function() {
@@ -109,6 +198,29 @@ describe('restricting guards', function() {
 		it('guards against numbers outside the range', function() {
 			assertGuards(false)(guard, -1);
 			assertGuards(false)(guard, 1);
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
+		});
+	});
+	context('safe', function() {
+		const guard = restricting.numberIsSafeInteger;
+		it('guards for integers in the range', function() {
+			assertGuards(true)(guard, Number.MIN_SAFE_INTEGER);
+			assertGuards(true)(guard, Number.MAX_SAFE_INTEGER);
+			assertGuards(true)(guard, 0);
+		});
+		it('guards against integers outside the range', function() {
+			assertGuards(false)(guard, Number.MIN_SAFE_INTEGER - 1);
+			assertGuards(false)(guard, Number.MAX_SAFE_INTEGER + 1);
+		});
+		it('guards against non-integers', function() {
+			assertGuards(false)(guard, 0.999999999);
+			assertGuards(false)(guard, Number.MIN_SAFE_INTEGER * (1 + Number.EPSILON));
+			assertGuards(false)(guard, Number.MAX_SAFE_INTEGER * (1 + Number.EPSILON));
+			assertGuards(false)(guard, Number.NEGATIVE_INFINITY);
+			assertGuards(false)(guard, Number.POSITIVE_INFINITY);
+			assertGuards(false)(guard, Number.NaN);
 		});
 	});
 });
