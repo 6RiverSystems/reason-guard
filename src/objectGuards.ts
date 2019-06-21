@@ -8,7 +8,7 @@ import {isObject} from './primitiveGuards';
  * Fields in `FROM` that are narrowed in `TO`
  */
 type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {
-	[P in K]: FROM[P] extends TO[P] ? never : P;
+	[P in K]-?: FROM[P] extends TO[P] ? never : P;
 }[K];
 /**
  * Fields in `TO` that don't exist in `FROM`
@@ -18,16 +18,16 @@ type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 /**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
-export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO>|ExtendedFields<FROM, TO>;
+export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
 
 /**
  * A function from property name to guard on that property
  */
 type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends keyof TO> =
-	(p: P) => ReasonGuard<Pick<FROM, P&keyof FROM>, Pick<TO, P>>;
+	(p: P) => ReasonGuard<Pick<FROM, P & keyof FROM>, Pick<TO, P>>;
 
 export type RequiredGuards<FROM extends object, TO extends FROM, K extends keyof TO = ChangedFields<FROM, TO>> = {
-	[P in K]: PropertyGuardFactory<FROM, TO, P>
+	[P in K]-?: PropertyGuardFactory<FROM, TO, P>
 }
 
 export type OptionalGuards<FROM extends object, TO extends FROM> = Partial<RequiredGuards<FROM, TO, keyof TO>>;
