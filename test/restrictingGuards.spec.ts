@@ -16,6 +16,23 @@ describe('restricting guards', function() {
 			assertGuards(false)(guard, Symbol('test'));
 		});
 	});
+	context('isStrictEqual', function() {
+		const testSymbol = Symbol('test');
+		const valueList = ['a', 5, true, false, testSymbol];
+		const badValuesLists: unknown[][] = [[1, 'b'], [4, 'a'], [false], [true], [Symbol('test'), Symbol('bad')]];
+		const guards = valueList.map((v) => restricting.isStrictEqual(v));
+		it('guards for the exact value', function() {
+			guards.forEach((guard, i) => assertGuards(true)(guard, valueList[i]));
+		});
+		it('guards against other values', function() {
+			guards.forEach((guard, i) => valueList.forEach((badValue, j) => {
+				if (i !== j) {
+					assertGuards(false)(guard, badValue);
+				}
+			}));
+			guards.forEach((guard, i) => badValuesLists[i].forEach((badValue) => assertGuards(false)(guard, badValue)));
+		});
+	});
 	context('numberIsInteger', function() {
 		const guard = restricting.numberIsInteger;
 		it('guards for integers', function() {
