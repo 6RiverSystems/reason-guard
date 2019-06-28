@@ -3,7 +3,7 @@ import {isDate} from './instanceGuards';
 import {isDateString} from './parseGuards';
 import {thenGuard, orGuard} from './Combinators';
 
-export const isDateOrStringyDate = orGuard(
+export const isDateOrStringDate = orGuard(
 	thenGuard(
 		isString,
 		isDateString
