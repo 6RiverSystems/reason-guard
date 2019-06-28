@@ -26,7 +26,10 @@
     "htmlcov:darwin": "open coverage/index.html",
     "clean": "rm -rf coverage/ dist/ .nyc_output/"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/chance": "^1.0.4",
+    "chance": "^1.0.18"
+  },
   "devDependencies": {
     "@6river/commitlint-config-6river": "^2.1.0",
     "@commitlint/cli": "^7.6.1",
