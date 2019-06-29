@@ -6,7 +6,7 @@ describe('restricting guards', function() {
 		const testSymbol = Symbol('test');
 		const badValues = [false, true, {datum: 1}, undefined, 6, 'string', testSymbol, null, [1, 2]];
 		const values = [new Date(), (new Date()).toISOString()];
-		const guard = restricting.isDateOrStringDate;
+		const guard = restricting.isDateOrDateString;
 
 		it('should return true for a date or date strings', function() {
 			 values.forEach((value) => assertGuards(true)(guard, value));

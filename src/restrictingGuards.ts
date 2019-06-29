@@ -5,7 +5,7 @@ import {isNumber, isSymbol, isString} from './primitiveGuards';
 import {isDate} from './instanceGuards';
 import {isDateString} from './parseGuards';
 
-export const isDateOrStringDate = orGuard(
+export const isDateOrDateString = orGuard(
 	thenGuard(
 		isString,
 		isDateString
