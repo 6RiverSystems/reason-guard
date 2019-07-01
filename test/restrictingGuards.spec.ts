@@ -8,11 +8,11 @@ describe('restricting guards', function() {
 		const values = [new Date(), (new Date()).toISOString()];
 		const guard = restricting.isDateOrDateString;
 
-		it('should return true for a date or date strings', function() {
+		it('should guard for a date or date strings', function() {
 			 values.forEach((value) => assertGuards(true)(guard, value));
 		});
 
-		it('should return false for a non-dates or none-date-strings', function() {
+		it('should guard against non-dates or none-date-strings', function() {
 			badValues.forEach((badValue) => assertGuards(false)(guard, badValue));
 		});
 	});
