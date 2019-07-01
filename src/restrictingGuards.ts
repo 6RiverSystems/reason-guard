@@ -2,6 +2,16 @@ import {checkerToGuard} from './Checker';
 import {andGuard, orGuard, thenGuard} from './Combinators';
 import {ReasonGuard} from './ReasonGuard';
 import {isNumber, isSymbol, isString} from './primitiveGuards';
+import {isDate} from './instanceGuards';
+import {isDateString} from './parseGuards';
+
+export const isDateOrDateString = orGuard(
+	thenGuard(
+		isString,
+		isDateString
+	),
+	isDate
+);
 
 export const numberIsInteger = checkerToGuard<number, number>((input: number) => {
 	if (!Number.isInteger(input)) {

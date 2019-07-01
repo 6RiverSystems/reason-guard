@@ -2,6 +2,20 @@ import {assertGuards} from './assertGuards';
 import * as restricting from '../src/restrictingGuards';
 
 describe('restricting guards', function() {
+	context('isDateOrStringDate', function() {
+		const testSymbol = Symbol('test');
+		const badValues = [false, true, {datum: 1}, undefined, 6, 'string', testSymbol, null, [1, 2]];
+		const values = [new Date(), (new Date()).toISOString()];
+		const guard = restricting.isDateOrDateString;
+
+		it('should guard for a date or date strings', function() {
+			 values.forEach((value) => assertGuards(true)(guard, value));
+		});
+
+		it('should guard against non-dates or none-date-strings', function() {
+			badValues.forEach((badValue) => assertGuards(false)(guard, badValue));
+		});
+	});
 	context('isLiteral', function() {
 		const testSymbol = Symbol('test');
 		const literalList = ['a', 3, testSymbol];
