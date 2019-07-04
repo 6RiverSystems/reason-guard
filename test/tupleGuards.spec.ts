@@ -1,7 +1,9 @@
+import {assert} from 'chai';
+
 import {assertGuards} from './assertGuards';
 
-import {isTuple, isStrictTuple} from '../src/tupleGuards';
-import {NegatableGuard, isString, isNumber, isDate, ReasonGuard} from '../src';
+import {isTuple, TupleGuard} from '../src/tupleGuards';
+import {isString, isNumber, isDate, ReasonGuard} from '../src';
 
 // half the point of this spec file is to verify it compiles cleanly
 // sadly there are some negative tests of that sort we'd like to have, but can't do that with mocha
@@ -10,7 +12,7 @@ describe('tupleGuards', function() {
 	const testValues = ['', 0, new Date(), Symbol('test'), [], {}, true, false];
 
 	// explicit typing on this one is to ensure the mapped types are working
-	const guard2: NegatableGuard<unknown, [string, number]> = isTuple(
+	const guard2: TupleGuard<[string, number]> = isTuple(
 		isString, isNumber,
 	);
 	const guard3 = isTuple(
@@ -21,6 +23,12 @@ describe('tupleGuards', function() {
 	const guard3Good: unknown[] = [...guard2Good, new Date()];
 
 	context('isTuple', function() {
+		it('defaults to being a loose guard', function() {
+			assert.propertyVal(guard2, 'isStrict', false);
+			assert.propertyVal(guard3, 'isStrict', false);
+			assert.strictEqual(guard2.toLoose(), guard2);
+			assert.strictEqual(guard3.toLoose(), guard3);
+		});
 		it('guards for valid tuples of the expected length', function() {
 			assertGuards(true)(guard2, guard2Good);
 			assertGuards(true)(guard3, guard3Good);
@@ -55,8 +63,16 @@ describe('tupleGuards', function() {
 	});
 
 	context('isStrictTuple', function() {
-		const guard2Strict = isStrictTuple(guard2, 2);
-		const guard3Strict = isStrictTuple(guard3, 3);
+		const guard2Strict = guard2.toStrict();
+		const guard3Strict = guard3.toStrict();
+		it('makes a strict guard via toStrict', function() {
+			assert.propertyVal(guard2Strict, 'isStrict', true);
+			assert.propertyVal(guard3Strict, 'isStrict', true);
+			assert.strictEqual(guard2Strict.toStrict(), guard2Strict);
+			assert.strictEqual(guard3Strict.toStrict(), guard3Strict);
+			assert.strictEqual(guard2Strict.toLoose(), guard2);
+			assert.strictEqual(guard3Strict.toLoose(), guard3);
+		});
 		it('guards for good tuples of the right length', function() {
 			assertGuards(true)(guard2Strict, guard2Good);
 			assertGuards(true)(guard3Strict, guard3Good);

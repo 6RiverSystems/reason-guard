@@ -19,7 +19,7 @@ type TupleIntermediate<TTuple extends unknown[]> = {
 	[P in keyof TTuple]: unknown;
 }
 type TupleGuards<TTuple extends unknown[]> = {
-	[P in keyof TTuple]: ReasonGuard<unknown, TTuple[P]>;
+	readonly [P in keyof TTuple]: ReasonGuard<unknown, TTuple[P]>;
 };
 
 const isArrayOfLength = <TTuple extends unknown[]>(
@@ -29,33 +29,57 @@ const isArrayOfLength = <TTuple extends unknown[]>(
 	requiredProperty(thenGuard(isNumber, lengthGuard))('length') as NegatableGuard<unknown[], TTuple>,
 );
 
-export const isTuple =
-	<TTuple extends unknown[]>(
-		...itemGuards: TupleGuards<TTuple>
-	): NegatableGuard<unknown, TTuple> => thenGuard<unknown, TupleIntermediate<TTuple>, TTuple>(
-		isArrayOfLength<TTuple>(numberIsAtLeast(itemGuards.length)),
-		itemGuards
-		.map((guard, idx) => requiredProperty(guard)(idx))
-		.reduce(
-			(aggGuard, itemGuard) => aggGuard === constantGuards(true) ? itemGuard : andGuard(aggGuard, itemGuard),
-			constantGuards(true),
-		) as NegatableGuard<TupleIntermediate<TTuple>, TTuple>,
-		// ^^^ Typescript needs help because no varaidic types
-	);
+export type TupleGuard<TTuple extends unknown[]> = NegatableGuard<unknown, TTuple> & {
+	readonly tupleLength: number;
+	readonly isStrict: boolean;
+	// technically we could have toStrict/Loose only declared on the specific interfaces,
+	// but it's easier to use if they are on the base type
+	toStrict(): StrictTupleGuard<TTuple>;
+	toLoose(): LooseTupleGuard<TTuple>;
+}
+export type StrictTupleGuard<TTuple extends unknown[]> = TupleGuard<TTuple> & {
+	isStrict: true;
+}
+export type LooseTupleGuard<TTuple extends unknown[]> = TupleGuard<TTuple> & {
+	isStrict: false;
+}
 
-/**
- * Turn a loose tuple guard into a strict one, i.e. one that no longer accepts extra items.
- *
- * @param tupleGuard Loose pair guard
- * @param length Strict array length to check
- */
-export const isStrictTuple = <TArray extends unknown[]>(
-	tupleGuard: ReasonGuard<unknown, TArray>,
-	// NOTE: the keyof TArray restriction here does not actually work, it just maps to `number`,
-	// not to the specific numbers that are valid indexes in TArray
-	// but it's written here in the hopes that it will in a future version of typescript
-	length: keyof TArray & number,
-) => andGuard(
-		tupleGuard,
-		isArrayOfLength(numberIs(length)),
+export function isTuple<TTuple extends unknown[]>(
+	...itemGuards: TupleGuards<TTuple>
+): LooseTupleGuard<TTuple> {
+	const looseGuard: LooseTupleGuard<TTuple> = Object.assign(
+		thenGuard<unknown, TupleIntermediate<TTuple>, TTuple>(
+			isArrayOfLength<TTuple>(numberIsAtLeast(itemGuards.length)),
+			itemGuards
+			.map((guard, idx) => requiredProperty(guard)(idx))
+			.reduce(
+				(aggGuard, itemGuard) => aggGuard === constantGuards(true) ? itemGuard : andGuard(aggGuard, itemGuard),
+				constantGuards(true),
+			) as NegatableGuard<TupleIntermediate<TTuple>, TTuple>,
+			// ^^^ Typescript needs help because no varaidic types
+		),
+		{
+			tupleLength: itemGuards.length,
+			// cast below is needed because otherwise typescript always thinks this is just a boolean
+			isStrict: false,
+			toStrict: () => {
+				const strictGuard: StrictTupleGuard<TTuple> = Object.assign(
+					andGuard(
+						looseGuard,
+						isArrayOfLength(numberIs(looseGuard.tupleLength)),
+					),
+					{
+						tupleLength: looseGuard.tupleLength,
+						isStrict: true,
+						// already strict, can just return itself
+						toStrict: () => strictGuard,
+						toLoose: () => looseGuard,
+					} as Pick<StrictTupleGuard<TTuple>, 'tupleLength' | 'isStrict' | 'toStrict' | 'toLoose'>,
+				);
+				return strictGuard;
+			},
+			toLoose: () => looseGuard,
+		} as Pick<LooseTupleGuard<TTuple>, 'tupleLength' | 'isStrict' | 'toStrict' | 'toLoose'>,
 	);
+	return looseGuard;
+};
