@@ -2,6 +2,17 @@ import {checkerToGuard} from './Checker';
 import {andGuard, orGuard, thenGuard} from './Combinators';
 import {ReasonGuard} from './ReasonGuard';
 import {isNumber, isSymbol, isString} from './primitiveGuards';
+import {UUIDRegex} from './Utils';
+
+export const isUUIDString = checkerToGuard<string, string>((input) => {
+	if (UUIDRegex.test(input)) {
+		return 'Valid UUID';
+	} else {
+		throw new Error('Not a valid UUID');
+	}
+});
+
+export const isUUID = thenGuard(isString, isUUIDString);
 
 export const numberIsInteger = checkerToGuard<number, number>((input: number) => {
 	if (!Number.isInteger(input)) {
