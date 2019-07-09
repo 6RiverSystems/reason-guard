@@ -2,7 +2,19 @@ import {checkerToGuard} from './Checker';
 import {andGuard, orGuard, thenGuard} from './Combinators';
 import {ReasonGuard} from './ReasonGuard';
 import {isNumber, isSymbol, isString} from './primitiveGuards';
-import {UUIDRegex} from './Utils';
+import {isDate} from './instanceGuards';
+import {isDateString} from './parseGuards';
+
+
+export const isDateOrDateString = orGuard(
+	thenGuard(
+		isString,
+		isDateString
+	),
+	isDate
+);
+
+const UUIDRegex = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
 
 export const isUUIDString = checkerToGuard<string, string>((input) => {
 	if (UUIDRegex.test(input)) {
