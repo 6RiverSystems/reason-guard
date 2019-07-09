@@ -60,7 +60,6 @@ export function isTuple<TTuple extends unknown[]>(
 		),
 		{
 			tupleLength: itemGuards.length,
-			// cast below is needed because otherwise typescript always thinks this is just a boolean
 			isStrict: false,
 			toStrict: () => {
 				const strictGuard: StrictTupleGuard<TTuple> = Object.assign(
