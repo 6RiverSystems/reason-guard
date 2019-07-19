@@ -1,6 +1,9 @@
 import {ReasonGuard} from './ReasonGuard';
 import {NegatableGuard, buildNegatable} from './NegatableGuard';
 
+/**
+ * [[Checker]] is the most basic type for all reason guards
+ */
 export type Checker<FROM> = (input: FROM) => string;
 
 export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
@@ -9,6 +12,11 @@ export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
 	() => getRawGuard(checker),
 	() => getRawNegation(checker)
 );
+
+/**
+ *
+ * @param checker
+ */
 
 function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
 	return (input, e = [], c = []): input is TO => {
