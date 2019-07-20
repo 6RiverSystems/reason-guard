@@ -25,7 +25,7 @@
     "htmlcov:linux-gnu": "xdg-open coverage/index.html",
     "htmlcov:darwin": "open coverage/index.html",
     "clean": "rm -rf coverage/ dist/ .nyc_output/",
-    "typedoc": "typedoc --out docs ./src"
+    "typedoc": "typedoc --plugin typedoc-plugin-as-member-of ./src"
   },
   "dependencies": {},
   "devDependencies": {

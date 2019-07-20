@@ -2,7 +2,10 @@ import {ReasonGuard} from './ReasonGuard';
 import {NegatableGuard, buildNegatable} from './NegatableGuard';
 
 /**
- * [[Checker]] is the most basic type for all reason guards
+ * @remark
+ * building block for all reason guards
+ * @return
+ * the string will either be an error or a confirmation
  */
 export type Checker<FROM> = (input: FROM) => string;
 

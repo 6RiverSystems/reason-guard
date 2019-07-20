@@ -1,8 +1,6 @@
 import {checkerToGuard} from './Checker';
 
-/**
- * Would Number.parseFloat parse this input?
- */
+// Would Number.parseFloat parse this input?
 export const isNumberString = checkerToGuard<string, string>((input) => {
 	if (!isNaN(Number.parseFloat(input))) {
 		return 'is Number-string';
@@ -11,9 +9,7 @@ export const isNumberString = checkerToGuard<string, string>((input) => {
 	}
 });
 
-/**
- * Would Date.parse parse this input?
- */
+// Would Date.parse parse this input?
 export const isDateString = checkerToGuard<string, string>((input) => {
 	if (!isNaN(Date.parse(input))) {
 		return 'is Date-string';
@@ -22,9 +18,7 @@ export const isDateString = checkerToGuard<string, string>((input) => {
 	}
 });
 
-/**
- * Would BigInt parse this input?
- */
+// Would BigInt parse this input?
 export const isBigIntString = checkerToGuard<string, string>((input) => {
 	try {
 		// eslint-disable-next-line 6river/new-cap

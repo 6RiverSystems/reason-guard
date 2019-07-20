@@ -1,5 +1,7 @@
 {
 	"mode": "file",
 	"out": "docs",
-	"ignoreCompileErrors": true
+	"disableOutputCheck": true,
+	"ignoreCompilerErrors": true,
+	"plugin": []
 }

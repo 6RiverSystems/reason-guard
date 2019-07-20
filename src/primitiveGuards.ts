@@ -2,6 +2,16 @@ import {checkerToGuard} from './Checker';
 import {andGuard, notGuard} from './Combinators';
 
 type Primitive = 'string'|'number'|'bigint'|'boolean'|'symbol'|'undefined'|'object'|'function';
+/**
+ * Factory for primitive reason guards
+ * @typeparam PRIM is a generic representing the type you want to guard for
+ * @returns
+ * [checkerToGuard](#checkertoguard)
+ * ###Examples
+ * [isNumber](#isnumber), [isString](#isstring), [isBoolean](#isboolean),
+ * [isFunction](#isfunciton), [isSymbol](#issymbol), [isBigInt](#isBigInt),
+ * [isObject](#isobject)
+*/
 // Dangerous -- do not export!
 // We cannot guarantee that "x: PRIM" -> "typeof x === 'prim'"!
 function getPrimitiveTypeCheck<PRIM>(prim: Primitive) {

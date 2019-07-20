@@ -1,10 +1,10 @@
 import {ReasonGuard} from './ReasonGuard';
 import {thenGuard} from './Combinators';
 import {isObject} from './primitiveGuards';
-
-// NOTE: for this one you HAVE to have K as a parameter
-// if you move `keyof FROM` into the mapping, the result of this type is `any`
 /**
+ * @remark for this one you HAVE to have K as a parameter
+ * if you move `keyof FROM` into the mapping, the result of this type is `any`
+ *
  * Fields in `FROM` that are narrowed in `TO`
  */
 type NarrowedFields<FROM, TO extends FROM, K extends keyof FROM = keyof FROM> = {

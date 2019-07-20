@@ -109,6 +109,8 @@
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#open" class="tsd-kind-icon">OPEN</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#uuidregex" class="tsd-kind-icon">UUIDRegex</a></li>
 								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#falseguard" class="tsd-kind-icon">false<wbr>Guard</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#getrawalt" class="tsd-kind-icon">get<wbr>Raw<wbr>Alt</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#getrawnegatedalt" class="tsd-kind-icon">get<wbr>Raw<wbr>Negated<wbr>Alt</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#isarray" class="tsd-kind-icon">is<wbr>Array</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#isbigint" class="tsd-kind-icon">is<wbr>Big<wbr>Int</a></li>
 								<li class="tsd-kind-variable"><a href="globals.html#isbigintstring" class="tsd-kind-icon">is<wbr>Big<wbr>Int<wbr>String</a></li>
@@ -139,6 +141,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#altguard" class="tsd-kind-icon">alt<wbr>Guard</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#andguard" class="tsd-kind-icon">and<wbr>Guard</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#arrayfilterguard" class="tsd-kind-icon">array<wbr>Filter<wbr>Guard</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="globals.html#arrayhastype" class="tsd-kind-icon">array<wbr>Has<wbr>Type</a></li>
@@ -203,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">Alternative<wbr>Guard<span class="tsd-signature-symbol">:</span> <a href="globals.html#negatableguard" class="tsd-signature-type">NegatableGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/NegatableGuard.ts#L7">NegatableGuard.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/NegatableGuard.ts#L7">NegatableGuard.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -213,7 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">Array<wbr>Filter<wbr>Guard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/arrayFilterGuard.ts#L3">arrayFilterGuard.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/arrayFilterGuard.ts#L3">arrayFilterGuard.ts:3</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -244,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">Array<wbr>Literal<wbr>Check<span class="tsd-signature-symbol">:</span> <a href="globals.html#literalcheck" class="tsd-signature-type">LiteralCheck</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><a href="globals.html#arraytoliteral" class="tsd-signature-type">ArrayToLiteral</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L160">restrictingGuards.ts:160</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L160">restrictingGuards.ts:160</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -254,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">Array<wbr>ToLiteral<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ArrayToLiteral&lt;T&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L156">restrictingGuards.ts:156</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L156">restrictingGuards.ts:156</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -264,7 +267,7 @@
 					<div class="tsd-signature tsd-kind-icon">Bool<wbr>Map<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L157">restrictingGuards.ts:157</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L157">restrictingGuards.ts:157</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -274,7 +277,7 @@
 					<div class="tsd-signature tsd-kind-icon">Bottom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L116">restrictingGuards.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L116">restrictingGuards.ts:116</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -284,7 +287,7 @@
 					<div class="tsd-signature tsd-kind-icon">Changed<wbr>Fields<span class="tsd-signature-symbol">:</span> <a href="globals.html#narrowedfields" class="tsd-signature-type">NarrowedFields</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="globals.html#extendedfields" class="tsd-signature-type">ExtendedFields</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L21">objectGuards.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L21">objectGuards.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -299,13 +302,18 @@
 					<div class="tsd-signature tsd-kind-icon">Checker<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Checker.ts#L7">Checker.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Checker.ts#L10">Checker.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="globals.html#checker">Checker</a> is the most basic type for all reason guards</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>remark</dt>
+							<dd><p>building block for all reason guards</p>
+							</dd>
+							<dt>returns</dt>
+							<dd><p>the string will either be an error or a confirmation</p>
+							</dd>
+						</dl>
 					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
@@ -335,7 +343,7 @@
 					<div class="tsd-signature tsd-kind-icon">Extended<wbr>Fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">keyof TO</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">keyof FROM</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L16">objectGuards.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L16">objectGuards.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -350,7 +358,7 @@
 					<div class="tsd-signature tsd-kind-icon">Literable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L154">restrictingGuards.ts:154</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L154">restrictingGuards.ts:154</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -360,7 +368,7 @@
 					<div class="tsd-signature tsd-kind-icon">Literal<wbr>Check<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LiteralCheck&lt;T1, T2, BAD&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L158">restrictingGuards.ts:158</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L158">restrictingGuards.ts:158</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -370,7 +378,7 @@
 					<div class="tsd-signature tsd-kind-icon">Narrow<wbr>Property<wbr>Guard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L18">propertyGuards.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L18">propertyGuards.ts:18</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -407,13 +415,17 @@
 					<div class="tsd-signature tsd-kind-icon">Narrowed<wbr>Fields<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">{ [P in K]-?: FROM[P] extends TO[P] ? never : P; }[K]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L10">objectGuards.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L10">objectGuards.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Fields in <code>FROM</code> that are narrowed in <code>TO</code></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>remark</dt>
+							<dd><p>for this one you HAVE to have K as a parameter
+								if you move <code>keyof FROM</code> into the mapping, the result of this type is <code>any</code></p>
+								<p>Fields in <code>FROM</code> that are narrowed in <code>TO</code></p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
@@ -422,7 +434,7 @@
 					<div class="tsd-signature tsd-kind-icon">Negatable<wbr>Guard<span class="tsd-signature-symbol">:</span> <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/NegatableGuard.ts#L3">NegatableGuard.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/NegatableGuard.ts#L3">NegatableGuard.ts:3</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -432,7 +444,7 @@
 					<div class="tsd-signature tsd-kind-icon">Optional<wbr>Guards<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="globals.html#requiredguards" class="tsd-signature-type">RequiredGuards</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">keyof TO</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L33">objectGuards.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L33">objectGuards.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -442,7 +454,7 @@
 					<div class="tsd-signature tsd-kind-icon">Optional<wbr>Property<wbr>Guard<span class="tsd-signature-symbol">:</span> <a href="globals.html#strictoptionalpropertyguard" class="tsd-signature-type">StrictOptionalPropertyGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">DEST_PROP_TYPE</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L16">propertyGuards.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L16">propertyGuards.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -452,7 +464,7 @@
 					<div class="tsd-signature tsd-kind-icon">Primitive<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"string"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"number"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"bigint"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"boolean"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"symbol"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"undefined"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"object"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"function"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L4">primitiveGuards.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L4">primitiveGuards.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -462,7 +474,7 @@
 					<div class="tsd-signature tsd-kind-icon">Property<wbr>Guard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L8">propertyGuards.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L8">propertyGuards.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -499,7 +511,7 @@
 					<div class="tsd-signature tsd-kind-icon">Property<wbr>Guard<wbr>Factory<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L26">objectGuards.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L26">objectGuards.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -535,7 +547,7 @@
 					<div class="tsd-signature tsd-kind-icon">Property<wbr>Guards<span class="tsd-signature-symbol">:</span> <a href="globals.html#requiredguards" class="tsd-signature-type">RequiredGuards</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="globals.html#optionalguards" class="tsd-signature-type">OptionalGuards</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L38">objectGuards.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L38">objectGuards.ts:38</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -550,7 +562,7 @@
 					<div class="tsd-signature tsd-kind-icon">Reason<wbr>Guard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/ReasonGuard.ts#L1">ReasonGuard.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/ReasonGuard.ts#L1">ReasonGuard.ts:1</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -587,7 +599,7 @@
 					<div class="tsd-signature tsd-kind-icon">Required<wbr>Guards<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L29">objectGuards.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L29">objectGuards.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -602,7 +614,7 @@
 					<div class="tsd-signature tsd-kind-icon">Strict<wbr>Optional<wbr>Property<wbr>Guard<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L12">propertyGuards.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L12">propertyGuards.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -639,7 +651,7 @@
 					<div class="tsd-signature tsd-kind-icon">Top<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">keyof object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L117">restrictingGuards.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L117">restrictingGuards.ts:117</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -652,7 +664,7 @@
 					<div class="tsd-signature tsd-kind-icon">CLOSED<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> =&nbsp;Symbol(&#x27;closed&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L88">restrictingGuards.ts:88</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L88">restrictingGuards.ts:88</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -662,7 +674,7 @@
 					<div class="tsd-signature tsd-kind-icon">OPEN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> =&nbsp;Symbol(&#x27;open&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L87">restrictingGuards.ts:87</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L87">restrictingGuards.ts:87</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -672,7 +684,7 @@
 					<div class="tsd-signature tsd-kind-icon">UUIDRegex<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> =&nbsp;/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L16">restrictingGuards.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L16">restrictingGuards.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -682,9 +694,89 @@
 					<div class="tsd-signature tsd-kind-icon">false<wbr>Guard<span class="tsd-signature-symbol">:</span> <a href="globals.html#negatableguard" class="tsd-signature-type">NegatableGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard(() &#x3D;&gt; {throw new Error(&#x27;false&#x27;);})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/constantGuards.ts#L8">constantGuards.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/constantGuards.ts#L8">constantGuards.ts:8</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="getrawalt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Raw<wbr>Alt</h3>
+					<div class="tsd-signature tsd-kind-icon">get<wbr>Raw<wbr>Alt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;&lt;(&lt;LEFT, RIGHT&gt;(left: ReasonGuard&lt;LEFT|RIGHT, LEFT&gt;) &#x3D;&gt;ReasonGuard&lt;LEFT|RIGHT, LEFT&gt;)&gt;((left) &#x3D;&gt; left)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/altGuard.ts#L14">Combinators/altGuard.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-has-type-parameter tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon">&lt;LEFT, RIGHT&gt;<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-type-parameters-title">Type parameters</h4>
+										<ul class="tsd-type-parameters">
+											<li>
+												<h4>LEFT</h4>
+											</li>
+											<li>
+												<h4>RIGHT</h4>
+											</li>
+										</ul>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>left: <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="getrawnegatedalt" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Raw<wbr>Negated<wbr>Alt</h3>
+					<div class="tsd-signature tsd-kind-icon">get<wbr>Raw<wbr>Negated<wbr>Alt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;&lt;(&lt;LEFT, RIGHT&gt;(left: ReasonGuard&lt;LEFT|RIGHT, LEFT&gt;) &#x3D;&gt;ReasonGuard&lt;LEFT|RIGHT, RIGHT&gt;)&gt;((left) &#x3D;&gt; notGuard(left))</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/altGuard.ts#L18">Combinators/altGuard.ts:18</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-has-type-parameter tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon">&lt;LEFT, RIGHT&gt;<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">&gt;</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-type-parameters-title">Type parameters</h4>
+										<ul class="tsd-type-parameters">
+											<li>
+												<h4>LEFT</h4>
+											</li>
+											<li>
+												<h4>RIGHT</h4>
+											</li>
+										</ul>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>left: <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="isarray" class="tsd-anchor"></a>
@@ -692,7 +784,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Array<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getInstanceTypeCheck(Array)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/instanceGuards.ts#L12">instanceGuards.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/instanceGuards.ts#L20">instanceGuards.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -702,7 +794,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Big<wbr>Int<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getPrimitiveTypeCheck&lt;BigInt&gt;(&#x27;bigint&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L32">primitiveGuards.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L42">primitiveGuards.ts:42</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -712,14 +804,9 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Big<wbr>Int<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;string, string&gt;((input) &#x3D;&gt; {try {// eslint-disable-next-line 6river/new-capBigInt(input);return &#x27;is BigInt-string&#x27;;} catch (err) {throw new Error(&#x27;is not BigInt-string&#x27;);}})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/parseGuards.ts#L28">parseGuards.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/parseGuards.ts#L22">parseGuards.ts:22</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Would BigInt parse this input?</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="isboolean" class="tsd-anchor"></a>
@@ -727,7 +814,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Boolean<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getPrimitiveTypeCheck&lt;boolean&gt;(&#x27;boolean&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L29">primitiveGuards.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L39">primitiveGuards.ts:39</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -737,7 +824,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Date<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getInstanceTypeCheck(Date)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/instanceGuards.ts#L11">instanceGuards.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/instanceGuards.ts#L19">instanceGuards.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -747,7 +834,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Date<wbr>OrDate<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;orGuard(thenGuard(isString,isDateString),isDate)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L8">restrictingGuards.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L8">restrictingGuards.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -757,14 +844,9 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Date<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;string, string&gt;((input) &#x3D;&gt; {if (!isNaN(Date.parse(input))) {return &#x27;is Date-string&#x27;;} else {throw new Error(&#x27;is not Date-string&#x27;);}})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/parseGuards.ts#L17">parseGuards.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/parseGuards.ts#L13">parseGuards.ts:13</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Would Date.parse parse this input?</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="isfunction" class="tsd-anchor"></a>
@@ -772,7 +854,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getPrimitiveTypeCheck&lt;Function&gt;(&#x27;function&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L30">primitiveGuards.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L40">primitiveGuards.ts:40</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -782,7 +864,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Literable<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;orGuard(orGuard(isString,isSymbol),isNumber)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L163">restrictingGuards.ts:163</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L163">restrictingGuards.ts:163</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -792,7 +874,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Null<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;unknown, null&gt;((input) &#x3D;&gt; {if (input &#x3D;&#x3D;&#x3D; null) {return &#x60;null&#x60;;}throw new Error(&#x27;not null&#x27;);})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L20">primitiveGuards.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L30">primitiveGuards.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -802,7 +884,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getPrimitiveTypeCheck&lt;number&gt;(&#x27;number&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L27">primitiveGuards.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L37">primitiveGuards.ts:37</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -812,14 +894,9 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Number<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;string, string&gt;((input) &#x3D;&gt; {if (!isNaN(Number.parseFloat(input))) {return &#x27;is Number-string&#x27;;} else {throw new Error(&#x27;is not Number-string&#x27;);}})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/parseGuards.ts#L6">parseGuards.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/parseGuards.ts#L4">parseGuards.ts:4</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Would Number.parseFloat parse this input?</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable">
 					<a name="isobject" class="tsd-anchor"></a>
@@ -827,7 +904,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;andGuard(getPrimitiveTypeCheck&lt;object&gt;(&#x27;object&#x27;),notGuard(isNull))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L33">primitiveGuards.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L43">primitiveGuards.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -837,7 +914,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>String<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getPrimitiveTypeCheck&lt;string&gt;(&#x27;string&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L28">primitiveGuards.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L38">primitiveGuards.ts:38</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -847,7 +924,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;getPrimitiveTypeCheck&lt;symbol&gt;(&#x27;symbol&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L31">primitiveGuards.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L41">primitiveGuards.ts:41</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -857,7 +934,7 @@
 					<div class="tsd-signature tsd-kind-icon">isUUID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;thenGuard(isString, isUUIDString)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L26">restrictingGuards.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L26">restrictingGuards.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -867,7 +944,7 @@
 					<div class="tsd-signature tsd-kind-icon">isUUIDString<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;string, string&gt;((input) &#x3D;&gt; {if (UUIDRegex.test(input)) {return &#x27;Valid UUID&#x27;;} else {throw new Error(&#x27;Not a valid UUID&#x27;);}})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L18">restrictingGuards.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L18">restrictingGuards.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -877,7 +954,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Undefined<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;unknown, undefined&gt;((input) &#x3D;&gt; {if (input &#x3D;&#x3D;&#x3D; undefined) {return &#x60;undefined&#x60;;}throw new Error(&#x27;not undefined&#x27;);})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L14">primitiveGuards.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L24">primitiveGuards.ts:24</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -887,7 +964,7 @@
 					<div class="tsd-signature tsd-kind-icon">number<wbr>IsFinite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;number, number&gt;((input: number) &#x3D;&gt; {if (!Number.isFinite(input)) {throw new Error(&#x60;${input} is not finite&#x60;);}return &#x60;${input} is finite&#x60;;})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L35">restrictingGuards.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L35">restrictingGuards.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -897,7 +974,7 @@
 					<div class="tsd-signature tsd-kind-icon">number<wbr>IsGreater<wbr>Than<wbr>OrEqual<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">numberIsAtLeast</a><span class="tsd-signature-symbol"> =&nbsp;numberIsAtLeast</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L85">restrictingGuards.ts:85</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L85">restrictingGuards.ts:85</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -907,7 +984,7 @@
 					<div class="tsd-signature tsd-kind-icon">number<wbr>IsInteger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard&lt;number, number&gt;((input: number) &#x3D;&gt; {if (!Number.isInteger(input)) {throw new Error(&#x60;${input} is not an integer&#x60;);}return &#x60;${input} is an integer&#x60;;})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L28">restrictingGuards.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L28">restrictingGuards.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -917,7 +994,7 @@
 					<div class="tsd-signature tsd-kind-icon">number<wbr>IsLess<wbr>Than<wbr>OrEqual<span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type">numberIsAtMost</a><span class="tsd-signature-symbol"> =&nbsp;numberIsAtMost</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L84">restrictingGuards.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L84">restrictingGuards.ts:84</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -927,7 +1004,7 @@
 					<div class="tsd-signature tsd-kind-icon">number<wbr>IsSafe<wbr>Integer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;andGuard(numberIsInteger,interval(&#x27;&gt;&#x3D;&#x27;, Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, &#x27;&lt;&#x3D;&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L138">restrictingGuards.ts:138</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L138">restrictingGuards.ts:138</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -937,7 +1014,7 @@
 					<div class="tsd-signature tsd-kind-icon">object<wbr>Has<wbr>Definition<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;&lt;(&lt;FROM extends object, TO extends FROM&gt;(definition: PropertyGuards&lt;FROM, TO&gt;) &#x3D;&gt; ReasonGuard&lt;FROM, TO&gt;)&gt;((definition) &#x3D;&gt;(input, output &#x3D; [], confirmations &#x3D; []) &#x3D;&gt; checkDefinition(definition, input, output, confirmations))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L82">objectGuards.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L82">objectGuards.ts:82</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -977,13 +1054,53 @@
 					<div class="tsd-signature tsd-kind-icon">true<wbr>Guard<span class="tsd-signature-symbol">:</span> <a href="globals.html#negatableguard" class="tsd-signature-type">NegatableGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;checkerToGuard(() &#x3D;&gt; &#x27;true&#x27;)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/constantGuards.ts#L5">constantGuards.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/constantGuards.ts#L5">constantGuards.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="altguard" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> alt<wbr>Guard</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">alt<wbr>Guard&lt;LEFT, RIGHT&gt;<span class="tsd-signature-symbol">(</span>left<span class="tsd-signature-symbol">: </span><a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/altGuard.ts#L9">Combinators/altGuard.ts:9</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>A guard that narrows an A/B choice to a single alternative</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>LEFT</h4>
+								</li>
+								<li>
+									<h4>RIGHT</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>left: <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RIGHT</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">LEFT</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span>
+								<span class="tsd-signature-symbol"> &amp; </span>
+								<span class="tsd-signature-type">object</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="andguard" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> and<wbr>Guard</h3>
@@ -994,7 +1111,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/andGuard.ts#L6">Combinators/andGuard.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/andGuard.ts#L6">Combinators/andGuard.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1035,7 +1152,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/arrayFilterGuard.ts#L8">arrayFilterGuard.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/arrayFilterGuard.ts#L8">arrayFilterGuard.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1072,7 +1189,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/arrayHasType.ts#L7">arrayHasType.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/arrayHasType.ts#L7">arrayHasType.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1104,7 +1221,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/NegatableGuard.ts#L14">NegatableGuard.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/NegatableGuard.ts#L14">NegatableGuard.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1169,7 +1286,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L40">objectGuards.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L40">objectGuards.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1210,7 +1327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Checker.ts#L11">Checker.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Checker.ts#L14">Checker.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1254,7 +1371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/ReasonGuard.ts#L7">ReasonGuard.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/ReasonGuard.ts#L7">ReasonGuard.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1286,7 +1403,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/constantGuards.ts#L13">constantGuards.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/constantGuards.ts#L13">constantGuards.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1316,19 +1433,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/instanceGuards.ts#L3">instanceGuards.ts:3</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/instanceGuards.ts#L11">instanceGuards.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>INST</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>is a generic for the instance type to guard for</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>ctor: <span class="tsd-signature-type">object</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>constructor</p>
+										</div>
+									</div>
 									<ul class="tsd-parameters">
 									</ul>
 								</li>
@@ -1337,6 +1462,9 @@
 								<span class="tsd-signature-symbol"> &amp; </span>
 								<span class="tsd-signature-type">object</span>
 							</h4>
+							<p><a href="#checkertoguard">checkToGuard</a></p>
+							<h3 id="examples">Examples</h3>
+							<p><a href="#isdate">isDate</a>, <a href="#isarray">isArray</a></p>
 						</li>
 					</ul>
 				</section>
@@ -1350,13 +1478,21 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/primitiveGuards.ts#L7">primitiveGuards.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/primitiveGuards.ts#L17">primitiveGuards.ts:17</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Factory for primitive reason guards</p>
+								</div>
+							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
 									<h4>PRIM</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>is a generic representing the type you want to guard for</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1369,6 +1505,11 @@
 								<span class="tsd-signature-symbol"> &amp; </span>
 								<span class="tsd-signature-type">object</span>
 							</h4>
+							<p><a href="#checkertoguard">checkerToGuard</a></p>
+							<p>###Examples
+								<a href="#isnumber">isNumber</a>, <a href="#isstring">isString</a>, <a href="#isboolean">isBoolean</a>,
+								<a href="#isfunciton">isFunction</a>, <a href="#issymbol">isSymbol</a>, <a href="#isBigInt">isBigInt</a>,
+							<a href="#isobject">isObject</a></p>
 						</li>
 					</ul>
 				</section>
@@ -1382,7 +1523,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/andGuard.ts#L14">Combinators/andGuard.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/andGuard.ts#L14">Combinators/andGuard.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1420,10 +1561,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Checker.ts#L21">Checker.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Checker.ts#L25">Checker.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>asmemberof</dt>
+									<dd><p>checkerToGuard</p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -1438,8 +1584,6 @@
 							<ul class="tsd-parameters">
 								<li>
 									<h5>checker: <a href="globals.html#checker" class="tsd-signature-type">Checker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="globals.html#reasonguard" class="tsd-signature-type">ReasonGuard</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">FROM</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TO</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1456,7 +1600,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/andGuard.ts#L23">Combinators/andGuard.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/andGuard.ts#L23">Combinators/andGuard.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1494,7 +1638,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/orGuard.ts#L40">Combinators/orGuard.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/orGuard.ts#L40">Combinators/orGuard.ts:40</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1532,7 +1676,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/thenGuard.ts#L23">Combinators/thenGuard.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/thenGuard.ts#L23">Combinators/thenGuard.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1570,7 +1714,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Checker.ts#L33">Checker.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Checker.ts#L37">Checker.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1602,7 +1746,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/notGuard.ts#L14">Combinators/notGuard.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/notGuard.ts#L14">Combinators/notGuard.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1637,7 +1781,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/orGuard.ts#L14">Combinators/orGuard.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/orGuard.ts#L14">Combinators/orGuard.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1675,7 +1819,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/thenGuard.ts#L14">Combinators/thenGuard.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/thenGuard.ts#L14">Combinators/thenGuard.ts:14</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1713,7 +1857,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L80">propertyGuards.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L80">propertyGuards.ts:80</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1745,7 +1889,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L24">propertyGuards.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L24">propertyGuards.ts:24</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1777,7 +1921,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L130">restrictingGuards.ts:130</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L130">restrictingGuards.ts:130</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1803,7 +1947,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L119">restrictingGuards.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L119">restrictingGuards.ts:119</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1829,7 +1973,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/arrayHasType.ts#L20">arrayHasType.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/arrayHasType.ts#L20">arrayHasType.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1858,7 +2002,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L176">restrictingGuards.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L176">restrictingGuards.ts:176</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1901,7 +2045,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/NegatableGuard.ts#L9">NegatableGuard.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/NegatableGuard.ts#L9">NegatableGuard.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1936,7 +2080,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/objectGuards.ts#L88">objectGuards.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/objectGuards.ts#L88">objectGuards.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1968,7 +2112,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L143">restrictingGuards.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L143">restrictingGuards.ts:143</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2000,7 +2144,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L46">propertyGuards.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L46">propertyGuards.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2032,7 +2176,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/notGuard.ts#L4">Combinators/notGuard.ts:4</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/notGuard.ts#L4">Combinators/notGuard.ts:4</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2070,7 +2214,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L58">restrictingGuards.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L58">restrictingGuards.ts:58</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2096,7 +2240,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L78">restrictingGuards.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L78">restrictingGuards.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2122,7 +2266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L72">restrictingGuards.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L72">restrictingGuards.ts:72</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2148,7 +2292,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L50">restrictingGuards.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L50">restrictingGuards.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2174,7 +2318,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L42">restrictingGuards.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L42">restrictingGuards.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2200,7 +2344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L59">propertyGuards.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L59">propertyGuards.ts:59</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2229,7 +2373,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/orGuard.ts#L6">Combinators/orGuard.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/orGuard.ts#L6">Combinators/orGuard.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2270,7 +2414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L34">propertyGuards.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L34">propertyGuards.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2314,7 +2458,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L53">propertyGuards.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L53">propertyGuards.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2343,7 +2487,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/propertyGuards.ts#L71">propertyGuards.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/propertyGuards.ts#L71">propertyGuards.ts:71</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2372,7 +2516,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/Combinators/thenGuard.ts#L6">Combinators/thenGuard.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/Combinators/thenGuard.ts#L6">Combinators/thenGuard.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2413,7 +2557,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/constantGuards.ts#L29">constantGuards.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/constantGuards.ts#L29">constantGuards.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2460,7 +2604,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/constantGuards.ts#L23">constantGuards.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/constantGuards.ts#L23">constantGuards.ts:23</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2486,7 +2630,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/constantGuards.ts#L16">constantGuards.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/constantGuards.ts#L16">constantGuards.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2514,7 +2658,7 @@
 					<div class="tsd-signature tsd-kind-icon">bottom<wbr>Symbols<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L90">restrictingGuards.ts:90</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L90">restrictingGuards.ts:90</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -2523,7 +2667,7 @@
 						<div class="tsd-signature tsd-kind-icon">(<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L93">restrictingGuards.ts:93</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L93">restrictingGuards.ts:93</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2533,7 +2677,7 @@
 						<div class="tsd-signature tsd-kind-icon">><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L91">restrictingGuards.ts:91</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L91">restrictingGuards.ts:91</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2543,7 +2687,7 @@
 						<div class="tsd-signature tsd-kind-icon">>=<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L96">restrictingGuards.ts:96</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L96">restrictingGuards.ts:96</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2553,7 +2697,7 @@
 						<div class="tsd-signature tsd-kind-icon">GT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L95">restrictingGuards.ts:95</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L95">restrictingGuards.ts:95</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2563,7 +2707,7 @@
 						<div class="tsd-signature tsd-kind-icon">GTE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L100">restrictingGuards.ts:100</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L100">restrictingGuards.ts:100</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2573,7 +2717,7 @@
 						<div class="tsd-signature tsd-kind-icon">[<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L98">restrictingGuards.ts:98</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L98">restrictingGuards.ts:98</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2583,7 +2727,7 @@
 						<div class="tsd-signature tsd-kind-icon">closed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L97">restrictingGuards.ts:97</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L97">restrictingGuards.ts:97</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2593,7 +2737,7 @@
 						<div class="tsd-signature tsd-kind-icon">gt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L94">restrictingGuards.ts:94</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L94">restrictingGuards.ts:94</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2603,7 +2747,7 @@
 						<div class="tsd-signature tsd-kind-icon">gte<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L99">restrictingGuards.ts:99</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L99">restrictingGuards.ts:99</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2613,7 +2757,7 @@
 						<div class="tsd-signature tsd-kind-icon">open<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L92">restrictingGuards.ts:92</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L92">restrictingGuards.ts:92</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2624,7 +2768,7 @@
 					<div class="tsd-signature tsd-kind-icon">top<wbr>Symbols<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L103">restrictingGuards.ts:103</a></li>
+							<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L103">restrictingGuards.ts:103</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -2633,7 +2777,7 @@
 						<div class="tsd-signature tsd-kind-icon">)<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L106">restrictingGuards.ts:106</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L106">restrictingGuards.ts:106</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2643,7 +2787,7 @@
 						<div class="tsd-signature tsd-kind-icon"><<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L104">restrictingGuards.ts:104</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L104">restrictingGuards.ts:104</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2653,7 +2797,7 @@
 						<div class="tsd-signature tsd-kind-icon"><=<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L109">restrictingGuards.ts:109</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L109">restrictingGuards.ts:109</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2663,7 +2807,7 @@
 						<div class="tsd-signature tsd-kind-icon">LT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L108">restrictingGuards.ts:108</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L108">restrictingGuards.ts:108</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2673,7 +2817,7 @@
 						<div class="tsd-signature tsd-kind-icon">LTE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L113">restrictingGuards.ts:113</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L113">restrictingGuards.ts:113</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2683,7 +2827,7 @@
 						<div class="tsd-signature tsd-kind-icon">]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L111">restrictingGuards.ts:111</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L111">restrictingGuards.ts:111</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2693,7 +2837,7 @@
 						<div class="tsd-signature tsd-kind-icon">closed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L110">restrictingGuards.ts:110</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L110">restrictingGuards.ts:110</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2703,7 +2847,7 @@
 						<div class="tsd-signature tsd-kind-icon">lt<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L107">restrictingGuards.ts:107</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L107">restrictingGuards.ts:107</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2713,7 +2857,7 @@
 						<div class="tsd-signature tsd-kind-icon">lte<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;CLOSED</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L112">restrictingGuards.ts:112</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L112">restrictingGuards.ts:112</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2723,7 +2867,7 @@
 						<div class="tsd-signature tsd-kind-icon">open<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol"> =&nbsp;OPEN</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/3f8cb13/src/restrictingGuards.ts#L105">restrictingGuards.ts:105</a></li>
+								<li>Defined in <a href="https://github.com/6RiverSystems/reason-guard/blob/ca8e7a7/src/restrictingGuards.ts#L105">restrictingGuards.ts:105</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2827,6 +2971,12 @@
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#falseguard" class="tsd-kind-icon">false<wbr>Guard</a>
 					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#getrawalt" class="tsd-kind-icon">get<wbr>Raw<wbr>Alt</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#getrawnegatedalt" class="tsd-kind-icon">get<wbr>Raw<wbr>Negated<wbr>Alt</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#isarray" class="tsd-kind-icon">is<wbr>Array</a>
 					</li>
@@ -2901,6 +3051,9 @@
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#trueguard" class="tsd-kind-icon">true<wbr>Guard</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#altguard" class="tsd-kind-icon">alt<wbr>Guard</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#andguard" class="tsd-kind-icon">and<wbr>Guard</a>
