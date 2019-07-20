@@ -11,3 +11,4 @@ export * from './constantGuards';
 export * from './NegatableGuard';
 export * from './parseGuards';
 export * from './arrayFilterGuard';
+export * from './tupleGuards';
