@@ -22,8 +22,8 @@
     "test": "npm run only:test",
     "precommit": "npm test",
     "htmlcov": "npm run htmlcov:$(bash -c 'echo $OSTYPE')",
-    "htmlcov:linux-gnu": "xdg-open coverage/index.html",
-    "htmlcov:darwin": "open coverage/index.html",
+    "htmlcov:linux": "xdg-open coverage/index.html",
+    "htmlcov:darwi": "open coverage/index.html",
     "clean": "rm -rf coverage/ dist/ .nyc_output/"
   },
   "dependencies": {},
