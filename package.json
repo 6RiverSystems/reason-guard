@@ -7,9 +7,7 @@
     "url": "https://github.com/6RiverSystems/reason-guard.git"
   },
   "main": "dist/src/index.js",
-  "contributors": [
-    "David Durschlag <ddurschlag@6river.com>"
-  ],
+  "contributors": [],
   "scripts": {
     "lint": "eslint --ext .ts .",
     "only:build": "tsc",
@@ -21,9 +19,7 @@
     "pretest": "npm run build",
     "test": "npm run only:test",
     "precommit": "npm test",
-    "htmlcov": "npm run htmlcov:$(bash -c 'echo $OSTYPE')",
-    "htmlcov:linux-gnu": "xdg-open coverage/index.html",
-    "htmlcov:darwin": "open coverage/index.html",
+    "htmlcov": "opener coverage/index.html",
     "clean": "rm -rf coverage/ dist/ .nyc_output/"
   },
   "dependencies": {},
@@ -32,7 +28,7 @@
     "@commitlint/cli": "8.1.0",
     "@types/chai": "4.1.7",
     "@types/mocha": "5.2.7",
-    "@types/node": "12.6.9",
+    "@types/node": "10.14.15",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
     "chai": "4.2.0",
@@ -43,6 +39,7 @@
     "mocha": "6.2.0",
     "mocha-junit-reporter": "1.23.1",
     "nyc": "14.1.1",
+    "opener": "1.5.1",
     "source-map-support": "0.5.13",
     "typescript": "3.5.3"
   },
