@@ -27,6 +27,22 @@ describe('primitive guards', function() {
 			assertGuards(false)(primitive.isString, {});
 		});
 	});
+	context('isFunction', function() {
+		it('guards for functions', function() {
+			assertGuards(true)(primitive.isFunction, () => {});
+			assertGuards(true)(primitive.isFunction, async function() {
+				return Promise.resolve(true);
+			});
+		});
+		it('guards against non-functions', function() {
+			assertGuards(false)(primitive.isFunction, 7);
+			assertGuards(false)(primitive.isFunction, undefined);
+			assertGuards(false)(primitive.isFunction, null);
+			assertGuards(false)(primitive.isFunction, {});
+			assertGuards(false)(primitive.isFunction, 'string');
+			assertGuards(false)(primitive.isFunction, []);
+		});
+	});
 	context('isUndefined', function() {
 		it('guards for undefined', function() {
 			assertGuards(true)(primitive.isUndefined, undefined);
