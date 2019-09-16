@@ -10,13 +10,13 @@ export class FluentGuardBuilder<FROM, TO extends FROM> {
 	public get guard() {
 		return this._guard;
 	}
-	public or(guard: ReasonGuard<FROM, TO>) {
+	public or<TO2 extends FROM>(guard: ReasonGuard<FROM, TO2>) {
 		return new FluentGuardBuilder(orGuard(this.guard, guard));
 	}
-	public and(guard: ReasonGuard<FROM, TO>) {
+	public and<TO2 extends FROM>(guard: ReasonGuard<FROM, TO2>) {
 		return new FluentGuardBuilder(andGuard(this.guard, guard));
 	}
-	public then(guard: ReasonGuard<FROM, TO>) {
+	public then<TO2 extends TO>(guard: ReasonGuard<TO, TO2>) {
 		return new FluentGuardBuilder(thenGuard(this.guard, guard));
 	}
 	public not() {
