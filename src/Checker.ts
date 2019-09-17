@@ -19,6 +19,8 @@ export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
 /**
  *
  * @param checker
+ * @remark
+ * fills error or confirmation array based on the results of the checker function
  */
 
 function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
