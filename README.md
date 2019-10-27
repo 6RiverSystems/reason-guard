@@ -10,3 +10,6 @@ TypeScript library to build typeguards that explain their decisions
 
 # examples
 - See the [example guard tests](test/examples)
+
+# typedoc
+- `npm run typedoc` to compile documentation which can be found at the `docs` folder
