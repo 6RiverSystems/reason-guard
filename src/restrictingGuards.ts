@@ -13,7 +13,7 @@ export const isDateOrDateString = orGuard(
 	isDate
 );
 
-const UUIDRegex = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/;
+const UUIDRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
 export const isUUIDString = checkerToGuard<string, string>((input) => {
 	if (UUIDRegex.test(input)) {
