@@ -1,7 +1,7 @@
 import {ReasonGuard} from './ReasonGuard';
 import {NegatableGuard, buildNegatable} from './NegatableGuard';
 
-export type Checker<FROM> = (input: FROM) => string;
+export type Checker<FROM> = (input: FROM, context?: PropertyKey[]) => string;
 
 export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
 	checker: Checker<FROM>
@@ -11,12 +11,16 @@ export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
 );
 
 function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
-	return (input, e = [], c = []): input is TO => {
+	return (input, e = [], c = [], context = []): input is TO => {
 		try {
-			c.push(checker(input));
+			c.push(checker(input, context));
 			return true;
 		} catch (err) {
-			e.push(err);
+			if (Array.isArray(err)) {
+				e.push(...err);
+			} else {
+				e.push(err);
+			}
 			return false;
 		}
 	};
@@ -37,4 +41,12 @@ function getRawNegation<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGu
 			return true;
 		}
 	};
+}
+
+export function pushContext<T extends PropertyKey>(p: T, context?: PropertyKey[]): PropertyKey[] {
+	if (context) {
+		return [...context, p];
+	} else {
+		return [p];
+	}
 }

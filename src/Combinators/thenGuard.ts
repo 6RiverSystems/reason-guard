@@ -15,8 +15,8 @@ function getRawThen<FROM, MID extends FROM, TO extends MID>(
 	left: ReasonGuard<FROM, MID>,
 	right: ReasonGuard<MID, TO>
 ): ReasonGuard<FROM, TO> {
-	return (input, output, confirmations): input is TO => {
-		return left(input, output, confirmations) && right(input, output, confirmations);
+	return (input, output, confirmations, context): input is TO => {
+		return left(input, output, confirmations, context) && right(input, output, confirmations, context);
 	};
 }
 

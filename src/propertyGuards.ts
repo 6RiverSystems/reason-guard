@@ -1,12 +1,16 @@
 import {ReasonGuard} from './ReasonGuard';
-import {checkerToGuard} from './Checker';
+import {checkerToGuard, pushContext} from './Checker';
 import {thenGuard, orGuard, notGuard} from './Combinators';
 import {isUndefined} from './primitiveGuards';
 import {isArrayOfType} from './arrayHasType';
 import {NegatableGuard} from './NegatableGuard';
+import {ContextError} from './ContextError';
+
+// TODO: we may have this type defined elsewhere already
+export type PropertyKey = string|number|symbol;
 
 export type PropertyGuard<DEST_PROP_TYPE> =
-<T extends string | number | symbol>(p: T) =>
+<T extends string | number | symbol>(p: T, context?: string) =>
 NegatableGuard<unknown, Record<T, DEST_PROP_TYPE>>;
 
 export type StrictOptionalPropertyGuard<DEST_PROP_TYPE> =
@@ -21,24 +25,30 @@ export type NarrowPropertyGuard<
 > = <T extends string | number | symbol>(p: T) =>
 NegatableGuard<Record<T, FROM_PROP_TYPE>, Record<T, DEST_PROP_TYPE>>;
 
+
 export const hasProperty =
 	<T extends string | number | symbol>
-	(p: T) => checkerToGuard<unknown, Record<T, unknown>, Partial<Record<T, never>> >((input: unknown) => {
-		const x: any = input;
-		// if (x[p] === undefined) throw new Error(`property ${p} is undefined`);
-		// if (x[p] === null) throw new Error(`property ${p} is null`); // is this right?
-		if (!(p in x)) throw new Error(`property ${p} is not present`);
-		return `property ${p} is present`;
-	});
+	(p: T) =>
+		checkerToGuard<unknown, Record<T, unknown>, Partial<Record<T, never>> >(
+			(input: unknown, context?: PropertyKey[]) => {
+				const x: any = input;
+				// if (x[p] === undefined) throw new Error(`property ${p} is undefined`);
+				// if (x[p] === null) throw new Error(`property ${p} is null`); // is this right?
+				if (!(p in x)) throw new ContextError(`property ${p} is not present`, pushContext(p, context));
+				return `property ${p} is present`;
+			});
 
 export const propertyHasType =
 	<FROMT, T extends string|number|symbol, TOT extends FROMT, TO extends Record<T, TOT>>
 	(itemGuard: ReasonGuard<FROMT, TOT>, p: T) =>
-		checkerToGuard<Record<T, FROMT>, Pick<TO, T>>((input) => {
+		checkerToGuard<Record<T, FROMT>, Pick<TO, T>>((input, context) => {
 			const innerErrors: Error[] = [];
 			const innerConfs: string[] = [];
-			if (!itemGuard(input[p], innerErrors, innerConfs)) {
-				throw new Error(`property ${p}: ${innerErrors[0].message}`);
+			const innerContext = pushContext(p, context);
+			if (!itemGuard(input[p], innerErrors, innerConfs, innerContext)) {
+				throw innerErrors.map((err) =>
+					new ContextError(`property ${p}: ${err.message}`,
+						err instanceof ContextError ? err.context : innerContext));
 			}
 			return `property ${p}: ${innerConfs[0]}`;
 		});
