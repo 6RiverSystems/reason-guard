@@ -6,5 +6,8 @@
 		{"language": "typescript", "autoFix": true}
 	],
 	// Use locally installed copy of TypeScript instead of the version that ships with the editor
-	"typescript.tsdk": "node_modules/typescript/lib"
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	}
 }
