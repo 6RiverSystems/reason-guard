@@ -1,5 +1,6 @@
 import {ReasonGuard} from './ReasonGuard';
 import {NegatableGuard, buildNegatable} from './NegatableGuard';
+import {CompositeError} from './ContextError';
 
 export type Checker<FROM> = (input: FROM, context?: PropertyKey[]) => string;
 
@@ -16,8 +17,8 @@ function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard
 			c.push(checker(input, context));
 			return true;
 		} catch (err) {
-			if (Array.isArray(err)) {
-				e.push(...err);
+			if (err instanceof CompositeError) {
+				e.push(...err.errors);
 			} else {
 				e.push(err);
 			}

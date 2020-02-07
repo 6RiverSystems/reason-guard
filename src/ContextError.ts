@@ -3,3 +3,9 @@ export class ContextError extends Error {
 		super(message);
 	}
 }
+
+export class CompositeError extends Error {
+	constructor(public readonly errors: ReadonlyArray<Error>) {
+		super(`composite of ${errors.length} error(s)`);
+	}
+}

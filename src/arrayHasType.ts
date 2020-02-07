@@ -3,7 +3,7 @@ import {checkerToGuard, pushContext} from './Checker';
 import {thenGuard} from './Combinators';
 import {isArray} from './instanceGuards';
 import {NegatableGuard} from './NegatableGuard';
-import {ContextError} from './ContextError';
+import {ContextError, CompositeError} from './ContextError';
 
 export const arrayHasType =
 	<TO>(itemGuard: ReasonGuard<unknown, TO>) =>
@@ -13,9 +13,9 @@ export const arrayHasType =
 				const innerConfs: string[] = [];
 				const innerContext = pushContext(i, context);
 				if (!itemGuard(input[i], innerErrors, innerConfs, innerContext)) {
-					throw innerErrors.map((err) =>
+					throw new CompositeError(innerErrors.map((err) =>
 						new ContextError(`element ${i}: ${err.message}`,
-							err instanceof ContextError ? err.context : innerContext)
+							err instanceof ContextError ? err.context : innerContext))
 					);
 				}
 			}

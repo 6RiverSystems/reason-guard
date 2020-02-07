@@ -1,7 +1,6 @@
 import {assert} from 'chai';
 import {assertGuards} from '../assertGuards';
-import {thenGuard,
-	isObject,
+import {
 	requiredProperty,
 	isString,
 	isNumber,
@@ -27,15 +26,12 @@ const isFeature = isObjectWithDefinition<Feature>({
 	bounds: requiredProperty(isBounds),
 });
 
-const mapGuard = thenGuard(
-	isObject,
-	isObjectWithDefinition<Map>({
-		version: requiredProperty(isString),
-		name: requiredProperty(isString),
-		bounds: requiredProperty(isBounds),
-		aisles: hasArrayProperty(isFeature),
-	})
-);
+const mapGuard = isObjectWithDefinition<Map>({
+	version: requiredProperty(isString),
+	name: requiredProperty(isString),
+	bounds: requiredProperty(isBounds),
+	aisles: hasArrayProperty(isFeature),
+});
 
 
 describe('guard context', function() {
@@ -60,8 +56,8 @@ describe('guard context', function() {
 		assertGuards(false)(mapGuard, test);
 
 		const errors: ContextError[] = [];
-		mapGuard(test, errors, []);
-		assert.lengthOf(errors, 5, `no error reason for failed guard`);
+		assert.isFalse(mapGuard(test, errors));
+		assert.lengthOf(errors, 5);
 		assert.deepEqual(errors[0].context, ['version']);
 		assert.deepEqual(errors[1].context, ['bounds', 'x1']);
 		assert.deepEqual(errors[2].context, ['aisles', 0, 'name']);
