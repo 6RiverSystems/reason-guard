@@ -13,6 +13,7 @@ export const isDateOrDateString = orGuard(
 	isDate
 );
 
+// TODO investigate non-regex pattern checks
 const UUIDRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
 export const isUUIDString = checkerToGuard<string, string>((input) => {
