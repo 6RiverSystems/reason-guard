@@ -16,6 +16,19 @@ describe('restricting guards', function() {
 			badValues.forEach((badValue) => assertGuards(false)(guard, badValue));
 		});
 	});
+	context('isUUID', function() {
+		it('should guard for a valid UUID', function() {
+			assertGuards(true)(restricting.isUUID, '0ca8f69c-1d07-4404-9b82-d1d0eb492313');
+		});
+		it('should guard against a invalid UUID', function() {
+			assertGuards(false)(restricting.isUUID, '');
+			assertGuards(false)(restricting.isUUID, '123');
+			assertGuards(false)(restricting.isUUID, 'ABC0ca8f69c-1d07-4404-9b82-d1d0eb492313');
+			assertGuards(false)(restricting.isUUID, '0ca8f69c-1d07-4404-9b82-d1d0eb492313ABC');
+			assertGuards(false)(restricting.isUUID, ' 0ca8f69c-1d07-4404-9b82-d1d0eb492313ABC');
+			assertGuards(false)(restricting.isUUID, 123);
+		});
+	});
 	context('isLiteral', function() {
 		const testSymbol = Symbol('test');
 		const literalList = ['a', 3, testSymbol];
