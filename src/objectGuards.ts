@@ -38,7 +38,7 @@ export type OptionalGuards<FROM extends object, TO extends FROM> = Partial<Requi
 export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuards<FROM, TO> & OptionalGuards<FROM, TO>;
 
 function checkDefinition<FROM extends object, TO extends FROM>(
-	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[],
+	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[], context?: PropertyKey[]
 ): input is TO {
 	let anyPassed = false;
 	let anyFailed = false;
@@ -51,7 +51,7 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	function checkProperty<K extends keyof TO>(k: K) {
 		const propertyDefinition = unifiedDefs[k];
 		if (propertyDefinition) {
-			if (propertyDefinition(k)(input, output, confirmations)) {
+			if (propertyDefinition(k)(input, output, confirmations, context)) {
 				anyPassed = true;
 			} else {
 				anyFailed = true;
@@ -82,7 +82,8 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 export const objectHasDefinition =
 	<(<FROM extends object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
 		(definition) =>
-			(input, output = [], confirmations = []) => checkDefinition(definition, input, output, confirmations)
+			(input, output = [], confirmations = [], context = []) =>
+				checkDefinition(definition, input, output, confirmations, context)
 	);
 
 export const isObjectWithDefinition =

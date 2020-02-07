@@ -78,7 +78,7 @@ describe('property guards', function() {
 });
 
 function testGuardMaker(
-	guardMaker: <T extends string | number | symbol>(p: T) => ReasonGuard<unknown, unknown>, correctIndex: number
+	guardMaker: <T extends PropertyKey>(p: T) => ReasonGuard<unknown, unknown>, correctIndex: number
 ) {
 	it('guards for correct properties', function() {
 		assertGuards(true)(guardMaker('prop'), {prop: values[correctIndex]});
