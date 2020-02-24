@@ -1,6 +1,7 @@
-import {buildNegatable, notGuard, unnegatableConstantGuards} from '../src';
-import {assertGuards} from './assertGuards';
-import {assert} from 'chai';
+import { assert } from 'chai';
+
+import { buildNegatable, notGuard, unnegatableConstantGuards } from '../src';
+import { assertGuards } from './assertGuards';
 
 describe('NegatableGuard', function() {
 	context(buildNegatable.name, function() {

@@ -1,21 +1,22 @@
-import {ReasonGuard} from '../ReasonGuard';
-import {notGuard} from './notGuard';
-import {buildNegatable} from '../NegatableGuard';
-import {andGuard} from './andGuard';
+import { ReasonGuard } from '../ReasonGuard';
+import { notGuard } from './notGuard';
+import { buildNegatable } from '../NegatableGuard';
+import { andGuard } from './andGuard';
 
 export const orGuard = <FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,
-	right: ReasonGuard<FROM, RIGHT>
-) => buildNegatable(
+	right: ReasonGuard<FROM, RIGHT>,
+) =>
+	buildNegatable(
 		() => getRawOr(left, right),
-		() => getRawNegatedOr(left, right)
+		() => getRawNegatedOr(left, right),
 	);
 
 function getRawOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,
-	right: ReasonGuard<FROM, RIGHT>
-): ReasonGuard<FROM, LEFT|RIGHT> {
-	return (input, output = [], confirmations = []): input is LEFT|RIGHT => {
+	right: ReasonGuard<FROM, RIGHT>,
+): ReasonGuard<FROM, LEFT | RIGHT> {
+	return (input, output = [], confirmations = []): input is LEFT | RIGHT => {
 		try {
 			const innerErrors: Error[] = [];
 			const innerConfs: string[] = [];
@@ -39,7 +40,7 @@ function getRawOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 
 function getRawNegatedOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,
-	right: ReasonGuard<FROM, RIGHT>
+	right: ReasonGuard<FROM, RIGHT>,
 ): ReasonGuard<FROM, FROM> {
 	return andGuard(notGuard(left), notGuard(right));
 }

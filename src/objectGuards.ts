@@ -1,6 +1,6 @@
-import {ReasonGuard} from './ReasonGuard';
-import {thenGuard} from './Combinators';
-import {isObject} from './primitiveGuards';
+import { ReasonGuard } from './ReasonGuard';
+import { thenGuard } from './Combinators';
+import { isObject } from './primitiveGuards';
 
 // NOTE: for this one you HAVE to have K as a parameter
 // if you move `keyof FROM` into the mapping, the result of this type is `any`
@@ -18,27 +18,41 @@ type ExtendedFields<FROM, TO extends FROM> = Exclude<keyof TO, keyof FROM>;
 /**
  * Fields in `TO` that are different (type or presence) in `FROM`
  */
-export type ChangedFields<FROM extends object, TO extends FROM> = NarrowedFields<FROM, TO> | ExtendedFields<FROM, TO>;
+export type ChangedFields<FROM extends object, TO extends FROM> =
+	| NarrowedFields<FROM, TO>
+	| ExtendedFields<FROM, TO>;
 
 /**
  * A function from property name to guard on that property
  */
-type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends keyof TO> =
-	(p: P) => ReasonGuard<Pick<FROM, P & keyof FROM>, Pick<TO, P>>;
+type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends keyof TO> = (
+	p: P,
+) => ReasonGuard<Pick<FROM, P & keyof FROM>, Pick<TO, P>>;
 
-export type RequiredGuards<FROM extends object, TO extends FROM, K extends keyof TO = ChangedFields<FROM, TO>> = {
-	[P in K]-?: PropertyGuardFactory<FROM, TO, P>
-}
+export type RequiredGuards<
+	FROM extends object,
+	TO extends FROM,
+	K extends keyof TO = ChangedFields<FROM, TO>
+> = {
+	[P in K]-?: PropertyGuardFactory<FROM, TO, P>;
+};
 
-export type OptionalGuards<FROM extends object, TO extends FROM> = Partial<RequiredGuards<FROM, TO, keyof TO>>;
+export type OptionalGuards<FROM extends object, TO extends FROM> = Partial<
+	RequiredGuards<FROM, TO, keyof TO>
+>;
 
 /**
  *	A mapping from property names to factories for guards on those properties
  */
-export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuards<FROM, TO> & OptionalGuards<FROM, TO>;
+export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuards<FROM, TO> &
+	OptionalGuards<FROM, TO>;
 
 function checkDefinition<FROM extends object, TO extends FROM>(
-	definition: PropertyGuards<FROM, TO>, input: FROM, output: Error[], confirmations: string[], context?: PropertyKey[]
+	definition: PropertyGuards<FROM, TO>,
+	input: FROM,
+	output: Error[],
+	confirmations: string[],
+	context?: PropertyKey[],
 ): input is TO {
 	let anyPassed = false;
 	let anyFailed = false;
@@ -79,15 +93,12 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 // this would save typing, but can't figure out how to use it below (syntax-wise)
 // type PropertyGuardBuilder<FROM, TO extends FROM> = (definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>;
 
-export const objectHasDefinition =
-	<(<FROM extends object, TO extends FROM>(definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>)>(
-		(definition) =>
-			(input, output = [], confirmations = [], context = []) =>
-				checkDefinition(definition, input, output, confirmations, context)
-	);
+export const objectHasDefinition = <
+	<FROM extends object, TO extends FROM>(
+		definition: PropertyGuards<FROM, TO>,
+	) => ReasonGuard<FROM, TO>
+>(definition => (input, output = [], confirmations = [], context = []) =>
+	checkDefinition(definition, input, output, confirmations, context));
 
-export const isObjectWithDefinition =
-	<TO extends object>(definition: PropertyGuards<object, TO>) => thenGuard<unknown, object, TO>(
-		isObject,
-		objectHasDefinition(definition)
-	);
+export const isObjectWithDefinition = <TO extends object>(definition: PropertyGuards<object, TO>) =>
+	thenGuard<unknown, object, TO>(isObject, objectHasDefinition(definition));

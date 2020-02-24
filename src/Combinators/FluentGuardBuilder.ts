@@ -1,12 +1,11 @@
-import {orGuard} from './orGuard';
-import {andGuard} from './andGuard';
-import {thenGuard} from './thenGuard';
-import {notGuard} from './notGuard';
-import {ReasonGuard} from '../ReasonGuard';
+import { orGuard } from './orGuard';
+import { andGuard } from './andGuard';
+import { thenGuard } from './thenGuard';
+import { notGuard } from './notGuard';
+import { ReasonGuard } from '../ReasonGuard';
 
 export class FluentGuardBuilder<FROM, TO extends FROM> {
-	constructor(private readonly _guard: ReasonGuard<FROM, TO>) {
-	}
+	constructor(private readonly _guard: ReasonGuard<FROM, TO>) {}
 	public get guard() {
 		return this._guard;
 	}

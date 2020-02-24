@@ -1,7 +1,15 @@
-import {checkerToGuard} from './Checker';
-import {andGuard, notGuard} from './Combinators';
+import { checkerToGuard } from './Checker';
+import { andGuard, notGuard } from './Combinators';
 
-type Primitive = 'string'|'number'|'bigint'|'boolean'|'symbol'|'undefined'|'object'|'function';
+type Primitive =
+	| 'string'
+	| 'number'
+	| 'bigint'
+	| 'boolean'
+	| 'symbol'
+	| 'undefined'
+	| 'object'
+	| 'function';
 // Dangerous -- do not export!
 // We cannot guarantee that "x: PRIM" -> "typeof x === 'prim'"!
 function getPrimitiveTypeCheck<PRIM>(prim: Primitive) {
@@ -11,13 +19,13 @@ function getPrimitiveTypeCheck<PRIM>(prim: Primitive) {
 	});
 }
 
-export const isUndefined = checkerToGuard<unknown, undefined>((input) => {
+export const isUndefined = checkerToGuard<unknown, undefined>(input => {
 	if (input === undefined) {
 		return `undefined`;
 	}
 	throw new Error('not undefined');
 });
-export const isNull = checkerToGuard<unknown, null>((input) => {
+export const isNull = checkerToGuard<unknown, null>(input => {
 	if (input === null) {
 		return `null`;
 	}
@@ -30,7 +38,4 @@ export const isBoolean = getPrimitiveTypeCheck<boolean>('boolean');
 export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<symbol>('symbol');
 export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');
-export const isObject = andGuard(
-	getPrimitiveTypeCheck<object>('object'),
-	notGuard(isNull)
-);
+export const isObject = andGuard(getPrimitiveTypeCheck<object>('object'), notGuard(isNull));

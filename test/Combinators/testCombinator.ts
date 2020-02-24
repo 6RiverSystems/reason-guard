@@ -1,22 +1,19 @@
-import {ReasonGuard, constantGuards, unnegatableConstantGuards} from '../../src';
-import {assertGuards} from '../assertGuards';
+import { ReasonGuard, constantGuards, unnegatableConstantGuards } from '../../src';
+import { assertGuards } from '../assertGuards';
 
 export type Tautology = ReasonGuard<unknown, unknown>;
-export const abbrev = (b: boolean) => b ? 'T' : 'F';
+export const abbrev = (b: boolean) => (b ? 'T' : 'F');
 
 export function testOneArgCombinator(
-	char: string, result: [boolean, boolean, boolean, boolean],
-	combinator: (inner: Tautology) => Tautology
+	char: string,
+	result: [boolean, boolean, boolean, boolean],
+	combinator: (inner: Tautology) => Tautology,
 ) {
 	for (const guardSource of [constantGuards, unnegatableConstantGuards]) {
-		const t = (
-			success: boolean,
-			inner: boolean,
-		) => assertGuards(success)(combinator(guardSource(inner)), undefined);
-		const tt = (
-			success: boolean,
-			inner: boolean,
-		) => assertGuards(success)(combinator(combinator(guardSource(inner))), undefined);
+		const t = (success: boolean, inner: boolean) =>
+			assertGuards(success)(combinator(guardSource(inner)), undefined);
+		const tt = (success: boolean, inner: boolean) =>
+			assertGuards(success)(combinator(combinator(guardSource(inner))), undefined);
 		it(char + 'F=' + abbrev(result[0]), function() {
 			t(result[0], false);
 		});
@@ -35,13 +32,10 @@ export function testOneArgCombinator(
 export function testTwoArgCombinator(
 	char: string,
 	result: [boolean, boolean, boolean, boolean],
-	combinator: (left: Tautology, right: Tautology) => Tautology
+	combinator: (left: Tautology, right: Tautology) => Tautology,
 ) {
-	const t = (
-		success: boolean,
-		left: boolean,
-		right: boolean
-	) => assertGuards(success)(combinator(constantGuards(left), constantGuards(right)), undefined);
+	const t = (success: boolean, left: boolean, right: boolean) =>
+		assertGuards(success)(combinator(constantGuards(left), constantGuards(right)), undefined);
 	it('F' + char + 'F=' + abbrev(result[0]), function() {
 		t(result[0], false, false);
 	});

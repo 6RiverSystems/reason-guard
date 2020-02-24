@@ -1,15 +1,16 @@
-import {ReasonGuard} from './ReasonGuard';
-import {NegatableGuard, buildNegatable} from './NegatableGuard';
-import {CompositeError} from './ContextError';
+import { ReasonGuard } from './ReasonGuard';
+import { NegatableGuard, buildNegatable } from './NegatableGuard';
+import { CompositeError } from './ContextError';
 
 export type Checker<FROM> = (input: FROM, context?: PropertyKey[]) => string;
 
 export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
-	checker: Checker<FROM>
-) => NegatableGuard<FROM, TO, N> = (checker) => buildNegatable(
-	() => getRawGuard(checker),
-	() => getRawNegation(checker)
-);
+	checker: Checker<FROM>,
+) => NegatableGuard<FROM, TO, N> = checker =>
+	buildNegatable(
+		() => getRawGuard(checker),
+		() => getRawNegation(checker),
+	);
 
 function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
 	return (input, e = [], c = [], context = []): input is TO => {

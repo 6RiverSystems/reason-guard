@@ -1,22 +1,16 @@
-import {checkerToGuard} from './Checker';
-import {andGuard, orGuard, thenGuard} from './Combinators';
-import {ReasonGuard} from './ReasonGuard';
-import {isNumber, isSymbol, isString} from './primitiveGuards';
-import {isDate} from './instanceGuards';
-import {isDateString} from './parseGuards';
+import { checkerToGuard } from './Checker';
+import { andGuard, orGuard, thenGuard } from './Combinators';
+import { ReasonGuard } from './ReasonGuard';
+import { isNumber, isSymbol, isString } from './primitiveGuards';
+import { isDate } from './instanceGuards';
+import { isDateString } from './parseGuards';
 
-export const isDateOrDateString = orGuard(
-	thenGuard(
-		isString,
-		isDateString
-	),
-	isDate
-);
+export const isDateOrDateString = orGuard(thenGuard(isString, isDateString), isDate);
 
 // TODO investigate non-regex pattern checks
 const UUIDRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
-export const isUUIDString = checkerToGuard<string, string>((input) => {
+export const isUUIDString = checkerToGuard<string, string>(input => {
 	if (UUIDRegex.test(input)) {
 		return 'Valid UUID';
 	} else {
@@ -59,28 +53,22 @@ export const numberIsGreaterThan = (minimum: number) =>
 export const numberIs = (value: number) =>
 	Number.isNaN(value)
 		? checkerToGuard<number, number>((input: number) => {
-			if (Number.isNaN(input)) {
-				return `${input} = ${value}`;
-			}
-			throw new Error(`${input} != ${value}`);
-		})
+				if (Number.isNaN(input)) {
+					return `${input} = ${value}`;
+				}
+				throw new Error(`${input} != ${value}`);
+		  })
 		: checkerToGuard<number, number>((input: number) => {
-			if (input === value) {
-				return `${input} = ${value}`;
-			}
-			throw new Error(`${input} != ${value}`);
-		});
+				if (input === value) {
+					return `${input} = ${value}`;
+				}
+				throw new Error(`${input} != ${value}`);
+		  });
 export const numberIsAtMost = (maximum: number) =>
-	orGuard(
-		numberIsLessThan(maximum),
-		numberIs(maximum)
-	);
+	orGuard(numberIsLessThan(maximum), numberIs(maximum));
 
 export const numberIsAtLeast = (minimum: number) =>
-	orGuard(
-		numberIsGreaterThan(minimum),
-		numberIs(minimum)
-	);
+	orGuard(numberIsGreaterThan(minimum), numberIs(minimum));
 
 export const numberIsLessThanOrEqual = numberIsAtMost;
 export const numberIsGreaterThanOrEqual = numberIsAtLeast;
@@ -90,65 +78,66 @@ const CLOSED = Symbol('closed');
 
 const bottomSymbols = {
 	'>': OPEN,
-	'open': OPEN,
+	open: OPEN,
 	'(': OPEN,
-	'gt': OPEN,
-	'GT': OPEN,
+	gt: OPEN,
+	GT: OPEN,
 	'>=': CLOSED,
-	'closed': CLOSED,
+	closed: CLOSED,
 	'[': CLOSED,
-	'gte': CLOSED,
-	'GTE': CLOSED,
+	gte: CLOSED,
+	GTE: CLOSED,
 };
 
 const topSymbols = {
 	'<': OPEN,
-	'open': OPEN,
+	open: OPEN,
 	')': OPEN,
-	'lt': OPEN,
-	'LT': OPEN,
+	lt: OPEN,
+	LT: OPEN,
 	'<=': CLOSED,
-	'closed': CLOSED,
+	closed: CLOSED,
 	']': CLOSED,
-	'lte': CLOSED,
-	'LTE': CLOSED,
+	lte: CLOSED,
+	LTE: CLOSED,
 };
 
 export type Bottom = keyof typeof bottomSymbols;
 export type Top = keyof typeof topSymbols;
 
-export const interval =
-		(bottomType: Bottom, bottomValue: number) =>
-			(topValue: number, topType: Top) =>
-				thenGuard(
-					isNumber,
-					andGuard(
-						bottomSymbols[bottomType] === OPEN ? numberIsGreaterThan(bottomValue) : numberIsAtLeast(bottomValue),
-						topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue)
-					)
-				);
+export const interval = (bottomType: Bottom, bottomValue: number) => (
+	topValue: number,
+	topType: Top,
+) =>
+	thenGuard(
+		isNumber,
+		andGuard(
+			bottomSymbols[bottomType] === OPEN
+				? numberIsGreaterThan(bottomValue)
+				: numberIsAtLeast(bottomValue),
+			topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue),
+		),
+	);
 
-export const integralInterval =
-	(bottomType: Bottom, bottomValue: number) =>
-		(topValue: number, topType: Top) =>
-			thenGuard(
-				interval(bottomType, bottomValue)(topValue, topType),
-				numberIsInteger
-			);
+export const integralInterval = (bottomType: Bottom, bottomValue: number) => (
+	topValue: number,
+	topType: Top,
+) => thenGuard(interval(bottomType, bottomValue)(topValue, topType), numberIsInteger);
 
 export const numberIsSafeInteger = andGuard(
 	numberIsInteger,
-	interval('>=', Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, '<=')
+	interval('>=', Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, '<='),
 );
 
-export const isStrictEqual = <T>(value: T) => checkerToGuard<unknown, T>((input) => {
-	// have to use String() because of Symbols
-	if (value === input) {
-		return `is exactly ${String(value)}`;
-	} else {
-		throw new Error(`is not exactly ${String(input)}`);
-	}
-});
+export const isStrictEqual = <T>(value: T) =>
+	checkerToGuard<unknown, T>(input => {
+		// have to use String() because of Symbols
+		if (value === input) {
+			return `is exactly ${String(value)}`;
+		} else {
+			throw new Error(`is not exactly ${String(input)}`);
+		}
+	});
 
 // You can have boolean literal types, but they don't work with Record<>,
 // and they don't make sense in most contexts, so they are handled separately
@@ -156,18 +145,19 @@ type Literable = string | symbol | number;
 
 type ArrayToLiteral<T> = T extends ReadonlyArray<infer U> ? U : never;
 type BoolMap<T extends Literable> = Record<T, boolean>;
-type LiteralCheck<T1 extends Literable, T2 extends Literable, BAD = unknown> =
-	BoolMap<T1> extends BoolMap<T2> ? (BoolMap<T2> extends BoolMap<T1> ? T2 : BAD) : BAD;
-export type ArrayLiteralCheck<T extends Literable, TT extends ReadonlyArray<Literable>> =
-	LiteralCheck<T, ArrayToLiteral<TT>>;
+type LiteralCheck<T1 extends Literable, T2 extends Literable, BAD = unknown> = BoolMap<
+	T1
+> extends BoolMap<T2>
+	? BoolMap<T2> extends BoolMap<T1>
+		? T2
+		: BAD
+	: BAD;
+export type ArrayLiteralCheck<
+	T extends Literable,
+	TT extends ReadonlyArray<Literable>
+> = LiteralCheck<T, ArrayToLiteral<TT>>;
 
-export const isLiterable = orGuard(
-	orGuard(
-		isString,
-		isSymbol
-	),
-	isNumber
-);
+export const isLiterable = orGuard(orGuard(isString, isSymbol), isNumber);
 
 /**
  * Check that a value is a string literal type given the list of values.
@@ -176,7 +166,7 @@ export const isLiterable = orGuard(
  */
 export function isLiteral<T extends Literable, U extends T>(
 	keys: ReadonlyArray<U>,
-	literableGuard: ReasonGuard<unknown, Literable> = isLiterable
+	literableGuard: ReasonGuard<unknown, Literable> = isLiterable,
 ): ReasonGuard<unknown, ArrayLiteralCheck<T, typeof keys>> {
 	// want this to be computed once when building the guard
 	const values = new Set<Literable>(keys);
@@ -197,4 +187,4 @@ export function isLiteral<T extends Literable, U extends T>(
 			return false;
 		}
 	};
-};
+}
