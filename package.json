@@ -32,7 +32,7 @@
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
     "chai": "4.2.0",
-    "codecov": "3.5.0",
+    "codecov": "3.6.5",
     "eslint": "6.1.0",
     "eslint-config-6river": "2.1.0",
     "husky": "3.0.2",
