@@ -1,4 +1,5 @@
 import { assert } from 'chai';
+
 import { ReasonGuard } from '../src';
 
 type assertGuard = <FROM, MID extends FROM, TO extends FROM>(

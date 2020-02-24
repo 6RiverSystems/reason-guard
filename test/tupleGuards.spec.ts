@@ -1,7 +1,6 @@
 import { assert } from 'chai';
 
 import { assertGuards } from './assertGuards';
-
 import { isTuple, TupleGuard } from '../src/tupleGuards';
 import { isString, isNumber, isDate, ReasonGuard } from '../src';
 
