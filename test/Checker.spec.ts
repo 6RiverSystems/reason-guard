@@ -1,6 +1,6 @@
-import {assert} from 'chai';
+import { assert } from 'chai';
 
-import {checkerToGuard} from '../src';
+import { checkerToGuard } from '../src';
 
 describe('checkerToGuard', function() {
 	const trueChecker = () => 'true';

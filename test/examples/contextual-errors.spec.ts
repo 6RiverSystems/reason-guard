@@ -1,17 +1,18 @@
-import {assert} from 'chai';
-import {assertGuards} from '../assertGuards';
+import { assert } from 'chai';
+import { assertGuards } from '../assertGuards';
 import {
 	requiredProperty,
 	isString,
 	isNumber,
 	hasArrayProperty,
 	isObjectWithDefinition,
-	isLiteral} from '../../src';
-import {ContextError} from '../../src/ContextError';
+	isLiteral,
+} from '../../src';
+import { ContextError } from '../../src/ContextError';
 
-type Bounds = {x1: number, y1: number, x2: number, y2: number};
-type Feature = {name: string, type: 'aisle' | 'workflowPoint' | 'area', bounds: Bounds};
-type Map = {version: string, name: string, bounds: Bounds, aisles: Feature[]};
+type Bounds = { x1: number; y1: number; x2: number; y2: number };
+type Feature = { name: string; type: 'aisle' | 'workflowPoint' | 'area'; bounds: Bounds };
+type Map = { version: string; name: string; bounds: Bounds; aisles: Feature[] };
 
 const isBounds = isObjectWithDefinition<Bounds>({
 	x1: requiredProperty(isNumber),
@@ -33,17 +34,18 @@ const mapGuard = isObjectWithDefinition<Map>({
 	aisles: hasArrayProperty(isFeature),
 });
 
-
 describe('guard context', function() {
 	const map: Map = {
 		name: 'xyzzy',
 		version: '2.0',
-		bounds: {x1: 0, y1: 0, x2: 100, y2: 100},
-		aisles: [{
-			name: 'S2-A1',
-			type: 'aisle',
-			bounds: {x1: 0, y1: 0, x2: 100, y2: 100},
-		}],
+		bounds: { x1: 0, y1: 0, x2: 100, y2: 100 },
+		aisles: [
+			{
+				name: 'S2-A1',
+				type: 'aisle',
+				bounds: { x1: 0, y1: 0, x2: 100, y2: 100 },
+			},
+		],
 	};
 
 	it('resolves path for errors', function() {
@@ -51,7 +53,7 @@ describe('guard context', function() {
 		(test.version as any) = 77;
 		(test.bounds.x1 as any) = 'BAADF00D';
 		(test.aisles[0].bounds.x1 as any) = 'BAADF00D';
-		(test.aisles[0].type) = 'BAADF00D';
+		test.aisles[0].type = 'BAADF00D';
 		delete test.aisles[0].name;
 		assertGuards(false)(mapGuard, test);
 

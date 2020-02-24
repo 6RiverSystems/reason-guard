@@ -1,4 +1,4 @@
-import {assertGuards} from './assertGuards';
+import { assertGuards } from './assertGuards';
 import * as primitive from '../src/primitiveGuards';
 
 describe('primitive guards', function() {

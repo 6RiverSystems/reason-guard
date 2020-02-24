@@ -1,5 +1,5 @@
-import {testOneArgCombinator, Tautology, testTwoArgCombinator} from './testCombinator';
-import {notGuard, orGuard, andGuard, thenGuard} from '../../src';
+import { testOneArgCombinator, Tautology, testTwoArgCombinator } from './testCombinator';
+import { notGuard, orGuard, andGuard, thenGuard } from '../../src';
 
 describe('not', function() {
 	context('pure not', function() {

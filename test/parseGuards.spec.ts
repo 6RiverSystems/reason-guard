@@ -1,5 +1,5 @@
-import {isNumberString, isDateString, isBigIntString} from '../src';
-import {assertGuards} from './assertGuards';
+import { isNumberString, isDateString, isBigIntString } from '../src';
+import { assertGuards } from './assertGuards';
 
 describe('parse guards', function() {
 	context('number', function() {
@@ -30,7 +30,10 @@ describe('parse guards', function() {
 			assertGuards(true)(isBigIntString, '-10');
 			assertGuards(true)(isBigIntString, '0x1fffffffffffff');
 			assertGuards(true)(isBigIntString, '0b11111111111111111111111111111111111111111111111111111');
-			assertGuards(true)(isBigIntString, '0b111111111111111111111111111111111111111111111111111111');
+			assertGuards(true)(
+				isBigIntString,
+				'0b111111111111111111111111111111111111111111111111111111',
+			);
 		});
 		it('guards against non-BigInts', function() {
 			assertGuards(false)(isBigIntString, 'test');

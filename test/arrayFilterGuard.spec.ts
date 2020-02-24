@@ -1,5 +1,5 @@
-import {arrayFilterGuard, isString} from '../src';
-import {assert} from 'chai';
+import { arrayFilterGuard, isString } from '../src';
+import { assert } from 'chai';
 
 describe('arrayFilterGuard', function() {
 	const guard = arrayFilterGuard(isString);
