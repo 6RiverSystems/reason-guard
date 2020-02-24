@@ -36,7 +36,7 @@ const mapGuard = isObjectWithDefinition<Map>({
 
 describe('guard context', function() {
 	const map: Map = {
-		name: 'xpomem',
+		name: 'xyzzy',
 		version: '2.0',
 		bounds: {x1: 0, y1: 0, x2: 100, y2: 100},
 		aisles: [{
