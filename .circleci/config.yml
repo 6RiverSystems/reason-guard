@@ -59,9 +59,7 @@ jobs:
       - run:
           name: Coverage
           command: npm run only:lCov
-      - run:
-          name: Upload to codecov
-          command: npm run ci:codecov
+      - sixrs-gke/codecov
       - store_test_results:
           path: ./reports
       - store_artifacts:
