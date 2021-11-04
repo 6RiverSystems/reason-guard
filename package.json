@@ -8,6 +8,9 @@
   },
   "main": "dist/src/index.js",
   "contributors": [],
+  "engines": {
+    "node": ">= 14.17.6"
+  },
   "scripts": {
     "lint": "npm run eslint:check && npm run format:check",
     "lint:fix": "npm run eslint:fix && npm run format:fix",
