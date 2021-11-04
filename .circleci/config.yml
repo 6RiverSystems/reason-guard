@@ -36,8 +36,11 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
+          name: check format
+          command: npm run format:check
+      - run:
           name: Lint
-          command: npm run lint -- --format junit --output-file ./reports/eslint/results.xml
+          command: npm run eslint:check -- --format junit --output-file ./reports/eslint/results.xml
       - store_test_results:
           path: ./reports
       - store_artifacts:
