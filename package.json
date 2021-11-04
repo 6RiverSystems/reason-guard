@@ -21,7 +21,6 @@
     "only:build": "tsc",
     "only:test": "NODE_ENV=test nyc mocha ${MOCHA_OPTS}",
     "only:lCov": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov",
-    "ci:codecov": "codecov",
     "prebuild": "npm run lint",
     "build": "npm run only:build",
     "pretest": "npm run build",
