@@ -1,16 +1,16 @@
 import { checkerToGuard } from './Checker';
 import { andGuard, orGuard, thenGuard } from './Combinators';
 import { ReasonGuard } from './ReasonGuard';
-import { isNumber, isSymbol, isString } from './primitiveGuards';
 import { isDate } from './instanceGuards';
 import { isDateString } from './parseGuards';
+import { isNumber, isSymbol, isString } from './primitiveGuards';
 
 export const isDateOrDateString = orGuard(thenGuard(isString, isDateString), isDate);
 
 // TODO investigate non-regex pattern checks
 const UUIDRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
-export const isUUIDString = checkerToGuard<string, string>(input => {
+export const isUUIDString = checkerToGuard<string, string>((input) => {
 	if (UUIDRegex.test(input)) {
 		return 'Valid UUID';
 	} else {
@@ -105,24 +105,21 @@ const topSymbols = {
 export type Bottom = keyof typeof bottomSymbols;
 export type Top = keyof typeof topSymbols;
 
-export const interval = (bottomType: Bottom, bottomValue: number) => (
-	topValue: number,
-	topType: Top,
-) =>
-	thenGuard(
-		isNumber,
-		andGuard(
-			bottomSymbols[bottomType] === OPEN
-				? numberIsGreaterThan(bottomValue)
-				: numberIsAtLeast(bottomValue),
-			topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue),
-		),
-	);
+export const interval =
+	(bottomType: Bottom, bottomValue: number) => (topValue: number, topType: Top) =>
+		thenGuard(
+			isNumber,
+			andGuard(
+				bottomSymbols[bottomType] === OPEN
+					? numberIsGreaterThan(bottomValue)
+					: numberIsAtLeast(bottomValue),
+				topSymbols[topType] === OPEN ? numberIsLessThan(topValue) : numberIsAtMost(topValue),
+			),
+		);
 
-export const integralInterval = (bottomType: Bottom, bottomValue: number) => (
-	topValue: number,
-	topType: Top,
-) => thenGuard(interval(bottomType, bottomValue)(topValue, topType), numberIsInteger);
+export const integralInterval =
+	(bottomType: Bottom, bottomValue: number) => (topValue: number, topType: Top) =>
+		thenGuard(interval(bottomType, bottomValue)(topValue, topType), numberIsInteger);
 
 export const numberIsSafeInteger = andGuard(
 	numberIsInteger,
@@ -130,7 +127,7 @@ export const numberIsSafeInteger = andGuard(
 );
 
 export const isStrictEqual = <T>(value: T) =>
-	checkerToGuard<unknown, T>(input => {
+	checkerToGuard<unknown, T>((input) => {
 		// have to use String() because of Symbols
 		if (value === input) {
 			return `is exactly ${String(value)}`;
@@ -145,16 +142,14 @@ type Literable = string | symbol | number;
 
 type ArrayToLiteral<T> = T extends ReadonlyArray<infer U> ? U : never;
 type BoolMap<T extends Literable> = Record<T, boolean>;
-type LiteralCheck<T1 extends Literable, T2 extends Literable, BAD = unknown> = BoolMap<
-	T1
-> extends BoolMap<T2>
-	? BoolMap<T2> extends BoolMap<T1>
-		? T2
-		: BAD
-	: BAD;
+type LiteralCheck<
+	T1 extends Literable,
+	T2 extends Literable,
+	BAD = unknown,
+> = BoolMap<T1> extends BoolMap<T2> ? (BoolMap<T2> extends BoolMap<T1> ? T2 : BAD) : BAD;
 export type ArrayLiteralCheck<
 	T extends Literable,
-	TT extends ReadonlyArray<Literable>
+	TT extends ReadonlyArray<Literable>,
 > = LiteralCheck<T, ArrayToLiteral<TT>>;
 
 export const isLiterable = orGuard(orGuard(isString, isSymbol), isNumber);
@@ -182,7 +177,7 @@ export function isLiteral<T extends Literable, U extends T>(
 			} else {
 				throw new Error(`not in ${keys}`);
 			}
-		} catch (err) {
+		} catch (err: any) {
 			es.push(err);
 			return false;
 		}

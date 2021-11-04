@@ -1,13 +1,13 @@
 import { assert } from 'chai';
 
-import { testTwoArgCombinator } from './testCombinator';
 import { ReasonGuard, andGuard } from '../../src';
+import { testTwoArgCombinator } from './testCombinator';
 
-describe('and', function() {
-	it('behaves as && at runtime', function() {
+describe('and', function () {
+	it('behaves as && at runtime', function () {
 		testTwoArgCombinator('&', [false, false, false, true], andGuard);
 	});
-	it('can add up objects', function() {
+	it('can add up objects', function () {
 		type A = { a: string };
 		type B = { b: string };
 		type C = A & B;

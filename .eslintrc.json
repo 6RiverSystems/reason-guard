@@ -1,27 +1,19 @@
 {
-	"extends": [
-		"6river/typescript",
-		"plugin:import/typescript",
-		"prettier",
-		"prettier/@typescript-eslint"
-	],
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"extends": ["6river/typescript", "plugin:import/typescript", "prettier"],
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly"
+	},
 	"parser": "@typescript-eslint/parser",
-	"plugins": [
-		"@typescript-eslint",
-		"import"
-	],
-	"rules": {
-		"no-console": "warn",
-		"no-unused-vars": ["error", {"args": "after-used"}],
-		"import/order": [
-			"error",
-			{
-				"groups": [
-					["builtin", "external"],
-					["internal", "parent", "sibling", "index"]
-				],
-				"newlines-between": "always"
-			}
-		]
-	}
+	"parserOptions": {
+		"ecmaVersion": 2018,
+		"sourceType": "module",
+		"project": ["./tsconfig.json"]
+	},
+	"plugins": ["@typescript-eslint"],
+	"rules": {}
 }

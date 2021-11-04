@@ -1,5 +1,5 @@
-import { ReasonGuard } from './ReasonGuard';
 import { thenGuard } from './Combinators';
+import { ReasonGuard } from './ReasonGuard';
 import { isObject } from './primitiveGuards';
 
 // NOTE: for this one you HAVE to have K as a parameter
@@ -32,7 +32,7 @@ type PropertyGuardFactory<FROM extends object, TO extends FROM, P extends keyof 
 export type RequiredGuards<
 	FROM extends object,
 	TO extends FROM,
-	K extends keyof TO = ChangedFields<FROM, TO>
+	K extends keyof TO = ChangedFields<FROM, TO>,
 > = {
 	[P in K]-?: PropertyGuardFactory<FROM, TO, P>;
 };
@@ -82,7 +82,7 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	if (!anyPassed && !anyFailed) {
 		try {
 			throw new Error('definition had no guards');
-		} catch (err) {
+		} catch (err: any) {
 			output.push(err);
 			return false;
 		}
@@ -97,8 +97,9 @@ export const objectHasDefinition = <
 	<FROM extends object, TO extends FROM>(
 		definition: PropertyGuards<FROM, TO>,
 	) => ReasonGuard<FROM, TO>
->(definition => (input, output = [], confirmations = [], context = []) =>
-	checkDefinition(definition, input, output, confirmations, context));
+>((definition) =>
+	(input, output = [], confirmations = [], context = []) =>
+		checkDefinition(definition, input, output, confirmations, context));
 
 export const isObjectWithDefinition = <TO extends object>(definition: PropertyGuards<object, TO>) =>
 	thenGuard<unknown, object, TO>(isObject, objectHasDefinition(definition));

@@ -19,13 +19,13 @@ function getPrimitiveTypeCheck<PRIM>(prim: Primitive) {
 	});
 }
 
-export const isUndefined = checkerToGuard<unknown, undefined>(input => {
+export const isUndefined = checkerToGuard<unknown, undefined>((input) => {
 	if (input === undefined) {
 		return `undefined`;
 	}
 	throw new Error('not undefined');
 });
-export const isNull = checkerToGuard<unknown, null>(input => {
+export const isNull = checkerToGuard<unknown, null>((input) => {
 	if (input === null) {
 		return `null`;
 	}
@@ -35,6 +35,7 @@ export const isNull = checkerToGuard<unknown, null>(input => {
 export const isNumber = getPrimitiveTypeCheck<number>('number');
 export const isString = getPrimitiveTypeCheck<string>('string');
 export const isBoolean = getPrimitiveTypeCheck<boolean>('boolean');
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<symbol>('symbol');
 export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');

@@ -14,16 +14,16 @@ export function testOneArgCombinator(
 			assertGuards(success)(combinator(guardSource(inner)), undefined);
 		const tt = (success: boolean, inner: boolean) =>
 			assertGuards(success)(combinator(combinator(guardSource(inner))), undefined);
-		it(char + 'F=' + abbrev(result[0]), function() {
+		it(char + 'F=' + abbrev(result[0]), function () {
 			t(result[0], false);
 		});
-		it(char + 'T=' + abbrev(result[1]), function() {
+		it(char + 'T=' + abbrev(result[1]), function () {
 			t(result[1], true);
 		});
-		it(char + char + 'F=' + abbrev(result[2]), function() {
+		it(char + char + 'F=' + abbrev(result[2]), function () {
 			tt(result[2], false);
 		});
-		it(char + char + 'T=' + abbrev(result[2]), function() {
+		it(char + char + 'T=' + abbrev(result[2]), function () {
 			tt(result[3], true);
 		});
 	}
@@ -36,16 +36,16 @@ export function testTwoArgCombinator(
 ) {
 	const t = (success: boolean, left: boolean, right: boolean) =>
 		assertGuards(success)(combinator(constantGuards(left), constantGuards(right)), undefined);
-	it('F' + char + 'F=' + abbrev(result[0]), function() {
+	it('F' + char + 'F=' + abbrev(result[0]), function () {
 		t(result[0], false, false);
 	});
-	it('F' + char + 'T=' + abbrev(result[1]), function() {
+	it('F' + char + 'T=' + abbrev(result[1]), function () {
 		t(result[1], false, true);
 	});
-	it('T' + char + 'F=' + abbrev(result[2]), function() {
+	it('T' + char + 'F=' + abbrev(result[2]), function () {
 		t(result[2], true, false);
 	});
-	it('T' + char + 'T=' + abbrev(result[3]), function() {
+	it('T' + char + 'T=' + abbrev(result[3]), function () {
 		t(result[3], true, true);
 	});
 }

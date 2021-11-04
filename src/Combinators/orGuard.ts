@@ -1,7 +1,7 @@
-import { ReasonGuard } from '../ReasonGuard';
-import { notGuard } from './notGuard';
 import { buildNegatable } from '../NegatableGuard';
+import { ReasonGuard } from '../ReasonGuard';
 import { andGuard } from './andGuard';
+import { notGuard } from './notGuard';
 
 export const orGuard = <FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,
@@ -31,7 +31,7 @@ function getRawOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 				return true;
 			}
 			throw new Error(`${innerErrors[0].message}, and ${innerErrors[1].message}`);
-		} catch (err) {
+		} catch (err: any) {
 			output.push(err);
 			return false;
 		}

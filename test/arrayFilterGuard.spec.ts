@@ -2,9 +2,9 @@ import { assert } from 'chai';
 
 import { arrayFilterGuard, isString } from '../src';
 
-describe('arrayFilterGuard', function() {
+describe('arrayFilterGuard', function () {
 	const guard = arrayFilterGuard(isString);
-	it('works as a filter function and does not mutate input', function() {
+	it('works as a filter function and does not mutate input', function () {
 		const junk = ['foo', 'bar', 1, 2];
 		const junkClone = [...junk];
 

@@ -58,7 +58,7 @@ function testPropertyBadValues<FROM extends object, MID extends FROM, TO extends
 ) {
 	for (let i = 0; i < values.length; ++i) {
 		if (i !== correctIndex) {
-			it(`fails if ${prop} has bad value ${values[i]}`, function() {
+			it(`fails if ${prop} has bad value ${values[i]}`, function () {
 				assertGuards(false)(guard, { ...base, [prop]: values[i] });
 			});
 		}
@@ -72,14 +72,14 @@ function testPropertyGoodValues<FROM extends object, TO extends FROM>(
 	values: any[],
 ) {
 	for (let i = 0; i < values.length; ++i) {
-		it(`passes if ${prop} has good value ${values[i]}`, function() {
+		it(`passes if ${prop} has good value ${values[i]}`, function () {
 			assertGuards(true)(guard, { ...base, [prop]: values[i] });
 		});
 	}
 }
 
-describe(isObjectWithDefinition.name, function() {
-	context('double-optional nesting', function() {
+describe(isObjectWithDefinition.name, function () {
+	context('double-optional nesting', function () {
 		const guard = isObjectWithDefinition<{ a?: { b?: string } }>({
 			a: optionalProperty(
 				isObjectWithDefinition<{ b?: string }>({
@@ -95,7 +95,7 @@ describe(isObjectWithDefinition.name, function() {
 			),
 		});
 
-		it('guards for proper values', function() {
+		it('guards for proper values', function () {
 			assertGuards(true)(guard, { a: { b: '' } });
 			assertGuards(true)(guard, { a: {} });
 			assertGuards(true)(guard, {});
@@ -105,7 +105,7 @@ describe(isObjectWithDefinition.name, function() {
 			assertGuards(true)(strictGuard, {});
 		});
 
-		it('differentiates strictness for explicit undefined', function() {
+		it('differentiates strictness for explicit undefined', function () {
 			assertGuards(true)(guard, { a: { b: undefined } });
 			assertGuards(true)(guard, { a: undefined });
 
@@ -113,7 +113,7 @@ describe(isObjectWithDefinition.name, function() {
 			assertGuards(false)(strictGuard, { a: undefined });
 		});
 
-		it('guards against improper values', function() {
+		it('guards against improper values', function () {
 			assertGuards(false)(guard, { a: { b: null } });
 			assertGuards(false)(guard, { a: null });
 			assertGuards(false)(guard, null);
@@ -125,47 +125,47 @@ describe(isObjectWithDefinition.name, function() {
 	});
 });
 
-describe(objectHasDefinition.name, function() {
-	context('simple extension', function() {
+describe(objectHasDefinition.name, function () {
+	context('simple extension', function () {
 		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
 			b: requiredProperty(isString),
 		});
 
-		it('detects missing extension property', function() {
+		it('detects missing extension property', function () {
 			assertGuards(false)(guard, { a: 'foo' });
 		});
 		testPropertyBadValues(guard, { a: 'foo' }, 'b', 1);
 		testPropertyGoodValues(guard, { a: 'foo' }, 'b', ['foo', 'xyzzy']);
 	});
 
-	context('optional semantic narrowing', function() {
+	context('optional semantic narrowing', function () {
 		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
 			a: narrowedProperty(isNumberString),
 			b: requiredProperty(isString),
 		});
 
-		it('fails on things with wrong semantics', function() {
+		it('fails on things with wrong semantics', function () {
 			assertGuards(false)(guard, { a: 'foo', b: 'bar' });
 		});
-		it('succeeds on things with proper semantics', function() {
+		it('succeeds on things with proper semantics', function () {
 			assertGuards(true)(guard, { a: '7', b: 'foo' });
 		});
 	});
 
-	context('explicit choice not to add semantics', function() {
+	context('explicit choice not to add semantics', function () {
 		const guard = objectHasDefinition<SimpleBase, SimpleExtended>({
 			a: undefined,
 			b: requiredProperty(isString),
 		});
 
-		it('detects missing extension property', function() {
+		it('detects missing extension property', function () {
 			assertGuards(false)(guard, { a: 'foo' });
 		});
 		testPropertyBadValues(guard, { a: 'foo' }, 'b', 1);
 		testPropertyGoodValues(guard, { a: 'foo' }, 'b', ['foo', 'xyzzy']);
 	});
 
-	context('simple narrowing', function() {
+	context('simple narrowing', function () {
 		const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({
 			a: requiredProperty(isLiteral(['foo', 'bar'])),
 		});
@@ -174,7 +174,7 @@ describe(objectHasDefinition.name, function() {
 		testPropertyBadValues(guard, { a: 'xyzzy' }, 'a', Number.NaN);
 	});
 
-	context('optionality accepting', function() {
+	context('optionality accepting', function () {
 		const guard = isObjectWithDefinition<OptionalBase>({
 			a: optionalProperty(isString),
 		});
@@ -182,7 +182,7 @@ describe(objectHasDefinition.name, function() {
 		assertGuards(true)(guard, {});
 	});
 
-	context('optionality narrowing', function() {
+	context('optionality narrowing', function () {
 		const guard = objectHasDefinition<OptionalBase, OptionalNarrowed>({
 			a: requiredProperty(isString),
 		});
@@ -190,7 +190,7 @@ describe(objectHasDefinition.name, function() {
 		testPropertyBadValues(guard, {}, 'a', 1);
 	});
 
-	context('complex derivation part 1', function() {
+	context('complex derivation part 1', function () {
 		const guard = objectHasDefinition<ComplexBase, ComplexDerived>({
 			b: narrowedProperty(
 				objectHasDefinition<{ c: string }, { c: string; d: string }>({
@@ -202,12 +202,12 @@ describe(objectHasDefinition.name, function() {
 
 		// TODO: we want to assert on _why_ most of these tests pass/fail
 
-		it('detects missing new property', function() {
+		it('detects missing new property', function () {
 			assertGuards(false)(guard, { a: 'foo', b: { c: 'foo', d: 'foo' } });
 		});
 		// bad values for new property
 		testPropertyBadValues(guard, { a: 'foo', b: { c: 'foo', d: 'foo' } }, 'e', 1);
-		it('detects missing nested property', function() {
+		it('detects missing nested property', function () {
 			assertGuards(false)(guard, { a: 'foo', b: { c: 'foo' }, e: 'foo' });
 		});
 		// bad values for nested property
@@ -216,16 +216,16 @@ describe(objectHasDefinition.name, function() {
 			{ a: 'foo', b: { c: 'foo' }, e: 'foo' },
 			'b',
 			1,
-			commonValues.map(v => ({ c: 'foo', d: v })),
+			commonValues.map((v) => ({ c: 'foo', d: v })),
 		);
 
-		it('accepts good values', function() {
+		it('accepts good values', function () {
 			assertGuards(true)(guard, { a: 'foo', b: { c: 'foo', d: 'foo' }, e: 'foo' });
 		});
 	});
 
-	context('weird corner cases', function() {
-		it('detects no-op guards that made it past the type checker', function() {
+	context('weird corner cases', function () {
+		it('detects no-op guards that made it past the type checker', function () {
 			const guard = objectHasDefinition<SimpleBase, SimpleNarrowed>({} as any);
 			assertGuards(false)(guard, { a: 'foo' });
 		});
