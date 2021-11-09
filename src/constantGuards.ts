@@ -1,6 +1,6 @@
-import { ReasonGuard } from './ReasonGuard';
 import { checkerToGuard } from './Checker';
 import { NegatableGuard } from './NegatableGuard';
+import { ReasonGuard } from './ReasonGuard';
 
 const trueGuard: NegatableGuard<unknown, unknown, never> = checkerToGuard(() => 'true');
 
@@ -24,7 +24,6 @@ const unnegatableFalseGuard: ReasonGuard<unknown, never> = (input, es = []): inp
 	return false;
 };
 
-export const unnegatableConstantGuards: (
-	result: boolean,
-) => ReasonGuard<unknown, unknown> = result =>
-	result ? unnegatableTrueGuard : unnegatableFalseGuard;
+export const unnegatableConstantGuards: (result: boolean) => ReasonGuard<unknown, unknown> = (
+	result,
+) => (result ? unnegatableTrueGuard : unnegatableFalseGuard);

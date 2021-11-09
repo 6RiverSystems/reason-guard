@@ -1,23 +1,23 @@
-import { assertGuards } from './assertGuards';
 import { isArray, isDate } from '../src/instanceGuards';
+import { assertGuards } from './assertGuards';
 
-describe('instance guards', function() {
-	context('isArray', function() {
-		it('guards for arrays', function() {
+describe('instance guards', function () {
+	context('isArray', function () {
+		it('guards for arrays', function () {
 			assertGuards(true)(isArray, []);
 		});
-		it('guards against non-arrays', function() {
+		it('guards against non-arrays', function () {
 			assertGuards(false)(isArray, undefined);
 			assertGuards(false)(isArray, null);
 			assertGuards(false)(isArray, 3);
 			assertGuards(false)(isArray, {});
 		});
 	});
-	context('isDate', function() {
-		it('guards for dates', function() {
+	context('isDate', function () {
+		it('guards for dates', function () {
 			assertGuards(true)(isDate, new Date());
 		});
-		it('guards against non-dates', function() {
+		it('guards against non-dates', function () {
 			assertGuards(false)(isDate, undefined);
 			assertGuards(false)(isDate, null);
 			assertGuards(false)(isDate, 3);

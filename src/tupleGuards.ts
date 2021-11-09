@@ -1,11 +1,11 @@
-import { ReasonGuard } from './ReasonGuard';
-import { isNumber } from './primitiveGuards';
-import { numberIs, numberIsAtLeast } from './restrictingGuards';
 import { thenGuard, andGuard } from './Combinators';
-import { isArray } from './instanceGuards';
-import { requiredProperty } from './propertyGuards';
 import { NegatableGuard } from './NegatableGuard';
+import { ReasonGuard } from './ReasonGuard';
 import { constantGuards } from './constantGuards';
+import { isArray } from './instanceGuards';
+import { isNumber } from './primitiveGuards';
+import { requiredProperty } from './propertyGuards';
+import { numberIs, numberIsAtLeast } from './restrictingGuards';
 
 // we can't do variadic types, but we can do some useful pieces, by virtue of homomorphic mapped array types
 

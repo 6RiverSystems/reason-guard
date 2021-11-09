@@ -1,6 +1,5 @@
 import { assert } from 'chai';
 
-import { assertGuards } from '../assertGuards';
 import {
 	requiredProperty,
 	isString,
@@ -10,6 +9,7 @@ import {
 	isLiteral,
 } from '../../src';
 import { ContextError } from '../../src/ContextError';
+import { assertGuards } from '../assertGuards';
 
 type Bounds = { x1: number; y1: number; x2: number; y2: number };
 type Feature = { name: string; type: 'aisle' | 'workflowPoint' | 'area'; bounds: Bounds };
@@ -35,7 +35,7 @@ const mapGuard = isObjectWithDefinition<Map>({
 	aisles: hasArrayProperty(isFeature),
 });
 
-describe('guard context', function() {
+describe('guard context', function () {
 	const map: Map = {
 		name: 'xyzzy',
 		version: '2.0',
@@ -49,7 +49,7 @@ describe('guard context', function() {
 		],
 	};
 
-	it('resolves path for errors', function() {
+	it('resolves path for errors', function () {
 		const test = JSON.parse(JSON.stringify(map));
 		(test.version as any) = 77;
 		(test.bounds.x1 as any) = 'BAADF00D';

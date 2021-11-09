@@ -1,4 +1,3 @@
-import { assertGuards } from '../assertGuards';
 import {
 	objectHasDefinition,
 	isLiteral,
@@ -7,6 +6,7 @@ import {
 	isObject,
 	requiredProperty,
 } from '../../src';
+import { assertGuards } from '../assertGuards';
 
 const minSec = integralInterval('[', 0)(60, ')');
 const degLng = integralInterval('[', 0)(180, ')');
@@ -18,7 +18,7 @@ type GeoCoords = { lat: Lat; lng: Lng };
 
 const lat = thenGuard(
 	isObject,
-	objectHasDefinition<{}, Lat>({
+	objectHasDefinition<object, Lat>({
 		degrees: requiredProperty(degLat),
 		minutes: requiredProperty(minSec),
 		seconds: requiredProperty(minSec),
@@ -28,7 +28,7 @@ const lat = thenGuard(
 
 const lng = thenGuard(
 	isObject,
-	objectHasDefinition<{}, Lng>({
+	objectHasDefinition<object, Lng>({
 		degrees: requiredProperty(degLng),
 		minutes: requiredProperty(minSec),
 		seconds: requiredProperty(minSec),
@@ -36,12 +36,12 @@ const lng = thenGuard(
 	}),
 );
 
-const geoCoords = objectHasDefinition<{}, GeoCoords>({
+const geoCoords = objectHasDefinition<object, GeoCoords>({
 	lat: requiredProperty(lat),
 	lng: requiredProperty(lng),
 });
 
-describe('geographic coordinates', function() {
+describe('geographic coordinates', function () {
 	const goodCoords = {
 		lat: {
 			degrees: 30,
@@ -56,10 +56,10 @@ describe('geographic coordinates', function() {
 			heading: 'E',
 		},
 	};
-	it('accepts good coords', function() {
+	it('accepts good coords', function () {
 		assertGuards(true)(geoCoords, goodCoords);
 	});
-	it('reject invalid coords', function() {
+	it('reject invalid coords', function () {
 		let test = Object.assign({}, goodCoords);
 		test.lat.degrees = 150;
 		assertGuards(false)(geoCoords, test);

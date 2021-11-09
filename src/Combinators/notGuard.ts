@@ -1,5 +1,5 @@
-import { ReasonGuard } from '../ReasonGuard';
 import { isNegatableGuard, NegatableGuard, buildNegatable } from '../NegatableGuard';
+import { ReasonGuard } from '../ReasonGuard';
 
 export const notGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
 	inner: ReasonGuard<FROM, TO> | NegatableGuard<FROM, TO, N>,
@@ -24,7 +24,7 @@ function getRawNot<FROM, TO extends FROM, N extends FROM>(
 				confirmations.push(innerErrors[0].message);
 				return true;
 			}
-		} catch (err) {
+		} catch (err: any) {
 			errors.push(err);
 			return false;
 		}

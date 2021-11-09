@@ -1,9 +1,9 @@
-import { ReasonGuard } from './ReasonGuard';
 import { checkerToGuard, pushContext } from './Checker';
 import { thenGuard } from './Combinators';
-import { isArray } from './instanceGuards';
-import { NegatableGuard } from './NegatableGuard';
 import { ContextError, CompositeError } from './ContextError';
+import { NegatableGuard } from './NegatableGuard';
+import { ReasonGuard } from './ReasonGuard';
+import { isArray } from './instanceGuards';
 
 export const arrayHasType = <TO>(itemGuard: ReasonGuard<unknown, TO>) =>
 	checkerToGuard<unknown[], TO[]>((input: unknown[], context?: PropertyKey[]) => {
@@ -14,7 +14,7 @@ export const arrayHasType = <TO>(itemGuard: ReasonGuard<unknown, TO>) =>
 			if (!itemGuard(input[i], innerErrors, innerConfs, innerContext)) {
 				throw new CompositeError(
 					innerErrors.map(
-						err =>
+						(err) =>
 							new ContextError(
 								`element ${i}: ${err.message}`,
 								err instanceof ContextError ? err.context : innerContext,
