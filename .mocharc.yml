@@ -1,0 +1,16 @@
+require: source-map-support/register
+
+full-trace: true
+check-leaks: true
+
+recursive: true
+timeout: 4000
+
+global:
+  - verbose
+  - dryRun
+  - params
+
+spec:
+  # - dist*/test/bootstrap.js
+  - dist*/test/**/*.spec.js
