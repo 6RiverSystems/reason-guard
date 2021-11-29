@@ -1,5 +1,5 @@
 import { thenGuard } from './Combinators';
-import { ReasonGuard } from './ReasonGuard';
+import { ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isObject } from './primitiveGuards';
 
 // NOTE: for this one you HAVE to have K as a parameter
@@ -50,7 +50,7 @@ export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuard
 function checkDefinition<FROM extends object, TO extends FROM>(
 	definition: PropertyGuards<FROM, TO>,
 	input: FROM,
-	output: Error[],
+	output: ErrorLike[],
 	confirmations: string[],
 	context?: PropertyKey[],
 ): input is TO {

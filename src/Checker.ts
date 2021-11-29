@@ -1,8 +1,8 @@
 import { CompositeError } from './ContextError';
 import { NegatableGuard, buildNegatable } from './NegatableGuard';
-import { ReasonGuard } from './ReasonGuard';
+import { ErrorLike, ReasonGuard } from './ReasonGuard';
 
-export type Checker<FROM> = (input: FROM, context?: PropertyKey[]) => string;
+export type Checker<FROM> = (input: FROM, context?: PropertyKey[]) => string | ErrorLike;
 
 export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
 	checker: Checker<FROM>,
@@ -13,35 +13,42 @@ export const checkerToGuard: <FROM, TO extends FROM, N extends FROM = FROM>(
 	);
 
 function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
-	return (input, e = [], c = [], context = []): input is TO => {
+	return (input, errors, confirmations, context = []): input is TO => {
+		let result: string | ErrorLike;
 		try {
-			c.push(checker(input, context));
-			return true;
-		} catch (err: any) {
-			if (err instanceof CompositeError) {
-				e.push(...err.errors);
-			} else {
-				e.push(err);
+			result = checker(input, context);
+			if (typeof result === 'string') {
+				confirmations?.push(result);
+				return true;
 			}
-			return false;
+		} catch (err: any) {
+			result = err;
 		}
+		if (result instanceof CompositeError) {
+			errors?.push(...result.errors);
+		} else {
+			// can't get here if we got a positive confirmation
+			errors?.push(result as ErrorLike);
+		}
+		return false;
 	};
 }
 
 function getRawNegation<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
-	return (input, e = [], c = []): input is TO => {
+	return (input, errors, confirmations): input is TO => {
+		let result: string | ErrorLike;
 		try {
-			const innerConf = checker(input);
-			try {
-				throw new Error(`negation of: ${innerConf}`);
-			} catch (err: any) {
-				e.push(err);
+			result = checker(input);
+			if (typeof result === 'string') {
+				errors?.push(new Error(`negation of: ${result}`));
 				return false;
 			}
 		} catch (err: any) {
-			c.push(err.message);
-			return true;
+			result = err;
 		}
+		// can't get here if we got a positive inner confirmation
+		confirmations?.push((result as ErrorLike).message);
+		return true;
 	};
 }
 

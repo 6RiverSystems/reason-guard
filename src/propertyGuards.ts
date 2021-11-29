@@ -2,7 +2,7 @@ import { checkerToGuard, pushContext } from './Checker';
 import { thenGuard, orGuard, notGuard } from './Combinators';
 import { ContextError, CompositeError } from './ContextError';
 import { NegatableGuard } from './NegatableGuard';
-import { ReasonGuard } from './ReasonGuard';
+import { ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isArrayOfType } from './arrayHasType';
 import { isUndefined } from './primitiveGuards';
 
@@ -50,10 +50,10 @@ export const propertyHasType = <
 	p: T,
 ) =>
 	checkerToGuard<Record<T, FROMT>, Pick<TO, T>>((input, context) => {
-		const innerErrors: Error[] = [];
-		const innerConfs: string[] = [];
+		const innerErrors: ErrorLike[] = [];
+		const innerConfirmations: string[] = [];
 		const innerContext = pushContext(p, context);
-		if (!itemGuard(input[p], innerErrors, innerConfs, innerContext)) {
+		if (!itemGuard(input[p], innerErrors, innerConfirmations, innerContext)) {
 			throw new CompositeError(
 				innerErrors.map(
 					(err) =>
@@ -64,7 +64,7 @@ export const propertyHasType = <
 				),
 			);
 		}
-		return `property ${p}: ${innerConfs[0]}`;
+		return `property ${p}: ${innerConfirmations[0]}`;
 	});
 
 export const narrowedProperty =

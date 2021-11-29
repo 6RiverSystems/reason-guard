@@ -3,6 +3,7 @@ import { assert } from 'chai';
 import { ReasonGuard } from '../src';
 
 const MinIterations = 100_000;
+const MaxIterations = 100_000_000;
 const MinDurationMs = 750;
 const TargetDurationMs = 1_000;
 
@@ -73,7 +74,14 @@ function benchOnce<FROM, TO extends FROM>(
 	let duration = 0;
 	do {
 		if (duration) {
-			iterations = Math.ceil(Math.max(iterations, (TargetDurationMs * iterations) / duration));
+			let nextIterations = Math.ceil((TargetDurationMs * iterations) / duration);
+			if (nextIterations > iterations * 10) {
+				// don't let it grow too fast, we may have a low-accuracy measurement
+				nextIterations = iterations * 10;
+			} else if (nextIterations > MaxIterations) {
+				nextIterations = MaxIterations;
+			}
+			iterations = nextIterations;
 			// console.log(`after ${duration}, next ${iterations}`);
 		}
 		while (values.length < iterations) {
@@ -89,7 +97,10 @@ function benchOnce<FROM, TO extends FROM>(
 			guard(values[i], errors, confirmations);
 		}
 		duration = Date.now() - start;
-	} while (duration < MinDurationMs);
+		if (duration <= 0) {
+			duration = 1;
+		}
+	} while (duration < MinDurationMs && iterations < MaxIterations);
 	return {
 		nsPerCall: Math.round((duration * 1_000_000) / iterations),
 		iterations,

@@ -1,5 +1,5 @@
 import { isNegatableGuard, NegatableGuard, buildNegatable } from '../NegatableGuard';
-import { ReasonGuard } from '../ReasonGuard';
+import { ErrorLike, ReasonGuard } from '../ReasonGuard';
 
 export const notGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
 	inner: ReasonGuard<FROM, TO> | NegatableGuard<FROM, TO, N>,
@@ -7,25 +7,36 @@ export const notGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
 	isNegatableGuard(inner)
 		? inner.negate()
 		: buildNegatable<FROM, N, TO>(
-				() => getRawNot(inner),
+				() => negate(inner),
 				() => inner,
 		  );
 
-function getRawNot<FROM, TO extends FROM, N extends FROM>(
+export function negate<FROM, TO extends FROM, N extends FROM>(
 	inner: ReasonGuard<FROM, TO>,
 ): ReasonGuard<FROM, N> {
-	return (input: FROM, errors: Error[] = [], confirmations: string[] = []): input is N => {
+	return (input: FROM, errors?: ErrorLike[], confirmations?: string[]): input is N => {
 		try {
-			const innerErrors: Error[] = [];
-			const innerConfs: string[] = [];
-			if (inner(input, innerErrors, innerConfs)) {
-				throw new Error(innerConfs[innerConfs.length - 1]);
+			let innerErrors: ErrorLike[] | undefined;
+			let innerConfirmations: string[] | undefined;
+			if (confirmations) {
+				innerErrors = [];
+			}
+			if (errors) {
+				innerConfirmations = [];
+			}
+			if (inner(input, innerErrors, innerConfirmations)) {
+				if (!innerConfirmations) {
+					return false;
+				}
+				throw new Error(innerConfirmations[innerConfirmations.length - 1]);
 			} else {
-				confirmations.push(innerErrors[0].message);
+				if (innerErrors) {
+					confirmations?.push(innerErrors[0].message);
+				}
 				return true;
 			}
 		} catch (err: any) {
-			errors.push(err);
+			errors?.push(err);
 			return false;
 		}
 	};

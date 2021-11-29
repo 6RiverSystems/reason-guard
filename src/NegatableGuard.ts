@@ -11,6 +11,7 @@ export const isNegatableGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
 ): input is NegatableGuard<FROM, TO, N> =>
 	typeof input === 'function' && typeof (input as any).negate === 'function';
 
+// TODO: why is this so convoluted?
 export const buildNegatable = <FROM, TO extends FROM, N extends FROM = FROM>(
 	input: () => ReasonGuard<FROM, TO>,
 	negated: () => ReasonGuard<FROM, N>,

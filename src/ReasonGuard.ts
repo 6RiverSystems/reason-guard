@@ -1,6 +1,19 @@
+/**
+ * creating real errors is costly, due to capturing the stack trace at
+ * instantiation, so instead capture validation errors as just error-like
+ * objects.
+ */
+export interface ErrorLike {
+	message: string;
+}
+
+export function errorLike(message: string): ErrorLike {
+	return { message };
+}
+
 export type ReasonGuard<FROM, TO extends FROM> = (
 	input: FROM,
-	output?: Error[],
+	output?: ErrorLike[],
 	confirmations?: string[],
 	context?: PropertyKey[],
 ) => input is TO;
