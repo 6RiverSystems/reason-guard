@@ -1,5 +1,6 @@
 import * as primitive from '../src/primitiveGuards';
 import { assertGuards } from './assertGuards';
+import { assertBenchGuard } from './benchGuards';
 
 describe('primitive guards', function () {
 	context('isNumber', function () {
@@ -14,6 +15,13 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isNumber, null);
 			assertGuards(false)(primitive.isNumber, {});
 		});
+		it('is fast', function () {
+			assertBenchGuard(
+				primitive.isNumber,
+				() => Math.random(),
+				(): unknown => Math.random().toString(),
+			);
+		}).timeout(30_000);
 	});
 	context('isString', function () {
 		it('guards for strings', function () {
@@ -26,6 +34,13 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isString, null);
 			assertGuards(false)(primitive.isString, {});
 		});
+		it('is fast', function () {
+			assertBenchGuard(
+				primitive.isString,
+				() => Math.random().toString(),
+				(): unknown => Math.random(),
+			);
+		}).timeout(30_000);
 	});
 	context('isFunction', function () {
 		it('guards for functions', function () {
@@ -42,6 +57,13 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isFunction, 'string');
 			assertGuards(false)(primitive.isFunction, []);
 		});
+		it('is fast', function () {
+			assertBenchGuard(
+				primitive.isFunction,
+				() => Math.random,
+				(): unknown => true,
+			);
+		}).timeout(30_000);
 	});
 	context('isUndefined', function () {
 		it('guards for undefined', function () {
@@ -54,6 +76,13 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isUndefined, null);
 			assertGuards(false)(primitive.isUndefined, {});
 		});
+		it('is fast', function () {
+			assertBenchGuard(
+				primitive.isUndefined,
+				() => undefined,
+				(): unknown => true,
+			);
+		}).timeout(30_000);
 	});
 	context('isNull', function () {
 		it('guards for null', function () {
@@ -66,5 +95,12 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isNull, undefined);
 			assertGuards(false)(primitive.isNull, {});
 		});
+		it('is fast', function () {
+			assertBenchGuard(
+				primitive.isNull,
+				() => null,
+				(): unknown => true,
+			);
+		}).timeout(30_000);
 	});
 });
