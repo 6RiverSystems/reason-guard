@@ -92,10 +92,12 @@ function benchOnce<FROM, TO extends FROM>(
 		// TODO: use high res timer for this
 		duration = timeOnce(guard, values, iterations, errors, confirmations);
 	} while (duration < MinDurationMs && iterations < MaxIterations);
-	// run it again with the same number of iterations and take the faster of the two
-	const rerunDuration = timeOnce(guard, values, iterations, errors, confirmations);
-	if (rerunDuration < duration) {
-		duration = rerunDuration;
+	// take the best of three, we already have one
+	for (let i = 0; i < 2; ++i) {
+		const rerunDuration = timeOnce(guard, values, iterations, errors, confirmations);
+		if (rerunDuration < duration) {
+			duration = rerunDuration;
+		}
 	}
 	return {
 		nsPerCall: Math.round((duration * 1_000_000) / iterations),
