@@ -17,11 +17,12 @@ describe('primitive guards', function () {
 		});
 		it('is fast', function () {
 			assertBenchGuard(
+				this,
 				primitive.isNumber,
 				() => Math.random(),
 				(): unknown => Math.random().toString(),
 			);
-		}).timeout(30_000);
+		});
 	});
 	context('isString', function () {
 		it('guards for strings', function () {
@@ -36,11 +37,12 @@ describe('primitive guards', function () {
 		});
 		it('is fast', function () {
 			assertBenchGuard(
+				this,
 				primitive.isString,
 				() => Math.random().toString(),
 				(): unknown => Math.random(),
 			);
-		}).timeout(30_000);
+		});
 	});
 	context('isFunction', function () {
 		it('guards for functions', function () {
@@ -59,11 +61,12 @@ describe('primitive guards', function () {
 		});
 		it('is fast', function () {
 			assertBenchGuard(
+				this,
 				primitive.isFunction,
 				() => Math.random,
 				(): unknown => true,
 			);
-		}).timeout(30_000);
+		});
 	});
 	context('isUndefined', function () {
 		it('guards for undefined', function () {
@@ -78,11 +81,12 @@ describe('primitive guards', function () {
 		});
 		it('is fast', function () {
 			assertBenchGuard(
+				this,
 				primitive.isUndefined,
 				() => undefined,
 				(): unknown => true,
 			);
-		}).timeout(30_000);
+		});
 	});
 	context('isNull', function () {
 		it('guards for null', function () {
@@ -97,10 +101,11 @@ describe('primitive guards', function () {
 		});
 		it('is fast', function () {
 			assertBenchGuard(
+				this,
 				primitive.isNull,
 				() => null,
 				(): unknown => true,
 			);
-		}).timeout(30_000);
+		});
 	});
 });

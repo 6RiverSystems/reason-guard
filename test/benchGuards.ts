@@ -40,10 +40,15 @@ export function benchGuard<FROM, TO extends FROM>(
 }
 
 export function assertBenchGuard<FROM, TO extends FROM>(
+	ctx: Mocha.Context,
 	guard: ReasonGuard<FROM, TO>,
 	goodValueGenerator: () => TO,
 	badValueGenerator: () => FROM,
 ) {
+	if (process.env.SKIP_SLOW) {
+		// don't run these slow tests during git commit validation or the like
+		ctx.skip();
+	}
 	const positiveResults = benchGuard(guard, () => Array.from({ length: 100 }, goodValueGenerator));
 	// eslint-disable-next-line no-console
 	console.log(positiveResults, 'positive results');
