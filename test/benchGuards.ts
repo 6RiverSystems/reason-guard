@@ -2,10 +2,10 @@ import { assert } from 'chai';
 
 import { ReasonGuard } from '../src';
 
-const MinIterations = 100_000;
+const MinIterations = 10_000;
 const MaxIterations = 100_000_000;
-const MinDurationMs = 750;
-const TargetDurationMs = 1_000;
+const MinDurationMs = 75;
+const TargetDurationMs = 100;
 
 interface GuardBenchResult {
 	nsPerCall: number;
@@ -54,9 +54,9 @@ export function assertBenchGuard<FROM, TO extends FROM>(
 	for (const mode of Object.keys(negativeResults) as (keyof GuardBenchResults)[]) {
 		assert.isAtMost(
 			negativeResults[mode].nsPerCall,
-			// negative results should be no more than 50% slower than positives
-			positiveResults[mode].nsPerCall * 1.5,
-			`negative result for ${mode} should be within 50% of positive result`,
+			// negative results should be no more than 50ns+50% slower than positives
+			positiveResults[mode].nsPerCall * 1.5 + 50,
+			`negative result for ${mode} should be within 50%+50ns of positive result`,
 		);
 	}
 }
