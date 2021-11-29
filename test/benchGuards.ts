@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 
-import { ReasonGuard } from '../src';
+import { ErrorLike, ReasonGuard } from '../src';
 
 const MinIterations = 10_000;
 const MaxIterations = 100_000_000;
@@ -90,22 +90,37 @@ function benchOnce<FROM, TO extends FROM>(
 			values.push(...valueGenerator());
 		}
 		// TODO: use high res timer for this
-		const start = Date.now();
-		for (let i = 0; i < values.length && i < iterations; ++i) {
-			// try to reduce GC overhead by truncating these arrays instead of making
-			// new ones
-			errors?.splice(0);
-			confirmations?.splice(0);
-			guard(values[i], errors, confirmations);
-		}
-		duration = Date.now() - start;
-		if (duration <= 0) {
-			duration = 1;
-		}
+		duration = timeOnce(guard, values, iterations, errors, confirmations);
 	} while (duration < MinDurationMs && iterations < MaxIterations);
+	// run it again with the same number of iterations and take the faster of the two
+	const rerunDuration = timeOnce(guard, values, iterations, errors, confirmations);
+	if (rerunDuration < duration) {
+		duration = rerunDuration;
+	}
 	return {
 		nsPerCall: Math.round((duration * 1_000_000) / iterations),
 		iterations,
 		duration,
 	};
+}
+function timeOnce<FROM, TO extends FROM>(
+	guard: ReasonGuard<FROM, TO>,
+	values: FROM[],
+	iterations: number,
+	errors?: ErrorLike[],
+	confirmations?: string[],
+) {
+	const start = Date.now();
+	for (let i = 0; i < values.length && i < iterations; ++i) {
+		// try to reduce GC overhead by truncating these arrays instead of making
+		// new ones
+		errors?.splice(0);
+		confirmations?.splice(0);
+		guard(values[i], errors, confirmations);
+	}
+	let duration = Date.now() - start;
+	if (duration <= 0) {
+		duration = 1;
+	}
+	return duration;
 }
