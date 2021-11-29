@@ -94,7 +94,7 @@ export const objectHasDefinition = <
 		definition: PropertyGuards<FROM, TO>,
 	) => ReasonGuard<FROM, TO>
 >((definition) =>
-	(input, output = [], confirmations = [], context = []) =>
+	(input, output, confirmations, context = []) =>
 		checkDefinition(definition, input, output, confirmations, context));
 
 export const isObjectWithDefinition = <TO extends object>(definition: PropertyGuards<object, TO>) =>
