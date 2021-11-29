@@ -32,10 +32,10 @@ export const hasProperty = <T extends PropertyKey>(p: T) =>
 	checkerToGuard<unknown, Record<T, unknown>, Partial<Record<T, never>>>(
 		(input: unknown, context?: PropertyKey[]) => {
 			const x: any = input;
-			// if (x[p] === undefined) throw new Error(`property ${p} is undefined`);
-			// if (x[p] === null) throw new Error(`property ${p} is null`); // is this right?
+			// if (x[p] === undefined) return errorLike(`property ${p} is undefined`);
+			// if (x[p] === null) return errorLike(`property ${p} is null`); // is this right?
 			if (!(p in x))
-				throw new ContextError(`property ${p} is not present`, pushContext(p, context));
+				return new ContextError(`property ${p} is not present`, pushContext(p, context));
 			return `property ${p} is present`;
 		},
 	);
@@ -54,7 +54,7 @@ export const propertyHasType = <
 		const innerConfirmations: string[] = [];
 		const innerContext = pushContext(p, context);
 		if (!itemGuard(input[p], innerErrors, innerConfirmations, innerContext)) {
-			throw new CompositeError(
+			return new CompositeError(
 				innerErrors.map(
 					(err) =>
 						new ContextError(

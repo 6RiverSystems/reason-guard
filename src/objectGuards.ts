@@ -1,5 +1,5 @@
 import { thenGuard } from './Combinators';
-import { ErrorLike, ReasonGuard } from './ReasonGuard';
+import { errorLike, ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isObject } from './primitiveGuards';
 
 // NOTE: for this one you HAVE to have K as a parameter
@@ -50,8 +50,8 @@ export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuard
 function checkDefinition<FROM extends object, TO extends FROM>(
 	definition: PropertyGuards<FROM, TO>,
 	input: FROM,
-	output: ErrorLike[],
-	confirmations: string[],
+	output?: ErrorLike[],
+	confirmations?: string[],
 	context?: PropertyKey[],
 ): input is TO {
 	let anyPassed = false;
@@ -80,12 +80,8 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	(Object.getOwnPropertySymbols(definition) as (keyof TO)[]).forEach(checkProperty);
 
 	if (!anyPassed && !anyFailed) {
-		try {
-			throw new Error('definition had no guards');
-		} catch (err: any) {
-			output.push(err);
-			return false;
-		}
+		output?.push(errorLike('definition had no guards'));
+		return false;
 	}
 	return !anyFailed;
 }

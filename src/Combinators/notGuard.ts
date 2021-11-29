@@ -1,5 +1,5 @@
 import { isNegatableGuard, NegatableGuard, buildNegatable } from '../NegatableGuard';
-import { ErrorLike, ReasonGuard } from '../ReasonGuard';
+import { errorLike, ErrorLike, ReasonGuard } from '../ReasonGuard';
 
 export const notGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
 	inner: ReasonGuard<FROM, TO> | NegatableGuard<FROM, TO, N>,
@@ -25,10 +25,10 @@ export function negate<FROM, TO extends FROM, N extends FROM>(
 				innerConfirmations = [];
 			}
 			if (inner(input, innerErrors, innerConfirmations)) {
-				if (!innerConfirmations) {
-					return false;
+				if (innerConfirmations) {
+					errors?.push(errorLike(innerConfirmations[innerConfirmations.length - 1]));
 				}
-				throw new Error(innerConfirmations[innerConfirmations.length - 1]);
+				return false;
 			} else {
 				if (innerErrors) {
 					confirmations?.push(innerErrors[0].message);

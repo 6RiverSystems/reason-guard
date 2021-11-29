@@ -1,6 +1,6 @@
 import { CompositeError } from './ContextError';
 import { NegatableGuard, buildNegatable } from './NegatableGuard';
-import { ErrorLike, ReasonGuard } from './ReasonGuard';
+import { errorLike, ErrorLike, ReasonGuard } from './ReasonGuard';
 
 export type Checker<FROM> = (input: FROM, context?: PropertyKey[]) => string | ErrorLike;
 
@@ -40,7 +40,7 @@ function getRawNegation<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGu
 		try {
 			result = checker(input);
 			if (typeof result === 'string') {
-				errors?.push(new Error(`negation of: ${result}`));
+				errors?.push(errorLike(`negation of: ${result}`));
 				return false;
 			}
 		} catch (err: any) {

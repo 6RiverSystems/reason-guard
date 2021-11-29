@@ -12,7 +12,7 @@ export const arrayHasType = <TO>(itemGuard: ReasonGuard<unknown, TO>) =>
 			const innerConfirmations: string[] = [];
 			const innerContext = pushContext(i, context);
 			if (!itemGuard(input[i], innerErrors, innerConfirmations, innerContext)) {
-				throw new CompositeError(
+				return new CompositeError(
 					innerErrors.map(
 						(err) =>
 							new ContextError(

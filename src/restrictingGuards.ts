@@ -1,6 +1,6 @@
 import { checkerToGuard } from './Checker';
 import { andGuard, orGuard, thenGuard } from './Combinators';
-import { ReasonGuard } from './ReasonGuard';
+import { errorLike, ReasonGuard } from './ReasonGuard';
 import { isDate } from './instanceGuards';
 import { isDateString } from './parseGuards';
 import { isNumber, isSymbol, isString } from './primitiveGuards';
@@ -14,7 +14,7 @@ export const isUUIDString = checkerToGuard<string, string>((input) => {
 	if (UUIDRegex.test(input)) {
 		return 'Valid UUID';
 	} else {
-		throw new Error('Not a valid UUID');
+		return errorLike('Not a valid UUID');
 	}
 });
 
@@ -22,14 +22,14 @@ export const isUUID = thenGuard(isString, isUUIDString);
 
 export const numberIsInteger = checkerToGuard<number, number>((input: number) => {
 	if (!Number.isInteger(input)) {
-		throw new Error(`${input} is not an integer`);
+		return errorLike(`${input} is not an integer`);
 	}
 	return `${input} is an integer`;
 });
 
 export const numberIsFinite = checkerToGuard<number, number>((input: number) => {
 	if (!Number.isFinite(input)) {
-		throw new Error(`${input} is not finite`);
+		return errorLike(`${input} is not finite`);
 	}
 	return `${input} is finite`;
 });
@@ -39,7 +39,7 @@ export const numberIsLessThan = (maximum: number) =>
 		if (input < maximum) {
 			return `${input} < ${maximum}`;
 		}
-		throw new Error(`${input} >= ${maximum}`);
+		return errorLike(`${input} >= ${maximum}`);
 	});
 
 export const numberIsGreaterThan = (minimum: number) =>
@@ -47,7 +47,7 @@ export const numberIsGreaterThan = (minimum: number) =>
 		if (input > minimum) {
 			return `${input} > ${minimum}`;
 		}
-		throw new Error(`${input} <= ${minimum}`);
+		return errorLike(`${input} <= ${minimum}`);
 	});
 
 export const numberIs = (value: number) =>
@@ -56,13 +56,13 @@ export const numberIs = (value: number) =>
 				if (Number.isNaN(input)) {
 					return `${input} = ${value}`;
 				}
-				throw new Error(`${input} != ${value}`);
+				return errorLike(`${input} != ${value}`);
 		  })
 		: checkerToGuard<number, number>((input: number) => {
 				if (input === value) {
 					return `${input} = ${value}`;
 				}
-				throw new Error(`${input} != ${value}`);
+				return errorLike(`${input} != ${value}`);
 		  });
 export const numberIsAtMost = (maximum: number) =>
 	orGuard(numberIsLessThan(maximum), numberIs(maximum));
@@ -132,7 +132,7 @@ export const isStrictEqual = <T>(value: T) =>
 		if (value === input) {
 			return `is exactly ${String(value)}`;
 		} else {
-			throw new Error(`is not exactly ${String(input)}`);
+			return errorLike(`is not exactly ${String(input)}`);
 		}
 	});
 
@@ -166,19 +166,20 @@ export function isLiteral<T extends Literable, U extends T>(
 	// want this to be computed once when building the guard
 	const values = new Set<Literable>(keys);
 
-	return (input, es = [], cs = []): input is ArrayLiteralCheck<T, typeof keys> => {
+	return (input, errors, confirmations): input is ArrayLiteralCheck<T, typeof keys> => {
 		try {
-			if (!literableGuard(input, es, cs)) {
+			if (!literableGuard(input, errors, confirmations)) {
 				return false;
 			}
 			if (values.has(input)) {
-				cs.push(`is ${String(input)}`);
+				confirmations?.push(`is ${String(input)}`);
 				return true;
 			} else {
-				throw new Error(`not in ${keys}`);
+				errors?.push(errorLike(`not in ${keys}`));
+				return false;
 			}
 		} catch (err: any) {
-			es.push(err);
+			errors?.push(err);
 			return false;
 		}
 	};

@@ -1,5 +1,5 @@
 import { buildNegatable } from '../NegatableGuard';
-import { ReasonGuard } from '../ReasonGuard';
+import { ErrorLike, errorLike, ReasonGuard } from '../ReasonGuard';
 import { andGuard } from './andGuard';
 import { notGuard } from './notGuard';
 
@@ -16,23 +16,24 @@ function getRawOr<FROM, LEFT extends FROM, RIGHT extends FROM>(
 	left: ReasonGuard<FROM, LEFT>,
 	right: ReasonGuard<FROM, RIGHT>,
 ): ReasonGuard<FROM, LEFT | RIGHT> {
-	return (input, output = [], confirmations = []): input is LEFT | RIGHT => {
+	return (input, errors, confirmations): input is LEFT | RIGHT => {
 		try {
-			const innerErrors: Error[] = [];
-			const innerConfs: string[] = [];
-			if (left(input, innerErrors, innerConfs)) {
-				confirmations.push(...innerConfs);
+			const innerErrors: ErrorLike[] = [];
+			const innerConfirmations: string[] = [];
+			if (left(input, innerErrors, innerConfirmations)) {
+				confirmations?.push(...innerConfirmations);
 				return true;
 			}
 			innerErrors.splice(1);
-			innerConfs.splice(0);
-			if (right(input, innerErrors, innerConfs)) {
-				confirmations.push(...innerConfs);
+			innerConfirmations.splice(0);
+			if (right(input, innerErrors, innerConfirmations)) {
+				confirmations?.push(...innerConfirmations);
 				return true;
 			}
-			throw new Error(`${innerErrors[0].message}, and ${innerErrors[1].message}`);
+			errors?.push(errorLike(`${innerErrors[0].message}, and ${innerErrors[1].message}`));
+			return false;
 		} catch (err: any) {
-			output.push(err);
+			errors?.push(err);
 			return false;
 		}
 	};

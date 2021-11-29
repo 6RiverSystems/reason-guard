@@ -1,4 +1,5 @@
 import { checkerToGuard } from './Checker';
+import { errorLike } from './ReasonGuard';
 
 /**
  * Would Number.parseFloat parse this input?
@@ -7,7 +8,7 @@ export const isNumberString = checkerToGuard<string, string>((input) => {
 	if (!isNaN(Number.parseFloat(input))) {
 		return 'is Number-string';
 	} else {
-		throw new Error('is not Number-string');
+		return errorLike('is not Number-string');
 	}
 });
 
@@ -18,7 +19,7 @@ export const isDateString = checkerToGuard<string, string>((input) => {
 	if (!isNaN(Date.parse(input))) {
 		return 'is Date-string';
 	} else {
-		throw new Error('is not Date-string');
+		return errorLike('is not Date-string');
 	}
 });
 
@@ -31,6 +32,6 @@ export const isBigIntString = checkerToGuard<string, string>((input) => {
 		BigInt(input);
 		return 'is BigInt-string';
 	} catch (err) {
-		throw new Error('is not BigInt-string');
+		return errorLike('is not BigInt-string');
 	}
 });
