@@ -2,7 +2,7 @@
 	"cache": false,
 	"reporter": ["text", "html"],
 	"extension": [".ts"],
-	"include": ["dist/src/**/*.js"],
+	"include": ["dist/src/**/*.js", "src/**/*.ts"],
 	"exclude": ["**/*.d.ts", "coverage/**", "test/**"],
 	"all": true
 }
