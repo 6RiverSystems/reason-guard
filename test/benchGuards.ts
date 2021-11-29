@@ -80,10 +80,7 @@ function benchOnce<FROM, TO extends FROM>(
 	do {
 		if (duration) {
 			let nextIterations = Math.ceil((TargetDurationMs * iterations) / duration);
-			if (nextIterations > iterations * 10) {
-				// don't let it grow too fast, we may have a low-accuracy measurement
-				nextIterations = iterations * 10;
-			} else if (nextIterations > MaxIterations) {
+			if (nextIterations > MaxIterations) {
 				nextIterations = MaxIterations;
 			}
 			iterations = nextIterations;

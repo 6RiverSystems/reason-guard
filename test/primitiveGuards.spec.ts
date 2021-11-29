@@ -22,7 +22,7 @@ describe('primitive guards', function () {
 				() => Math.random(),
 				(): unknown => Math.random().toString(),
 			);
-		});
+		}).timeout(10_000);
 	});
 	context('isString', function () {
 		it('guards for strings', function () {
@@ -42,7 +42,7 @@ describe('primitive guards', function () {
 				() => Math.random().toString(),
 				(): unknown => Math.random(),
 			);
-		});
+		}).timeout(10_000);
 	});
 	context('isFunction', function () {
 		it('guards for functions', function () {
@@ -66,7 +66,7 @@ describe('primitive guards', function () {
 				() => Math.random,
 				(): unknown => true,
 			);
-		});
+		}).timeout(10_000);
 	});
 	context('isUndefined', function () {
 		it('guards for undefined', function () {
@@ -86,7 +86,7 @@ describe('primitive guards', function () {
 				() => undefined,
 				(): unknown => true,
 			);
-		});
+		}).timeout(10_000);
 	});
 	context('isNull', function () {
 		it('guards for null', function () {
@@ -106,6 +106,6 @@ describe('primitive guards', function () {
 				() => null,
 				(): unknown => true,
 			);
-		});
+		}).timeout(10_000);
 	});
 });
