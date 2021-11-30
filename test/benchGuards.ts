@@ -56,12 +56,18 @@ export function assertBenchGuard<FROM, TO extends FROM>(
 	// eslint-disable-next-line no-console
 	console.log(negativeResults, 'negative results');
 
+	let offset = 50;
+	if (process.env.CI) {
+		// CI runners are slow
+		offset += 50;
+	}
+
 	for (const mode of Object.keys(negativeResults) as (keyof GuardBenchResults)[]) {
 		assert.isAtMost(
 			negativeResults[mode].nsPerCall,
 			// negative results should be no more than 50ns+50% slower than positives
-			positiveResults[mode].nsPerCall * 1.5 + 50,
-			`negative result for ${mode} should be within 50%+50ns of positive result ${positiveResults[mode].nsPerCall}`,
+			positiveResults[mode].nsPerCall * 1.5 + offset,
+			`negative result for ${mode} should be within 50%+${offset}ns of positive result ${positiveResults[mode].nsPerCall}`,
 		);
 	}
 }
