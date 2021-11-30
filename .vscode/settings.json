@@ -1,13 +1,28 @@
 {
-	// Fix syntax/style problems on save
-	"eslint.autoFixOnSave": true,
-	"eslint.validate": [
-		{"language": "javascript", "autoFix": true},
-		{"language": "typescript", "autoFix": true}
-	],
-	// Use locally installed copy of TypeScript instead of the version that ships with the editor
-	"typescript.tsdk": "node_modules/typescript/lib",
+	"eslint.validate": ["javascript", "typescript"],
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
-	}
+	},
+	"eslint.workingDirectories": [{ "mode": "auto" }],
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[yaml]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"typescript.tsdk": "node_modules/typescript/lib"
 }

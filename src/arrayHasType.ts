@@ -2,17 +2,17 @@ import { checkerToGuard, pushContext } from './Checker';
 import { thenGuard } from './Combinators';
 import { ContextError, CompositeError } from './ContextError';
 import { NegatableGuard } from './NegatableGuard';
-import { ReasonGuard } from './ReasonGuard';
+import { ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isArray } from './instanceGuards';
 
 export const arrayHasType = <TO>(itemGuard: ReasonGuard<unknown, TO>) =>
 	checkerToGuard<unknown[], TO[]>((input: unknown[], context?: PropertyKey[]) => {
 		for (let i = 0; i < input.length; i++) {
-			const innerErrors: Error[] = [];
-			const innerConfs: string[] = [];
+			const innerErrors: ErrorLike[] = [];
+			const innerConfirmations: string[] = [];
 			const innerContext = pushContext(i, context);
-			if (!itemGuard(input[i], innerErrors, innerConfs, innerContext)) {
-				throw new CompositeError(
+			if (!itemGuard(input[i], innerErrors, innerConfirmations, innerContext)) {
+				return new CompositeError(
 					innerErrors.map(
 						(err) =>
 							new ContextError(

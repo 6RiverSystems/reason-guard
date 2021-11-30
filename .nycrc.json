@@ -1,16 +1,8 @@
 {
 	"cache": false,
-	"reporter": [
-		"text",
-		"html"
-	],
-	"extension": [
-		".ts"
-	],
-	"exclude": [
-		"**/*.d.ts",
-		"coverage/**",
-		"test/**"
-	],
+	"reporter": ["text", "html"],
+	"extension": [".ts"],
+	"include": ["dist/src/**/*.js", "src/**/*.ts"],
+	"exclude": ["**/*.d.ts", "coverage/**", "test/**"],
 	"all": true
 }

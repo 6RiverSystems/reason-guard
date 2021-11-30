@@ -2,7 +2,7 @@ import { checkerToGuard, pushContext } from './Checker';
 import { thenGuard, orGuard, notGuard } from './Combinators';
 import { ContextError, CompositeError } from './ContextError';
 import { NegatableGuard } from './NegatableGuard';
-import { ReasonGuard } from './ReasonGuard';
+import { ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isArrayOfType } from './arrayHasType';
 import { isUndefined } from './primitiveGuards';
 
@@ -32,10 +32,10 @@ export const hasProperty = <T extends PropertyKey>(p: T) =>
 	checkerToGuard<unknown, Record<T, unknown>, Partial<Record<T, never>>>(
 		(input: unknown, context?: PropertyKey[]) => {
 			const x: any = input;
-			// if (x[p] === undefined) throw new Error(`property ${p} is undefined`);
-			// if (x[p] === null) throw new Error(`property ${p} is null`); // is this right?
+			// if (x[p] === undefined) return errorLike(`property ${p} is undefined`);
+			// if (x[p] === null) return errorLike(`property ${p} is null`); // is this right?
 			if (!(p in x))
-				throw new ContextError(`property ${p} is not present`, pushContext(p, context));
+				return new ContextError(`property ${p} is not present`, pushContext(p, context));
 			return `property ${p} is present`;
 		},
 	);
@@ -50,11 +50,11 @@ export const propertyHasType = <
 	p: T,
 ) =>
 	checkerToGuard<Record<T, FROMT>, Pick<TO, T>>((input, context) => {
-		const innerErrors: Error[] = [];
-		const innerConfs: string[] = [];
+		const innerErrors: ErrorLike[] = [];
+		const innerConfirmations: string[] = [];
 		const innerContext = pushContext(p, context);
-		if (!itemGuard(input[p], innerErrors, innerConfs, innerContext)) {
-			throw new CompositeError(
+		if (!itemGuard(input[p], innerErrors, innerConfirmations, innerContext)) {
+			return new CompositeError(
 				innerErrors.map(
 					(err) =>
 						new ContextError(
@@ -64,7 +64,7 @@ export const propertyHasType = <
 				),
 			);
 		}
-		return `property ${p}: ${innerConfs[0]}`;
+		return `property ${p}: ${innerConfirmations[0]}`;
 	});
 
 export const narrowedProperty =

@@ -1,5 +1,6 @@
 import { checkerToGuard } from './Checker';
 import { andGuard, notGuard } from './Combinators';
+import { errorLike } from './ReasonGuard';
 
 type Primitive =
 	| 'string'
@@ -14,7 +15,7 @@ type Primitive =
 // We cannot guarantee that "x: PRIM" -> "typeof x === 'prim'"!
 function getPrimitiveTypeCheck<PRIM>(prim: Primitive) {
 	return checkerToGuard<unknown, PRIM>((input: unknown) => {
-		if (typeof input !== prim) throw new Error(`not a ${prim}`);
+		if (typeof input !== prim) return errorLike(`not a ${prim}`);
 		return `a ${prim}`;
 	});
 }
@@ -23,13 +24,13 @@ export const isUndefined = checkerToGuard<unknown, undefined>((input) => {
 	if (input === undefined) {
 		return `undefined`;
 	}
-	throw new Error('not undefined');
+	return errorLike('not undefined');
 });
 export const isNull = checkerToGuard<unknown, null>((input) => {
 	if (input === null) {
 		return `null`;
 	}
-	throw new Error('not null');
+	return errorLike('not null');
 });
 
 export const isNumber = getPrimitiveTypeCheck<number>('number');
