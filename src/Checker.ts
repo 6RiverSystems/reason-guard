@@ -35,10 +35,10 @@ function getRawGuard<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard
 }
 
 function getRawNegation<FROM, TO extends FROM>(checker: Checker<FROM>): ReasonGuard<FROM, TO> {
-	return (input, errors, confirmations): input is TO => {
+	return (input, errors, confirmations, context = []): input is TO => {
 		let result: string | ErrorLike;
 		try {
-			result = checker(input);
+			result = checker(input, context);
 			if (typeof result === 'string') {
 				errors?.push(errorLike(`negation of: ${result}`));
 				return false;
