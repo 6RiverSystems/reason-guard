@@ -27,6 +27,14 @@ describe('property guards', function () {
 			assertGuards(!false)(guard, {});
 			assertGuards(!false)(guard, { foo: 3 });
 		});
+		it('works with symbols', function () {
+			const sym = Symbol('foo');
+			const guard = property.requiredProperty(isString)(sym);
+			assertGuards(true)(guard, { [sym]: 'foo' });
+			assertGuards(false)(guard, {});
+			assertGuards(false)(guard, { [sym]: 3 });
+			assertGuards(false)(guard, { [Symbol('foo')]: 'foo' });
+		});
 	});
 	context('optional property', function () {
 		it('works normally', function () {

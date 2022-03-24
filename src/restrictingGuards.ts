@@ -175,7 +175,7 @@ export function isLiteral<T extends Literable, U extends T>(
 				confirmations?.push(`is ${String(input)}`);
 				return true;
 			} else {
-				errors?.push(errorLike(`not in ${keys}`));
+				errors?.push(errorLike(`not in ${keys.map((k) => String(k))}`));
 				return false;
 			}
 		} catch (err: any) {

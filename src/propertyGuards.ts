@@ -35,8 +35,8 @@ export const hasProperty = <T extends PropertyKey>(p: T) =>
 			// if (x[p] === undefined) return errorLike(`property ${p} is undefined`);
 			// if (x[p] === null) return errorLike(`property ${p} is null`); // is this right?
 			if (!(p in x))
-				return new ContextError(`property ${p} is not present`, pushContext(p, context));
-			return `property ${p} is present`;
+				return new ContextError(`property ${String(p)} is not present`, pushContext(p, context));
+			return `property ${String(p)} is present`;
 		},
 	);
 
@@ -58,13 +58,13 @@ export const propertyHasType = <
 				innerErrors.map(
 					(err) =>
 						new ContextError(
-							`property ${p}: ${err.message}`,
+							`property ${String(p)}: ${err.message}`,
 							err instanceof ContextError ? err.context : innerContext,
 						),
 				),
 			);
 		}
-		return `property ${p}: ${innerConfirmations[0]}`;
+		return `property ${String(p)}: ${innerConfirmations[0]}`;
 	});
 
 export const narrowedProperty =
