@@ -69,4 +69,16 @@ describe(isRecord.name, function () {
 			}
 		});
 	});
+
+	context('nesting', function () {
+		const innerGuard = isRecord(isString, isBoolean);
+		const outerGuard = isRecord(isString, innerGuard);
+
+		it('provides correct nested error context', function () {
+			const errors: ErrorLike[] = [];
+			outerGuard({ foo: { bar: 0 } }, errors);
+			assert.lengthOf(errors, 1);
+			assert.include(JSON.stringify(errors[0]), 'value foo: value bar: not ');
+		});
+	});
 });

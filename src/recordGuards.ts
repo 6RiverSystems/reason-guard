@@ -1,6 +1,6 @@
 import { pushContext } from './Checker';
 import { thenGuard } from './Combinators';
-import { CompositeError, ContextError } from './ContextError';
+import { ContextError } from './ContextError';
 import { ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isObject } from './primitiveGuards';
 
@@ -23,21 +23,17 @@ function checkRecord<K extends symbol | string, V>(
 		const innerContext = pushContext(String(k), context);
 		if (!keyChecker(k, keyErrors, keyConfirmations, innerContext)) {
 			anyFailed = true;
-			if (output) {
-				output.push(
-					new CompositeError(
-						keyErrors.map(
-							(err) =>
-								new ContextError(
-									`key ${String(k)}: ${err.message}`,
-									err instanceof ContextError ? err.context : innerContext,
-								),
+			output?.push(
+				...keyErrors.map(
+					(err) =>
+						new ContextError(
+							`key ${String(k)}: ${err.message}`,
+							err instanceof ContextError ? err.context : innerContext,
 						),
-					),
-				);
-			}
-		} else if (confirmations) {
-			confirmations.push(...keyConfirmations.map((c) => `key ${String(k)}: ${c}`));
+				),
+			);
+		} else {
+			confirmations?.push(...keyConfirmations.map((c) => `key ${String(k)}: ${c}`));
 		}
 		const valueErrors: ErrorLike[] = [];
 		const valueConfirmations: string[] = [];
@@ -46,21 +42,17 @@ function checkRecord<K extends symbol | string, V>(
 		// esp. since we are still checking values even if the key checker failed
 		if (!valueChecker((input as any)[k], valueErrors, valueConfirmations, innerContext)) {
 			anyFailed = true;
-			if (output) {
-				output.push(
-					new CompositeError(
-						valueErrors.map(
-							(err) =>
-								new ContextError(
-									`value ${String(k)}: ${err.message}`,
-									err instanceof ContextError ? err.context : innerContext,
-								),
+			output?.push(
+				...valueErrors.map(
+					(err) =>
+						new ContextError(
+							`value ${String(k)}: ${err.message}`,
+							err instanceof ContextError ? err.context : innerContext,
 						),
-					),
-				);
-			}
-		} else if (confirmations) {
-			confirmations.push(...valueConfirmations.map((c) => `value ${String(k)}: ${c}`));
+				),
+			);
+		} else {
+			confirmations?.push(...valueConfirmations.map((c) => `value ${String(k)}: ${c}`));
 		}
 	}
 	// Object.entries would be nice here, but it doesn't give us symbols
