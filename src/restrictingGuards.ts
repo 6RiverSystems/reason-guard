@@ -184,3 +184,12 @@ export function isLiteral<T extends Literable, U extends T>(
 		}
 	};
 }
+
+const isNonEmptyStringChecker = checkerToGuard<string, string>((input: string) => {
+	if (input.length === 0) {
+		return errorLike('String is has length of 0');
+	}
+	return `${input} is non-empty string`;
+});
+
+export const isNonEmptyString = thenGuard(isString, isNonEmptyStringChecker);

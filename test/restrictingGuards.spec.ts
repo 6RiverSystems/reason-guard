@@ -277,4 +277,23 @@ describe('restricting guards', function () {
 			assertGuards(false)(guard, Number.NaN);
 		});
 	});
+	context('isNonEmptyString', function () {
+		const guard = restricting.isNonEmptyString;
+		it('guards for populated strings', function () {
+			assertGuards(true)(guard, 'foo');
+			assertGuards(true)(guard, 'bar');
+			assertGuards(true)(guard, ' ');
+		});
+		it('guards against empty strings', function () {
+			assertGuards(false)(guard, '');
+		});
+		it('guards against non-strings', function () {
+			assertGuards(false)(guard, false);
+			assertGuards(false)(guard, true);
+			assertGuards(false)(guard, 1);
+			assertGuards(false)(guard, 0);
+			assertGuards(false)(guard, Number.NaN);
+			assertGuards(false)(guard, {});
+		});
+	});
 });
