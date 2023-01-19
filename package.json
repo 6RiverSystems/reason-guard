@@ -9,7 +9,7 @@
   "main": "dist/src/index.js",
   "contributors": [],
   "engines": {
-    "node": ">= 14.17.6"
+    "node": ">= 16.19.0"
   },
   "scripts": {
     "lint": "npm run eslint:check && npm run format:check",
@@ -28,14 +28,13 @@
     "htmlcov": "opener coverage/index.html",
     "clean": "rm -rf coverage/ dist/ .nyc_output/"
   },
-  "dependencies": {},
   "devDependencies": {
     "@6river/commitlint-config-6river": "^2.2.56",
     "@6river/prettier-config": "^1.0.53",
     "@commitlint/cli": "^14.1.0",
     "@types/chai": "4.1.7",
     "@types/mocha": "^5.2.7",
-    "@types/node": "10.14.15",
+    "@types/node": "16.18.11",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "chai": "4.2.0",
