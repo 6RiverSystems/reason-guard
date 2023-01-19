@@ -1,6 +1,6 @@
+import { notGuard } from './notGuard';
 import { buildNegatable } from '../NegatableGuard';
 import { ReasonGuard } from '../ReasonGuard';
-import { notGuard } from './notGuard';
 
 /**
  * A guard that narrows an A/B choice to a single alternative

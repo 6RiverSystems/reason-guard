@@ -1,7 +1,7 @@
 import 'mocha';
+import { assertGuards } from './assertGuards';
 import { ReasonGuard, isString, notGuard, isObjectWithDefinition } from '../src';
 import * as property from '../src/propertyGuards';
-import { assertGuards } from './assertGuards';
 
 const values = [0, 'string', false, () => null, new Date(), null, undefined, []];
 class TestBase {

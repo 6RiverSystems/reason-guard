@@ -1,5 +1,5 @@
-import { isNumberString, isDateString, isBigIntString } from '../src';
 import { assertGuards } from './assertGuards';
+import { isNumberString, isDateString, isBigIntString } from '../src';
 
 describe('parse guards', function () {
 	context('number', function () {

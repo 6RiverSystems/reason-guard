@@ -1,8 +1,8 @@
 import { assert } from 'chai';
 
+import { assertGuards } from './assertGuards';
 import { isString, isNumber, isDate, ReasonGuard } from '../src';
 import { isTuple, TupleGuard } from '../src/tupleGuards';
-import { assertGuards } from './assertGuards';
 
 // half the point of this spec file is to verify it compiles cleanly
 // sadly there are some negative tests of that sort we'd like to have, but can't do that with mocha

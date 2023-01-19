@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 
-import { ReasonGuard, andGuard } from '../../src';
 import { testTwoArgCombinator } from './testCombinator';
+import { ReasonGuard, andGuard } from '../../src';
 
 describe('and', function () {
 	it('behaves as && at runtime', function () {

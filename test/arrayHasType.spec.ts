@@ -1,7 +1,7 @@
 import 'mocha';
+import { assertGuards } from './assertGuards';
 import { arrayHasType } from '../src/arrayHasType';
 import { isNumber } from '../src/primitiveGuards';
-import { assertGuards } from './assertGuards';
 
 describe('array has type', function () {
 	it('guards for correct type', function () {
