@@ -1,12 +1,15 @@
 version: 2.1
 
 orbs:
-  sixrs-gke: sixriversystems/sixrs-gke@3
+  sixrs-gke: sixriversystems/sixrs-gke@7
+
+aliases:
+  - &node_image cimg/node:16.19.1
 
 jobs:
   setup:
     docker:
-      - image: cimg/node:14.17.6
+      - image: *node_image
     steps:
       - checkout
       - run:
@@ -18,7 +21,7 @@ jobs:
             - .
   build:
     docker:
-      - image: cimg/node:14.17.6
+      - image: *node_image
     steps:
       - attach_workspace:
           at: ./
@@ -31,7 +34,7 @@ jobs:
             - dist
   lint:
     docker:
-      - image: cimg/node:14.17.6
+      - image: *node_image
     steps:
       - attach_workspace:
           at: ./
@@ -47,7 +50,7 @@ jobs:
           path: ./reports
   test:
     docker:
-      - image: cimg/node:14.17.6
+      - image: *node_image
     environment:
       MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
     steps:
@@ -66,7 +69,7 @@ jobs:
           path: ./reports
   publish:
     docker:
-      - image: cimg/node:14.17.6
+      - image: *node_image
     steps:
       - attach_workspace:
           at: ./

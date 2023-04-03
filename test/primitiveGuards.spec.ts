@@ -1,6 +1,6 @@
-import * as primitive from '../src/primitiveGuards';
 import { assertGuards } from './assertGuards';
 import { assertBenchGuard } from './benchGuards';
+import * as primitive from '../src/primitiveGuards';
 
 describe('primitive guards', function () {
 	context('isNumber', function () {

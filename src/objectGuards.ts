@@ -79,6 +79,8 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	// repeat!
 	(Object.getOwnPropertySymbols(definition) as (keyof TO)[]).forEach(checkProperty);
 
+	// rule is wrong, doesn't understand calls to checkProperty
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!anyPassed && !anyFailed) {
 		output?.push(errorLike('definition had no guards'));
 		return false;

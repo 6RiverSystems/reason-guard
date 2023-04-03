@@ -1,5 +1,5 @@
-import * as restricting from '../src/restrictingGuards';
 import { assertGuards } from './assertGuards';
+import * as restricting from '../src/restrictingGuards';
 
 describe('restricting guards', function () {
 	context('isDateOrStringDate', function () {

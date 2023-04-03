@@ -1,7 +1,7 @@
 import { assert } from 'chai';
 
-import { ErrorLike, isBoolean, isNumberString, isRecord, isString, thenGuard } from '../src';
 import { assertGuards } from './assertGuards';
+import { ErrorLike, isBoolean, isNumberString, isRecord, isString, thenGuard } from '../src';
 
 const trueGuard = (_: unknown): _ is unknown => true;
 

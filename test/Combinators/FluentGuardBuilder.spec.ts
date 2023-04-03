@@ -1,5 +1,5 @@
-import { FluentGuardBuilder } from '../../src';
 import { testTwoArgCombinator, testOneArgCombinator } from './testCombinator';
+import { FluentGuardBuilder } from '../../src';
 
 describe('Builders', function () {
 	context('ands', function () {

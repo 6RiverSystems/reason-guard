@@ -39,5 +39,5 @@ export const isBoolean = getPrimitiveTypeCheck<boolean>('boolean');
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const isFunction = getPrimitiveTypeCheck<Function>('function');
 export const isSymbol = getPrimitiveTypeCheck<symbol>('symbol');
-export const isBigInt = getPrimitiveTypeCheck<BigInt>('bigint');
+export const isBigInt = getPrimitiveTypeCheck<bigint>('bigint');
 export const isObject = andGuard(getPrimitiveTypeCheck<object>('object'), notGuard(isNull));

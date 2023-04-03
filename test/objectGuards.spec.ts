@@ -1,3 +1,4 @@
+import { assertGuards } from './assertGuards';
 import {
 	ReasonGuard,
 	objectHasDefinition,
@@ -11,7 +12,6 @@ import {
 	strictOptionalProperty,
 	isNumberString,
 } from '../src';
-import { assertGuards } from './assertGuards';
 
 // NOTE: half of the testing here is just making sure this file compiles without errors
 

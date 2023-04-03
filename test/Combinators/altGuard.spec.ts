@@ -1,5 +1,5 @@
-import { altGuard, notGuard } from '../../src';
 import { testOneArgCombinator } from './testCombinator';
+import { altGuard, notGuard } from '../../src';
 
 describe('alt', function () {
 	testOneArgCombinator('~', [false, true, false, true], altGuard);
