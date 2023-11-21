@@ -7,7 +7,7 @@ export type NegatableGuard<FROM, TO extends FROM, N extends FROM = FROM> = Reaso
 export type AlternativeGuard<LEFT, RIGHT> = NegatableGuard<LEFT | RIGHT, LEFT, RIGHT>;
 
 export const isNegatableGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
-	input: ReasonGuard<FROM, TO>,
+	input: ReasonGuard<FROM, TO> | NegatableGuard<FROM, TO, N>,
 ): input is NegatableGuard<FROM, TO, N> =>
 	typeof input === 'function' && typeof (input as any).negate === 'function';
 

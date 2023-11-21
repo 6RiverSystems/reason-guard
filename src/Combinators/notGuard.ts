@@ -3,7 +3,7 @@ import { errorLike, ErrorLike, ReasonGuard } from '../ReasonGuard';
 
 export const notGuard = <FROM, TO extends FROM, N extends FROM = FROM>(
 	inner: ReasonGuard<FROM, TO> | NegatableGuard<FROM, TO, N>,
-) =>
+): NegatableGuard<FROM, N, TO> =>
 	isNegatableGuard(inner)
 		? inner.negate()
 		: buildNegatable<FROM, N, TO>(
