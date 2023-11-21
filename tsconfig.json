@@ -1,11 +1,6 @@
 {
 	"compileOnSave": true,
-	"include": [
-		"src",
-		"test",
-		"test",
-		"lib"
-	],
+	"include": ["src", "test", "test", "lib"],
 	"compilerOptions": {
 		"outDir": "dist",
 		"target": "es2021",
@@ -15,6 +10,7 @@
 		"allowUnreachableCode": false,
 		"strict": true,
 		"sourceMap": true,
+		"declarationMap": true,
 		"declaration": true,
 		"forceConsistentCasingInFileNames": true,
 		"removeComments": false,

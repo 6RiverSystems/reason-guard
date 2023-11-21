@@ -1,6 +1,5 @@
-import { andGuard } from './andGuard';
+import { andGuard, orGuard } from './booleanGuard';
 import { notGuard } from './notGuard';
-import { orGuard } from './orGuard';
 import { thenGuard } from './thenGuard';
 import { ReasonGuard } from '../ReasonGuard';
 
