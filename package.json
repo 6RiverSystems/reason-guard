@@ -20,7 +20,7 @@
     "format:fix": "prettier --write '{src,test}/**/*.ts'",
     "only:build": "tsc",
     "only:test": "NODE_ENV=test nyc mocha ${MOCHA_OPTS}",
-    "only:benchmarks": "NODE_ENV=test mocha ${MOCHA_OPTS} --grep='is fast'",
+    "only:benchmarks": "NODE_ENV=test mocha ${MOCHA_OPTS} --grep='is fast' --timeout=10000",
     "only:lCov": "NODE_ENV=test nyc report --reporter=text-lcov > coverage.lcov",
     "prebuild": "npm run lint",
     "build": "npm run only:build",

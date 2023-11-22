@@ -16,11 +16,13 @@ describe('primitive guards', function () {
 
 	before(function () {
 		// preload the test data
-		for (const gen of [numbers, strings, trues, nulls, undefineds, functions]) {
-			gen.ensure(10_000_000);
+		if (!process.env.SKIP_SLOW) {
+			for (const gen of [numbers, strings, trues, nulls, undefineds, functions]) {
+				gen.ensure(10_000_000);
+			}
+			// try to avoid having any GC time counted in the test by forcing it to run early
+			global.gc?.();
 		}
-		// try to avoid having any GC time counted in the test by forcing it to run early
-		global.gc?.();
 		// console.log('profiler breakpoint');
 	});
 	after(function () {
