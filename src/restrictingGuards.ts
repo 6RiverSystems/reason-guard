@@ -126,15 +126,18 @@ export const numberIsSafeInteger = andGuard(
 	interval('>=', Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, '<='),
 );
 
-export const isStrictEqual = <T>(value: T) =>
-	checkerToGuard<unknown, T>((input) => {
+export function isStrictEqual<T>(value: T) {
+	const confirmation = `is exactly ${String(value)}`;
+	const error = errorLike(`is not exactly ${String(value)}`);
+	return checkerToGuard<unknown, T>((input) => {
 		// have to use String() because of Symbols
 		if (value === input) {
-			return `is exactly ${String(value)}`;
+			return confirmation;
 		} else {
-			return errorLike(`is not exactly ${String(input)}`);
+			return error;
 		}
 	});
+}
 
 // You can have boolean literal types, but they don't work with Record<>,
 // and they don't make sense in most contexts, so they are handled separately

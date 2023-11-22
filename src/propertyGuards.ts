@@ -28,18 +28,19 @@ export type NarrowPropertyGuard<
 	p: T,
 ) => NegatableGuard<Record<T, FROM_PROP_TYPE>, Record<T, DEST_PROP_TYPE>>;
 
-export const hasProperty = <T extends PropertyKey>(p: T) =>
-	checkerToGuard<unknown, Record<T, unknown>, Partial<Record<T, never>>>(
+export function hasProperty<T extends PropertyKey>(p: T) {
+	const confirmationMsg = `property ${String(p)} is present`;
+	const errorMsg = `property ${String(p)} is not present`;
+	return checkerToGuard<unknown, Record<T, unknown>, Partial<Record<T, never>>>(
 		(input: unknown, context?: PropertyKey[]) => {
 			const x: any = input;
-			// if (x[p] === undefined) return errorLike(`property ${p} is undefined`);
-			// if (x[p] === null) return errorLike(`property ${p} is null`); // is this right?
 			if (!(p in x)) {
-				return new ContextError(`property ${String(p)} is not present`, pushContext(p, context));
+				return new ContextError(errorMsg, pushContext(p, context));
 			}
-			return `property ${String(p)} is present`;
+			return confirmationMsg;
 		},
 	);
+}
 
 export const propertyHasType = <
 	FROMT,

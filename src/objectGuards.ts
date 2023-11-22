@@ -40,47 +40,40 @@ export type RequiredGuards<
 export type OptionalGuards<FROM extends object, TO extends FROM> = Partial<
 	RequiredGuards<FROM, TO, keyof TO>
 >;
-
 /**
  *	A mapping from property names to factories for guards on those properties
  */
 export type PropertyGuards<FROM extends object, TO extends FROM> = RequiredGuards<FROM, TO> &
 	OptionalGuards<FROM, TO>;
 
+// we can't express this type precisely without a lot of hacks. It would end up
+// being a long tuple list of every property in TO. Since it isn't exported, and
+// we won't be able to make use of that type information where it is used, we
+// skip that part. We don't need the keys being checked to be part of this list,
+// because they are embedded in the guards.
+type PropertyGuardList<FROM extends object, TO extends FROM> = ReasonGuard<
+	FROM,
+	FROM & Partial<TO>
+>[];
+
 function checkDefinition<FROM extends object, TO extends FROM>(
-	definition: PropertyGuards<FROM, TO>,
+	definition: PropertyGuardList<FROM, TO>,
 	input: FROM,
 	output?: ErrorLike[],
 	confirmations?: string[],
-	context?: PropertyKey[],
+	context: PropertyKey[] = [],
 ): input is TO {
 	let anyPassed = false;
 	let anyFailed = false;
 
-	// Here be dragons
-	// While typescript accepts this done in pieces,
-	// it won't accept it as a one-liner.
-	const unifiedDefs: OptionalGuards<FROM, TO> = definition;
-
-	function checkProperty<K extends keyof TO>(k: K) {
-		const propertyDefinition = unifiedDefs[k];
-		if (propertyDefinition) {
-			if (propertyDefinition(k)(input, output, confirmations, context)) {
-				anyPassed = true;
-			} else {
-				anyFailed = true;
-			}
+	for (let i = 0; i < definition.length; ++i) {
+		if (definition[i](input, output, confirmations, context)) {
+			anyPassed = true;
+		} else {
+			anyFailed = true;
 		}
 	}
 
-	// if k in keyof FROM, then hasProperty is redundant, but that's not something we can express here
-	// TODO: we could cache these property lists for performance
-	(Object.getOwnPropertyNames(definition) as (keyof TO)[]).forEach(checkProperty);
-	// repeat!
-	(Object.getOwnPropertySymbols(definition) as (keyof TO)[]).forEach(checkProperty);
-
-	// rule is wrong, doesn't understand calls to checkProperty
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!anyPassed && !anyFailed) {
 		output?.push(errorLike('definition had no guards'));
 		return false;
@@ -88,16 +81,34 @@ function checkDefinition<FROM extends object, TO extends FROM>(
 	return !anyFailed;
 }
 
-// this would save typing, but can't figure out how to use it below (syntax-wise)
-// type PropertyGuardBuilder<FROM, TO extends FROM> = (definition: PropertyGuards<FROM, TO>) => ReasonGuard<FROM, TO>;
+function instantiatePropertyGuards<FROM extends object, TO extends FROM>(
+	definition: PropertyGuards<FROM, TO>,
+): PropertyGuardList<FROM, TO> {
+	const instantiated: PropertyGuardList<FROM, TO> = [];
+	const unified: OptionalGuards<FROM, TO> = definition;
+	for (const key of Object.getOwnPropertyNames(definition) as (keyof TO)[]) {
+		const factory = unified[key];
+		if (factory) {
+			instantiated.push(factory(key));
+		}
+	}
+	for (const key of Object.getOwnPropertySymbols(definition) as (keyof TO)[]) {
+		const factory = unified[key];
+		if (factory) {
+			instantiated.push(factory(key));
+		}
+	}
+	return instantiated;
+}
 
-export const objectHasDefinition = <
-	<FROM extends object, TO extends FROM>(
-		definition: PropertyGuards<FROM, TO>,
-	) => ReasonGuard<FROM, TO>
->((definition) =>
-	(input, output, confirmations, context = []) =>
-		checkDefinition(definition, input, output, confirmations, context));
+export function objectHasDefinition<FROM extends object, TO extends FROM>(
+	definition: PropertyGuards<FROM, TO>,
+): ReasonGuard<FROM, TO> {
+	const instantiated = instantiatePropertyGuards(definition);
+	// typescript won't allow us to inline this below
+	const typed = checkDefinition<FROM, TO>;
+	return typed.bind(undefined, instantiated) as ReasonGuard<FROM, TO>;
+}
 
 export const isObjectWithDefinition = <TO extends object>(definition: PropertyGuards<object, TO>) =>
 	thenGuard<unknown, object, TO>(isObject, objectHasDefinition(definition));

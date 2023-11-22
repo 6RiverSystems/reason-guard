@@ -5,6 +5,7 @@ import { NegatableGuard } from './NegatableGuard';
 import { ErrorLike, ReasonGuard } from './ReasonGuard';
 import { isArray } from './instanceGuards';
 
+const arrayHasTypeConfirmation = 'is array of expected type';
 export const arrayHasType = <TO>(itemGuard: ReasonGuard<unknown, TO>) =>
 	checkerToGuard<unknown[], TO[]>((input: unknown[], context?: PropertyKey[]) => {
 		for (let i = 0; i < input.length; i++) {
@@ -23,7 +24,7 @@ export const arrayHasType = <TO>(itemGuard: ReasonGuard<unknown, TO>) =>
 				);
 			}
 		}
-		return `is array of expected type`;
+		return arrayHasTypeConfirmation;
 	});
 
 export const isArrayOfType = <TO>(
