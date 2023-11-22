@@ -51,17 +51,19 @@ jobs:
   test:
     docker:
       - image: *node_image
-    environment:
-      MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
     steps:
       - attach_workspace:
           at: ./
       - run:
           name: Unit Tests
           command: npm run only:test
+          environment:
+            MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha.xml
       - run:
           name: Benchmarks
           command: npm run only:benchmarks
+          environment:
+            MOCHA_OPTS: --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/junit/mocha/mocha-benchmarks.xml
       - run:
           name: Coverage
           command: npm run only:lCov
