@@ -16,6 +16,9 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isNumber, {});
 		});
 		it('is fast', function () {
+			if (process.env.CI && !process.env.RUN_BENCHMARKS) {
+				this.skip();
+			}
 			assertBenchGuard(
 				this,
 				primitive.isNumber,
@@ -36,6 +39,9 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isString, {});
 		});
 		it('is fast', function () {
+			if (process.env.CI && !process.env.RUN_BENCHMARKS) {
+				this.skip();
+			}
 			assertBenchGuard(
 				this,
 				primitive.isString,
@@ -60,6 +66,9 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isFunction, []);
 		});
 		it('is fast', function () {
+			if (process.env.CI && !process.env.RUN_BENCHMARKS) {
+				this.skip();
+			}
 			assertBenchGuard(
 				this,
 				primitive.isFunction,
@@ -80,6 +89,9 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isUndefined, {});
 		});
 		it('is fast', function () {
+			if (process.env.CI && !process.env.RUN_BENCHMARKS) {
+				this.skip();
+			}
 			assertBenchGuard(
 				this,
 				primitive.isUndefined,
@@ -100,6 +112,9 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isNull, {});
 		});
 		it('is fast', function () {
+			if (process.env.CI && !process.env.RUN_BENCHMARKS) {
+				this.skip();
+			}
 			assertBenchGuard(
 				this,
 				primitive.isNull,
