@@ -1,8 +1,34 @@
 import { assertGuards } from './assertGuards';
-import { assertBenchGuard } from './benchGuards';
+import { GuardSingleGenerator, assertBenchGuard } from './benchGuards';
 import * as primitive from '../src/primitiveGuards';
 
+function aFunction() {}
+
 describe('primitive guards', function () {
+	// share input data across tests so that we don't need to recreate big arrays
+	const numbers = new GuardSingleGenerator(Math.random.bind(Math));
+	const strings = new GuardSingleGenerator(() => Math.random().toString());
+	const trues = new GuardSingleGenerator(() => true);
+	const nulls = new GuardSingleGenerator(() => null);
+	// cSpell:ignore undefineds
+	const undefineds = new GuardSingleGenerator(() => undefined);
+	const functions = new GuardSingleGenerator(() => aFunction);
+
+	before(function () {
+		// preload the test data
+		if (!process.env.SKIP_SLOW) {
+			for (const gen of [numbers, strings, trues, nulls, undefineds, functions]) {
+				gen.ensure(10_000_000);
+			}
+			// try to avoid having any GC time counted in the test by forcing it to run early
+			global.gc?.();
+		}
+		// console.log('profiler breakpoint');
+	});
+	after(function () {
+		// console.log('profiler breakpoint');
+	});
+
 	context('isNumber', function () {
 		it('guards for numbers', function () {
 			assertGuards(true)(primitive.isNumber, 0);
@@ -16,12 +42,7 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isNumber, {});
 		});
 		it('is fast', function () {
-			assertBenchGuard(
-				this,
-				primitive.isNumber,
-				() => Math.random(),
-				(): unknown => Math.random().toString(),
-			);
+			assertBenchGuard(this, primitive.isNumber, numbers, trues);
 		}).timeout(10_000);
 	});
 	context('isString', function () {
@@ -36,12 +57,7 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isString, {});
 		});
 		it('is fast', function () {
-			assertBenchGuard(
-				this,
-				primitive.isString,
-				() => Math.random().toString(),
-				(): unknown => Math.random(),
-			);
+			assertBenchGuard(this, primitive.isString, strings, trues);
 		}).timeout(10_000);
 	});
 	context('isFunction', function () {
@@ -60,12 +76,7 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isFunction, []);
 		});
 		it('is fast', function () {
-			assertBenchGuard(
-				this,
-				primitive.isFunction,
-				() => Math.random,
-				(): unknown => true,
-			);
+			assertBenchGuard(this, primitive.isFunction, functions, trues);
 		}).timeout(10_000);
 	});
 	context('isUndefined', function () {
@@ -80,12 +91,7 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isUndefined, {});
 		});
 		it('is fast', function () {
-			assertBenchGuard(
-				this,
-				primitive.isUndefined,
-				() => undefined,
-				(): unknown => true,
-			);
+			assertBenchGuard(this, primitive.isUndefined, undefineds, trues);
 		}).timeout(10_000);
 	});
 	context('isNull', function () {
@@ -100,12 +106,7 @@ describe('primitive guards', function () {
 			assertGuards(false)(primitive.isNull, {});
 		});
 		it('is fast', function () {
-			assertBenchGuard(
-				this,
-				primitive.isNull,
-				() => null,
-				(): unknown => true,
-			);
+			assertBenchGuard(this, primitive.isNull, nulls, trues);
 		}).timeout(10_000);
 	});
 });

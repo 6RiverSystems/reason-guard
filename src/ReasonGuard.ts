@@ -18,6 +18,9 @@ export type ReasonGuard<FROM, TO extends FROM> = (
 	context?: PropertyKey[],
 ) => input is TO;
 
+/**
+ * @deprecated this is generally unnecessary and slows things down
+ */
 export const cloneGuard =
 	<FROM, TO extends FROM>(g: ReasonGuard<FROM, TO>): ReasonGuard<FROM, TO> =>
 	(input, es, cs, context): input is TO =>

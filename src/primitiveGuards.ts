@@ -14,23 +14,33 @@ type Primitive =
 // Dangerous -- do not export!
 // We cannot guarantee that "x: PRIM" -> "typeof x === 'prim'"!
 function getPrimitiveTypeCheck<PRIM>(prim: Primitive) {
+	// avoid reconstructing messages on every hit
+	const confirmation = `a ${prim}`;
+	const error = errorLike(`not a ${prim}`);
 	return checkerToGuard<unknown, PRIM>((input: unknown) => {
-		if (typeof input !== prim) return errorLike(`not a ${prim}`);
-		return `a ${prim}`;
+		if (typeof input !== prim) {
+			return error;
+		}
+		return confirmation;
 	});
 }
 
+// more error construction optimization
+const isUndefinedConfirmation = 'undefined';
+const isUndefinedError = errorLike('not undefined');
 export const isUndefined = checkerToGuard<unknown, undefined>((input) => {
 	if (input === undefined) {
-		return `undefined`;
+		return isUndefinedConfirmation;
 	}
-	return errorLike('not undefined');
+	return isUndefinedError;
 });
+const isNullConfirmation = 'null';
+const isNullError = errorLike('not null');
 export const isNull = checkerToGuard<unknown, null>((input) => {
 	if (input === null) {
-		return `null`;
+		return isNullConfirmation;
 	}
-	return errorLike('not null');
+	return isNullError;
 });
 
 export const isNumber = getPrimitiveTypeCheck<number>('number');

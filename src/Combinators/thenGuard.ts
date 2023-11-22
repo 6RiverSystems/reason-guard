@@ -1,16 +1,12 @@
+import { getRawOr } from './booleanGuard';
 import { notGuard } from './notGuard';
-import { orGuard } from './orGuard';
-import { buildNegatable } from '../NegatableGuard';
+import { buildNegatableDirect } from '../NegatableGuard';
 import { ReasonGuard } from '../ReasonGuard';
 
 export const thenGuard = <FROM, MID extends FROM, TO extends MID>(
 	left: ReasonGuard<FROM, MID>,
 	right: ReasonGuard<MID, TO>,
-) =>
-	buildNegatable(
-		() => getRawThen(left, right),
-		() => getRawNegatedThen(left, right),
-	);
+) => buildNegatableDirect(getRawThen(left, right), getRawNegatedThen(left, right));
 
 function getRawThen<FROM, MID extends FROM, TO extends MID>(
 	left: ReasonGuard<FROM, MID>,
@@ -27,5 +23,5 @@ function getRawNegatedThen<FROM, MID extends FROM, TO extends MID>(
 	left: ReasonGuard<FROM, MID>,
 	right: ReasonGuard<MID, TO>,
 ): ReasonGuard<FROM, FROM> {
-	return orGuard(getRawThen(left, notGuard<MID, MID>(right)), notGuard(left));
+	return getRawOr(getRawThen(left, notGuard<MID, MID>(right)), notGuard(left));
 }

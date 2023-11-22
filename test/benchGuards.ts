@@ -2,10 +2,28 @@ import { assert } from 'chai';
 
 import { ErrorLike, ReasonGuard } from '../src';
 
-const MinIterations = 10_000;
+const MinIterations = 100_000;
 const MaxIterations = 100_000_000;
 const MinDurationMs = 75;
 const TargetDurationMs = 100;
+
+export class GuardSingleGenerator<T> {
+	readonly values: T[] = [];
+	constructor(readonly generator: () => T) {}
+	ensure(len: number): T[] {
+		while (this.values.length < len) {
+			this.values.push(this.generator());
+		}
+		if (this.values.length === len) {
+			return this.values;
+		}
+		return this.values.slice(0, len);
+	}
+}
+
+export interface GuardInput<T> {
+	ensure(len: number): T[];
+}
 
 interface GuardBenchResult {
 	nsPerCall: number;
@@ -24,52 +42,59 @@ export interface GuardBenchResults {
 
 export function benchGuard<FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
-	valueGenerator: () => FROM[],
+	values: GuardInput<FROM>,
 ): GuardBenchResults {
-	// cache generated values to reduce GC overhead
-	const values: FROM[] = [];
-	while (values.length < MinIterations) {
-		values.push(...valueGenerator());
-	}
+	values.ensure(MinIterations);
 	return {
-		baseline: benchOnce(guard, values, valueGenerator, false, false),
-		withErrors: benchOnce(guard, values, valueGenerator, true, false),
-		withConfirmations: benchOnce(guard, values, valueGenerator, false, true),
-		withAll: benchOnce(guard, values, valueGenerator, true, true),
+		baseline: benchOnce(guard, values, false, false),
+		withErrors: benchOnce(guard, values, true, false),
+		withConfirmations: benchOnce(guard, values, false, true),
+		withAll: benchOnce(guard, values, true, true),
 	};
 }
 
 export function assertBenchGuard<FROM, TO extends FROM>(
 	ctx: Mocha.Context,
 	guard: ReasonGuard<FROM, TO>,
-	goodValueGenerator: () => TO,
-	badValueGenerator: () => FROM,
+	good: GuardInput<TO>,
+	bad: GuardInput<FROM>,
 ) {
 	if (process.env.SKIP_SLOW) {
 		// don't run these slow tests during git commit validation or the like
 		ctx.skip();
 	}
-	const positiveResults = benchGuard(guard, () => Array.from({ length: 100 }, goodValueGenerator));
+	const positiveResults = benchGuard(guard, good);
 	// eslint-disable-next-line no-console
 	console.log(positiveResults, 'positive results');
-	const negativeResults = benchGuard(guard, () => Array.from({ length: 100 }, badValueGenerator));
+	const negativeResults = benchGuard(guard, bad);
 	// eslint-disable-next-line no-console
 	console.log(negativeResults, 'negative results');
 
+	// positive and negative results don't compare exactly. particularly,
+	// withErrors / withConfirmations are complementary.
+	type resultType = keyof GuardBenchResults;
+	const modePair: Record<resultType, resultType> = {
+		baseline: 'baseline',
+		withErrors: 'withConfirmations',
+		withConfirmations: 'withErrors',
+		withAll: 'withAll',
+	};
+
 	for (const mode of Object.keys(negativeResults) as (keyof GuardBenchResults)[]) {
+		const pair = modePair[mode];
 		assert.isAtMost(
 			negativeResults[mode].nsPerCall,
 			// negative results should be no more than 50ns+50% slower than positives
-			positiveResults[mode].nsPerCall * 1.5 + 50,
-			`negative result for ${mode} should be within 50%+50ns of positive result ${positiveResults[mode].nsPerCall}`,
+			positiveResults[pair].nsPerCall * 1.5 + 50,
+			`negative result for ${mode} should be within 50%+50ns of ` +
+				`positive ${pair} result ${positiveResults[pair].nsPerCall}`,
 		);
 	}
 }
 
-function benchOnce<FROM, TO extends FROM>(
+export function benchOnce<FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
-	values: FROM[],
-	valueGenerator: () => FROM[],
+	values: GuardInput<FROM>,
 	withErrors: boolean,
 	withConfirmations: boolean,
 ): GuardBenchResult {
@@ -84,17 +109,13 @@ function benchOnce<FROM, TO extends FROM>(
 				nextIterations = MaxIterations;
 			}
 			iterations = nextIterations;
-			// console.log(`after ${duration}, next ${iterations}`);
 		}
-		while (values.length < iterations) {
-			values.push(...valueGenerator());
-		}
-		// TODO: use high res timer for this
-		duration = timeOnce(guard, values, iterations, errors, confirmations);
+		values.ensure(iterations);
+		duration = timeOnce(guard, values.ensure(iterations), errors, confirmations);
 	} while (duration < MinDurationMs && iterations < MaxIterations);
 	// take the best of three, we already have one
 	for (let i = 0; i < 2; ++i) {
-		const rerunDuration = timeOnce(guard, values, iterations, errors, confirmations);
+		const rerunDuration = timeOnce(guard, values.ensure(iterations), errors, confirmations);
 		if (rerunDuration < duration) {
 			duration = rerunDuration;
 		}
@@ -105,24 +126,25 @@ function benchOnce<FROM, TO extends FROM>(
 		duration,
 	};
 }
-function timeOnce<FROM, TO extends FROM>(
+export function timeOnce<FROM, TO extends FROM>(
 	guard: ReasonGuard<FROM, TO>,
 	values: FROM[],
-	iterations: number,
 	errors?: ErrorLike[],
 	confirmations?: string[],
 ) {
-	const start = Date.now();
-	for (let i = 0; i < values.length && i < iterations; ++i) {
-		// try to reduce GC overhead by truncating these arrays instead of making
-		// new ones
-		errors?.splice(0);
-		confirmations?.splice(0);
+	// measure cpu time, not clock time
+	const start2 = process.cpuUsage();
+	for (let i = 0; i < values.length; ++i) {
+		// reduce GC overhead by truncating these arrays instead of making new ones.
+		// clearing these still ends up consuming _most_ of the time in the test!
+		if (errors?.length) {
+			errors.length = 0;
+		}
+		if (confirmations?.length) {
+			confirmations.length = 0;
+		}
 		guard(values[i], errors, confirmations);
 	}
-	let duration = Date.now() - start;
-	if (duration <= 0) {
-		duration = 1;
-	}
-	return duration;
+	const delta = process.cpuUsage(start2);
+	return (delta.user + delta.system) / 1000;
 }

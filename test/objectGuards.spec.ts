@@ -58,7 +58,7 @@ function testPropertyBadValues<FROM extends object, MID extends FROM, TO extends
 ) {
 	for (let i = 0; i < values.length; ++i) {
 		if (i !== correctIndex) {
-			it(`fails if ${prop} has bad value ${values[i]}`, function () {
+			it(`fails if ${String(prop)} has bad value ${values[i]}`, function () {
 				assertGuards(false)(guard, { ...base, [prop]: values[i] });
 			});
 		}
@@ -72,7 +72,7 @@ function testPropertyGoodValues<FROM extends object, TO extends FROM>(
 	values: any[],
 ) {
 	for (let i = 0; i < values.length; ++i) {
-		it(`passes if ${prop} has good value ${values[i]}`, function () {
+		it(`passes if ${String(prop)} has good value ${values[i]}`, function () {
 			assertGuards(true)(guard, { ...base, [prop]: values[i] });
 		});
 	}

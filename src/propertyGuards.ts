@@ -34,8 +34,9 @@ export const hasProperty = <T extends PropertyKey>(p: T) =>
 			const x: any = input;
 			// if (x[p] === undefined) return errorLike(`property ${p} is undefined`);
 			// if (x[p] === null) return errorLike(`property ${p} is null`); // is this right?
-			if (!(p in x))
+			if (!(p in x)) {
 				return new ContextError(`property ${String(p)} is not present`, pushContext(p, context));
+			}
 			return `property ${String(p)} is present`;
 		},
 	);
