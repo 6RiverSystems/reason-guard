@@ -60,6 +60,9 @@ jobs:
           name: Unit Tests
           command: npm run only:test
       - run:
+          name: Benchmarks
+          command: npm run only:benchmarks
+      - run:
           name: Coverage
           command: npm run only:lCov
       - sixrs-gke/codecov
