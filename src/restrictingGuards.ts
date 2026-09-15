@@ -126,6 +126,10 @@ export const numberIsSafeInteger = andGuard(
 	interval('>=', Number.MIN_SAFE_INTEGER)(Number.MAX_SAFE_INTEGER, '<='),
 );
 
+export const isSafeInteger = thenGuard(isNumber, numberIsSafeInteger);
+export const isNonNegativeInteger = thenGuard(isSafeInteger, numberIsAtLeast(0));
+export const isPositiveInteger = thenGuard(isSafeInteger, numberIsAtLeast(1));
+
 export function isStrictEqual<T>(value: T) {
 	const confirmation = `is exactly ${String(value)}`;
 	const error = errorLike(`is not exactly ${String(value)}`);
